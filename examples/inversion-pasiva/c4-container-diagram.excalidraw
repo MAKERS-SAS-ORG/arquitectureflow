@@ -1,0 +1,999 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "arquitectureflow",
+  "elements": [
+    {
+      "id": "title",
+      "type": "text",
+      "x": 250,
+      "y": 10,
+      "width": 450,
+      "height": 30,
+      "text": "C4 Level 2: Container Diagram",
+      "fontSize": 28,
+      "fontFamily": 1,
+      "createdAt": "2026-04-21T21:51:49.335Z",
+      "updatedAt": "2026-04-21T21:51:49.335Z",
+      "version": 1
+    },
+    {
+      "id": "subtitle",
+      "type": "text",
+      "x": 220,
+      "y": 48,
+      "width": 500,
+      "height": 25,
+      "strokeColor": "#868e96",
+      "text": "Plataforma de Inversion en Renta Fija",
+      "fontSize": 20,
+      "fontFamily": 1,
+      "createdAt": "2026-04-21T21:51:49.336Z",
+      "updatedAt": "2026-04-21T21:51:49.336Z",
+      "version": 1
+    },
+    {
+      "id": "person-head",
+      "type": "ellipse",
+      "x": 445,
+      "y": 90,
+      "width": 60,
+      "height": 60,
+      "backgroundColor": "#0c37a2",
+      "strokeColor": "#0c37a2",
+      "fillStyle": "solid",
+      "createdAt": "2026-04-21T21:51:49.336Z",
+      "updatedAt": "2026-04-21T21:51:49.336Z",
+      "version": 1
+    },
+    {
+      "id": "person-body",
+      "type": "rectangle",
+      "x": 410,
+      "y": 155,
+      "width": 130,
+      "height": 50,
+      "backgroundColor": "#0c37a2",
+      "strokeColor": "#0c37a2",
+      "roundness": {
+        "type": 3
+      },
+      "fillStyle": "solid",
+      "createdAt": "2026-04-21T21:51:49.336Z",
+      "updatedAt": "2026-04-21T21:51:49.336Z",
+      "version": 1
+    },
+    {
+      "id": "person-name",
+      "type": "text",
+      "x": 430,
+      "y": 162,
+      "width": 90,
+      "height": 20,
+      "strokeColor": "#ffffff",
+      "text": "Inversionista",
+      "fontSize": 16,
+      "fontFamily": 1,
+      "createdAt": "2026-04-21T21:51:49.336Z",
+      "updatedAt": "2026-04-21T21:51:49.336Z",
+      "version": 1
+    },
+    {
+      "id": "person-type",
+      "type": "text",
+      "x": 418,
+      "y": 185,
+      "width": 120,
+      "height": 18,
+      "strokeColor": "#cccccc",
+      "text": "[Persona Natural]",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "createdAt": "2026-04-21T21:51:49.336Z",
+      "updatedAt": "2026-04-21T21:51:49.336Z",
+      "version": 1
+    },
+    {
+      "id": "boundary",
+      "type": "rectangle",
+      "x": 40,
+      "y": 240,
+      "width": 820,
+      "height": 520,
+      "backgroundColor": "#ced4da",
+      "strokeColor": "#868e96",
+      "strokeWidth": 2,
+      "strokeStyle": "dashed",
+      "opacity": 15,
+      "roundness": {
+        "type": 3
+      },
+      "fillStyle": "solid",
+      "createdAt": "2026-04-21T21:51:49.336Z",
+      "updatedAt": "2026-04-21T21:51:49.336Z",
+      "version": 1
+    },
+    {
+      "id": "boundary-label",
+      "type": "text",
+      "x": 60,
+      "y": 250,
+      "width": 500,
+      "height": 25,
+      "strokeColor": "#868e96",
+      "text": "Plataforma de Inversion en Renta Fija [System Boundary]",
+      "fontSize": 16,
+      "fontFamily": 1,
+      "createdAt": "2026-04-21T21:51:49.336Z",
+      "updatedAt": "2026-04-21T21:51:49.336Z",
+      "version": 1
+    },
+    {
+      "id": "webapp",
+      "type": "rectangle",
+      "x": 80,
+      "y": 300,
+      "width": 220,
+      "height": 100,
+      "backgroundColor": "#228be6",
+      "strokeColor": "#2a5da7",
+      "roundness": {
+        "type": 3
+      },
+      "fillStyle": "solid",
+      "createdAt": "2026-04-21T21:52:10.605Z",
+      "updatedAt": "2026-04-21T21:52:10.605Z",
+      "version": 1
+    },
+    {
+      "id": "webapp-name",
+      "type": "text",
+      "x": 140,
+      "y": 310,
+      "width": 100,
+      "height": 25,
+      "strokeColor": "#ffffff",
+      "text": "Web App",
+      "fontSize": 20,
+      "fontFamily": 1,
+      "createdAt": "2026-04-21T21:52:10.605Z",
+      "updatedAt": "2026-04-21T21:52:10.605Z",
+      "version": 1
+    },
+    {
+      "id": "webapp-tech",
+      "type": "text",
+      "x": 120,
+      "y": 340,
+      "width": 140,
+      "height": 18,
+      "strokeColor": "#a5d8ff",
+      "text": "[Next.js 14]",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "createdAt": "2026-04-21T21:52:10.606Z",
+      "updatedAt": "2026-04-21T21:52:10.606Z",
+      "version": 1
+    },
+    {
+      "id": "webapp-desc",
+      "type": "text",
+      "x": 90,
+      "y": 365,
+      "width": 200,
+      "height": 18,
+      "strokeColor": "#dbe4ff",
+      "text": "UI para el inversionista",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "createdAt": "2026-04-21T21:52:10.606Z",
+      "updatedAt": "2026-04-21T21:52:10.606Z",
+      "version": 1
+    },
+    {
+      "id": "api",
+      "type": "rectangle",
+      "x": 350,
+      "y": 300,
+      "width": 220,
+      "height": 100,
+      "backgroundColor": "#228be6",
+      "strokeColor": "#2a5da7",
+      "roundness": {
+        "type": 3
+      },
+      "fillStyle": "solid",
+      "createdAt": "2026-04-21T21:52:10.606Z",
+      "updatedAt": "2026-04-21T21:52:10.606Z",
+      "version": 1
+    },
+    {
+      "id": "api-name",
+      "type": "text",
+      "x": 390,
+      "y": 310,
+      "width": 140,
+      "height": 25,
+      "strokeColor": "#ffffff",
+      "text": "Investment API",
+      "fontSize": 20,
+      "fontFamily": 1,
+      "createdAt": "2026-04-21T21:52:10.606Z",
+      "updatedAt": "2026-04-21T21:52:10.606Z",
+      "version": 1
+    },
+    {
+      "id": "api-tech",
+      "type": "text",
+      "x": 410,
+      "y": 340,
+      "width": 100,
+      "height": 18,
+      "strokeColor": "#a5d8ff",
+      "text": "[.NET 8]",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "createdAt": "2026-04-21T21:52:10.606Z",
+      "updatedAt": "2026-04-21T21:52:10.606Z",
+      "version": 1
+    },
+    {
+      "id": "api-desc",
+      "type": "text",
+      "x": 380,
+      "y": 365,
+      "width": 160,
+      "height": 18,
+      "strokeColor": "#dbe4ff",
+      "text": "Endpoints REST",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "createdAt": "2026-04-21T21:52:10.606Z",
+      "updatedAt": "2026-04-21T21:52:10.606Z",
+      "version": 1
+    },
+    {
+      "id": "redis",
+      "type": "rectangle",
+      "x": 80,
+      "y": 460,
+      "width": 200,
+      "height": 80,
+      "backgroundColor": "#228be6",
+      "strokeColor": "#2a5da7",
+      "roundness": {
+        "type": 3
+      },
+      "fillStyle": "solid",
+      "createdAt": "2026-04-21T21:52:10.606Z",
+      "updatedAt": "2026-04-21T21:52:10.606Z",
+      "version": 1
+    },
+    {
+      "id": "redis-name",
+      "type": "text",
+      "x": 135,
+      "y": 470,
+      "width": 80,
+      "height": 25,
+      "strokeColor": "#ffffff",
+      "text": "Redis",
+      "fontSize": 20,
+      "fontFamily": 1,
+      "createdAt": "2026-04-21T21:52:10.606Z",
+      "updatedAt": "2026-04-21T21:52:10.606Z",
+      "version": 1
+    },
+    {
+      "id": "redis-tech",
+      "type": "text",
+      "x": 105,
+      "y": 498,
+      "width": 150,
+      "height": 18,
+      "strokeColor": "#a5d8ff",
+      "text": "[ElastiCache 7.x]",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "createdAt": "2026-04-21T21:52:10.606Z",
+      "updatedAt": "2026-04-21T21:52:10.606Z",
+      "version": 1
+    },
+    {
+      "id": "redis-desc",
+      "type": "text",
+      "x": 100,
+      "y": 518,
+      "width": 150,
+      "height": 18,
+      "strokeColor": "#dbe4ff",
+      "text": "Cache + Sesiones",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "createdAt": "2026-04-21T21:52:10.606Z",
+      "updatedAt": "2026-04-21T21:52:10.606Z",
+      "version": 1
+    },
+    {
+      "id": "sqs",
+      "type": "rectangle",
+      "x": 350,
+      "y": 460,
+      "width": 200,
+      "height": 80,
+      "backgroundColor": "#7048e8",
+      "strokeColor": "#5f3dc4",
+      "roundness": {
+        "type": 3
+      },
+      "fillStyle": "solid",
+      "createdAt": "2026-04-21T21:52:10.606Z",
+      "updatedAt": "2026-04-21T21:52:10.606Z",
+      "version": 1
+    },
+    {
+      "id": "sqs-name",
+      "type": "text",
+      "x": 395,
+      "y": 470,
+      "width": 110,
+      "height": 25,
+      "strokeColor": "#ffffff",
+      "text": "Cola SQS",
+      "fontSize": 20,
+      "fontFamily": 1,
+      "createdAt": "2026-04-21T21:52:10.610Z",
+      "updatedAt": "2026-04-21T21:52:10.610Z",
+      "version": 1
+    },
+    {
+      "id": "sqs-tech",
+      "type": "text",
+      "x": 380,
+      "y": 498,
+      "width": 130,
+      "height": 18,
+      "strokeColor": "#d0bfff",
+      "text": "[Amazon SQS]",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "createdAt": "2026-04-21T21:52:10.610Z",
+      "updatedAt": "2026-04-21T21:52:10.610Z",
+      "version": 1
+    },
+    {
+      "id": "sqs-desc",
+      "type": "text",
+      "x": 365,
+      "y": 518,
+      "width": 170,
+      "height": 18,
+      "strokeColor": "#e5dbff",
+      "text": "Operaciones async",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "createdAt": "2026-04-21T21:52:10.610Z",
+      "updatedAt": "2026-04-21T21:52:10.610Z",
+      "version": 1
+    },
+    {
+      "id": "worker",
+      "type": "rectangle",
+      "x": 620,
+      "y": 460,
+      "width": 210,
+      "height": 80,
+      "backgroundColor": "#228be6",
+      "strokeColor": "#2a5da7",
+      "roundness": {
+        "type": 3
+      },
+      "fillStyle": "solid",
+      "createdAt": "2026-04-21T21:52:10.610Z",
+      "updatedAt": "2026-04-21T21:52:10.610Z",
+      "version": 1
+    },
+    {
+      "id": "worker-name",
+      "type": "text",
+      "x": 675,
+      "y": 470,
+      "width": 100,
+      "height": 25,
+      "strokeColor": "#ffffff",
+      "text": "Worker",
+      "fontSize": 20,
+      "fontFamily": 1,
+      "createdAt": "2026-04-21T21:52:10.611Z",
+      "updatedAt": "2026-04-21T21:52:10.611Z",
+      "version": 1
+    },
+    {
+      "id": "worker-tech",
+      "type": "text",
+      "x": 675,
+      "y": 498,
+      "width": 100,
+      "height": 18,
+      "strokeColor": "#a5d8ff",
+      "text": "[.NET 8]",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "createdAt": "2026-04-21T21:52:10.611Z",
+      "updatedAt": "2026-04-21T21:52:10.611Z",
+      "version": 1
+    },
+    {
+      "id": "worker-desc",
+      "type": "text",
+      "x": 635,
+      "y": 518,
+      "width": 180,
+      "height": 18,
+      "strokeColor": "#dbe4ff",
+      "text": "Procesa operaciones",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "createdAt": "2026-04-21T21:52:10.611Z",
+      "updatedAt": "2026-04-21T21:52:10.611Z",
+      "version": 1
+    },
+    {
+      "id": "pg",
+      "type": "rectangle",
+      "x": 80,
+      "y": 600,
+      "width": 240,
+      "height": 100,
+      "backgroundColor": "#228be6",
+      "strokeColor": "#2a5da7",
+      "roundness": {
+        "type": 3
+      },
+      "fillStyle": "solid",
+      "createdAt": "2026-04-21T21:52:10.611Z",
+      "updatedAt": "2026-04-21T21:52:10.611Z",
+      "version": 1
+    },
+    {
+      "id": "pg-name",
+      "type": "text",
+      "x": 130,
+      "y": 610,
+      "width": 140,
+      "height": 25,
+      "strokeColor": "#ffffff",
+      "text": "PostgreSQL",
+      "fontSize": 20,
+      "fontFamily": 1,
+      "createdAt": "2026-04-21T21:52:10.611Z",
+      "updatedAt": "2026-04-21T21:52:10.611Z",
+      "version": 1
+    },
+    {
+      "id": "pg-tech",
+      "type": "text",
+      "x": 130,
+      "y": 638,
+      "width": 120,
+      "height": 18,
+      "strokeColor": "#a5d8ff",
+      "text": "[RDS 16]",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "createdAt": "2026-04-21T21:52:10.611Z",
+      "updatedAt": "2026-04-21T21:52:10.611Z",
+      "version": 1
+    },
+    {
+      "id": "pg-desc",
+      "type": "text",
+      "x": 100,
+      "y": 665,
+      "width": 200,
+      "height": 18,
+      "strokeColor": "#dbe4ff",
+      "text": "Datos + Audit Trail",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "createdAt": "2026-04-21T21:52:10.611Z",
+      "updatedAt": "2026-04-21T21:52:10.611Z",
+      "version": 1
+    },
+    {
+      "id": "deceval",
+      "type": "rectangle",
+      "x": 950,
+      "y": 300,
+      "width": 220,
+      "height": 90,
+      "backgroundColor": "#868e96",
+      "strokeColor": "#495057",
+      "roundness": {
+        "type": 3
+      },
+      "fillStyle": "solid",
+      "createdAt": "2026-04-21T21:52:23.296Z",
+      "updatedAt": "2026-04-21T21:52:23.296Z",
+      "version": 1
+    },
+    {
+      "id": "deceval-name",
+      "type": "text",
+      "x": 1010,
+      "y": 310,
+      "width": 100,
+      "height": 25,
+      "strokeColor": "#ffffff",
+      "text": "Deceval",
+      "fontSize": 20,
+      "fontFamily": 1,
+      "createdAt": "2026-04-21T21:52:23.296Z",
+      "updatedAt": "2026-04-21T21:52:23.296Z",
+      "version": 1
+    },
+    {
+      "id": "deceval-tech",
+      "type": "text",
+      "x": 980,
+      "y": 340,
+      "width": 160,
+      "height": 18,
+      "strokeColor": "#dee2e6",
+      "text": "[Sistema Externo]",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "createdAt": "2026-04-21T21:52:23.296Z",
+      "updatedAt": "2026-04-21T21:52:23.296Z",
+      "version": 1
+    },
+    {
+      "id": "deceval-desc",
+      "type": "text",
+      "x": 970,
+      "y": 362,
+      "width": 180,
+      "height": 18,
+      "strokeColor": "#dee2e6",
+      "text": "Custodia de valores",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "createdAt": "2026-04-21T21:52:23.296Z",
+      "updatedAt": "2026-04-21T21:52:23.296Z",
+      "version": 1
+    },
+    {
+      "id": "pse",
+      "type": "rectangle",
+      "x": 950,
+      "y": 440,
+      "width": 220,
+      "height": 90,
+      "backgroundColor": "#868e96",
+      "strokeColor": "#495057",
+      "roundness": {
+        "type": 3
+      },
+      "fillStyle": "solid",
+      "createdAt": "2026-04-21T21:52:23.297Z",
+      "updatedAt": "2026-04-21T21:52:23.297Z",
+      "version": 1
+    },
+    {
+      "id": "pse-name",
+      "type": "text",
+      "x": 1000,
+      "y": 450,
+      "width": 120,
+      "height": 25,
+      "strokeColor": "#ffffff",
+      "text": "PSE / ACH",
+      "fontSize": 20,
+      "fontFamily": 1,
+      "createdAt": "2026-04-21T21:52:23.297Z",
+      "updatedAt": "2026-04-21T21:52:23.297Z",
+      "version": 1
+    },
+    {
+      "id": "pse-tech",
+      "type": "text",
+      "x": 980,
+      "y": 480,
+      "width": 160,
+      "height": 18,
+      "strokeColor": "#dee2e6",
+      "text": "[Sistema Externo]",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "createdAt": "2026-04-21T21:52:23.297Z",
+      "updatedAt": "2026-04-21T21:52:23.297Z",
+      "version": 1
+    },
+    {
+      "id": "pse-desc",
+      "type": "text",
+      "x": 975,
+      "y": 502,
+      "width": 170,
+      "height": 18,
+      "strokeColor": "#dee2e6",
+      "text": "Pasarela de pagos",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "createdAt": "2026-04-21T21:52:23.297Z",
+      "updatedAt": "2026-04-21T21:52:23.297Z",
+      "version": 1
+    },
+    {
+      "id": "sfc",
+      "type": "rectangle",
+      "x": 950,
+      "y": 580,
+      "width": 220,
+      "height": 90,
+      "backgroundColor": "#868e96",
+      "strokeColor": "#495057",
+      "roundness": {
+        "type": 3
+      },
+      "fillStyle": "solid",
+      "createdAt": "2026-04-21T21:52:23.297Z",
+      "updatedAt": "2026-04-21T21:52:23.297Z",
+      "version": 1
+    },
+    {
+      "id": "sfc-name",
+      "type": "text",
+      "x": 1030,
+      "y": 590,
+      "width": 60,
+      "height": 25,
+      "strokeColor": "#ffffff",
+      "text": "SFC",
+      "fontSize": 20,
+      "fontFamily": 1,
+      "createdAt": "2026-04-21T21:52:23.297Z",
+      "updatedAt": "2026-04-21T21:52:23.297Z",
+      "version": 1
+    },
+    {
+      "id": "sfc-tech",
+      "type": "text",
+      "x": 980,
+      "y": 620,
+      "width": 160,
+      "height": 18,
+      "strokeColor": "#dee2e6",
+      "text": "[Sistema Externo]",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "createdAt": "2026-04-21T21:52:23.297Z",
+      "updatedAt": "2026-04-21T21:52:23.297Z",
+      "version": 1
+    },
+    {
+      "id": "sfc-desc",
+      "type": "text",
+      "x": 965,
+      "y": 642,
+      "width": 190,
+      "height": 18,
+      "strokeColor": "#dee2e6",
+      "text": "Reportes regulatorios",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "createdAt": "2026-04-21T21:52:23.297Z",
+      "updatedAt": "2026-04-21T21:52:23.297Z",
+      "version": 1
+    },
+    {
+      "id": "a-person-webapp",
+      "type": "arrow",
+      "x": 475,
+      "y": 210,
+      "strokeColor": "#495057",
+      "strokeWidth": 2,
+      "label": {
+        "text": "Usa [HTTPS]"
+      },
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          -200,
+          90
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "createdAt": "2026-04-21T21:52:36.854Z",
+      "updatedAt": "2026-04-21T21:52:36.854Z",
+      "version": 1
+    },
+    {
+      "id": "a-webapp-api",
+      "type": "arrow",
+      "x": 308,
+      "y": 350,
+      "strokeColor": "#495057",
+      "strokeWidth": 2,
+      "label": {
+        "text": "Calls [REST]"
+      },
+      "start": {
+        "id": "webapp"
+      },
+      "end": {
+        "id": "api"
+      },
+      "endArrowhead": "arrow",
+      "createdAt": "2026-04-21T21:52:36.854Z",
+      "updatedAt": "2026-04-21T21:52:36.854Z",
+      "version": 1,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          34,
+          0
+        ]
+      ]
+    },
+    {
+      "id": "a-api-redis",
+      "type": "arrow",
+      "x": 359.61482690643635,
+      "y": 403.77777130012333,
+      "strokeColor": "#495057",
+      "strokeWidth": 2,
+      "label": {
+        "text": "Cache [TCP]"
+      },
+      "start": {
+        "id": "api"
+      },
+      "end": {
+        "id": "redis"
+      },
+      "endArrowhead": "arrow",
+      "createdAt": "2026-04-21T21:52:36.854Z",
+      "updatedAt": "2026-04-21T21:52:36.854Z",
+      "version": 1,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          -97.89632047953938,
+          52.44445739975333
+        ]
+      ]
+    },
+    {
+      "id": "a-api-sqs",
+      "type": "arrow",
+      "x": 456.13451458247647,
+      "y": 407.9822812628529,
+      "strokeColor": "#495057",
+      "strokeWidth": 2,
+      "label": {
+        "text": "Publica [SDK]"
+      },
+      "start": {
+        "id": "api"
+      },
+      "end": {
+        "id": "sqs"
+      },
+      "endArrowhead": "arrow",
+      "createdAt": "2026-04-21T21:52:36.854Z",
+      "updatedAt": "2026-04-21T21:52:36.854Z",
+      "version": 1,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          -2.9356958316195687,
+          44.03543747429421
+        ]
+      ]
+    },
+    {
+      "id": "a-sqs-worker",
+      "type": "arrow",
+      "x": 558,
+      "y": 500,
+      "strokeColor": "#495057",
+      "strokeWidth": 2,
+      "label": {
+        "text": "Consume"
+      },
+      "start": {
+        "id": "sqs"
+      },
+      "end": {
+        "id": "worker"
+      },
+      "endArrowhead": "arrow",
+      "createdAt": "2026-04-21T21:52:36.854Z",
+      "updatedAt": "2026-04-21T21:52:36.854Z",
+      "version": 1,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          54,
+          0
+        ]
+      ]
+    },
+    {
+      "id": "a-api-pg",
+      "type": "arrow",
+      "x": 411.42722235932393,
+      "y": 406.0455126623185,
+      "strokeColor": "#495057",
+      "strokeWidth": 2,
+      "label": {
+        "text": "Lee/Escribe [TCP]"
+      },
+      "start": {
+        "id": "api"
+      },
+      "end": {
+        "id": "pg"
+      },
+      "endArrowhead": "arrow",
+      "createdAt": "2026-04-21T21:52:36.854Z",
+      "updatedAt": "2026-04-21T21:52:36.854Z",
+      "version": 1,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          -162.85444471864787,
+          187.90897467536297
+        ]
+      ]
+    },
+    {
+      "id": "a-worker-pg",
+      "type": "arrow",
+      "x": 612.3078084188734,
+      "y": 532.197769023179,
+      "strokeColor": "#495057",
+      "strokeWidth": 2,
+      "strokeStyle": "dashed",
+      "label": {
+        "text": "Actualiza [TCP]"
+      },
+      "start": {
+        "id": "worker"
+      },
+      "end": {
+        "id": "pg"
+      },
+      "endArrowhead": "arrow",
+      "createdAt": "2026-04-21T21:52:36.854Z",
+      "updatedAt": "2026-04-21T21:52:36.855Z",
+      "version": 1,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          -284.6156168377468,
+          81.3187476679276
+        ]
+      ]
+    },
+    {
+      "id": "a-worker-deceval",
+      "type": "arrow",
+      "x": 818.7121130502765,
+      "y": 456.64066411106614,
+      "strokeColor": "#868e96",
+      "strokeWidth": 2,
+      "label": {
+        "text": "Registra [REST]"
+      },
+      "start": {
+        "id": "worker"
+      },
+      "end": {
+        "id": "deceval"
+      },
+      "endArrowhead": "arrow",
+      "createdAt": "2026-04-21T21:52:36.855Z",
+      "updatedAt": "2026-04-21T21:52:36.855Z",
+      "version": 1,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          136.7693222865439,
+          -63.28132822213229
+        ]
+      ]
+    },
+    {
+      "id": "a-worker-pse",
+      "type": "arrow",
+      "x": 837.9919924352952,
+      "y": 494.94065705513606,
+      "strokeColor": "#868e96",
+      "strokeWidth": 2,
+      "label": {
+        "text": "Pago [REST]"
+      },
+      "start": {
+        "id": "worker"
+      },
+      "end": {
+        "id": "pse"
+      },
+      "endArrowhead": "arrow",
+      "createdAt": "2026-04-21T21:52:36.855Z",
+      "updatedAt": "2026-04-21T21:52:36.855Z",
+      "version": 1,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          104.01601512940965,
+          -4.6574335132571605
+        ]
+      ]
+    },
+    {
+      "id": "a-api-sfc",
+      "type": "arrow",
+      "x": 576.3634276740634,
+      "y": 403.3332376839457,
+      "strokeColor": "#868e96",
+      "strokeWidth": 2,
+      "strokeStyle": "dashed",
+      "label": {
+        "text": "Reportes [REST]"
+      },
+      "start": {
+        "id": "api"
+      },
+      "end": {
+        "id": "sfc"
+      },
+      "endArrowhead": "arrow",
+      "createdAt": "2026-04-21T21:52:36.855Z",
+      "updatedAt": "2026-04-21T21:52:36.855Z",
+      "version": 1,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          378.18223556096416,
+          173.33352463210855
+        ]
+      ]
+    }
+  ],
+  "appState": {
+    "viewBackgroundColor": "#ffffff"
+  }
+}
