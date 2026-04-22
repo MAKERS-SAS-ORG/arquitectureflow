@@ -1,19 +1,20 @@
 ---
-titulo: "Runbook: [Nombre del Sistema]"
-identificador: RB-[NNN]
+titulo: "Requisitos Operacionales: [Nombre del Sistema]"
+identificador: RO-[NNN]
 tipo: Runbook
 estado: Draft
 version: "1.0.0"
-autor: "[Nombre]"
+autor: "[Nombre - Arquitecto SA]"
 fecha-creacion: YYYY-MM-DD
 fecha-ultima-revision: YYYY-MM-DD
 artefactos-origen: ["SD-NNN"]
 tags: []
 ---
 
-# Runbook: [Nombre del Sistema]
+# Requisitos Operacionales: [Nombre del Sistema]
 
-**Contactos de escalada:** [Nombre (rol) — canal]
+> Este documento define los REQUISITOS que Operations/SRE necesita para
+> crear el runbook detallado. El SA define QUE operar; Operations define COMO.
 
 ## 1. Informacion del Sistema
 
@@ -23,44 +24,66 @@ tags: []
 | URL staging | |
 | Region/Zona | |
 | Dashboard de monitoreo | [link] |
-| Pipeline CI/CD | [link] |
+| Contacto de escalada | [Nombre — canal] |
 
-## 2. Despliegue
+## 2. Requisitos de Deployment
 
-### Proceso normal
-1. [paso 1]
-2. [paso 2]
+| Requisito | Valor |
+|---|---|
+| Estrategia | Blue-green / Canary / Rolling |
+| Tiempo maximo de deployment | [minutos] |
+| Health check endpoint | [ruta] |
+| Health check criterio | [que debe retornar para considerar healthy] |
 
-### Checklist post-despliegue
-- [ ] Health check retorna 200
+### Checklist de verificacion post-despliegue (SA define criterios)
+- [ ] Health check retorna OK
 - [ ] Tasa de error < [umbral]
-- [ ] Flujo principal funciona (test de humo)
+- [ ] Flujo principal funciona (cual flujo: [describir])
+- [ ] Metricas de negocio en rango normal
 
-### Rollback
-1. [paso para revertir]
-2. [verificacion]
+## 3. Criterios de Rollback
 
-## 3. Operaciones Comunes
+| Condicion | Accion |
+|---|---|
+| Tasa de error > [X]% por mas de [Y] minutos | Rollback automatico |
+| Health check falla en [Z] segundos post-deploy | Rollback automatico |
+| Degradacion de latencia > [W]x sobre baseline | Evaluacion manual, posible rollback |
 
-### OP-001: [Nombre de la operacion]
-- **Cuando:** [condicion]
-- **Pasos:**
-  1. [paso]
-- **Verificacion:** [como confirmar que funciono]
+**Ventana de rollback segura:** [tiempo despues del deploy en que rollback es viable]
 
-## 4. Diagnostico de Problemas
+## 4. Metricas Criticas y Umbrales
 
-### PROB-001: [Descripcion del sintoma]
-- **Sintoma:** [que se observa]
-- **Causa probable:** [causa mas comun]
-- **Diagnostico:**
-  1. [paso de investigacion]
-- **Resolucion:** [como resolver]
-- **Escalada:** [cuando escalar y a quien]
+| Metrica | Umbral de alarma | Severidad | Escalar a |
+|---|---|---|---|
+| [metrica 1] | > [valor] por [tiempo] | P1 / P2 / P3 | [equipo/persona] |
+| [metrica 2] | > [valor] por [tiempo] | P1 / P2 / P3 | [equipo/persona] |
 
-## 5. Gestion de Cambios
+### Niveles de severidad
+| Nivel | Definicion | Tiempo de respuesta |
+|---|---|---|
+| P1 | Sistema caido o datos en riesgo | < 15 minutos |
+| P2 | Funcionalidad degradada | < 1 hora |
+| P3 | Issue menor, sin impacto critico | Proximo dia habil |
+
+## 5. Dependencias Externas y SLAs
+
+| Sistema externo | SLA contratado | Timeout esperado | Comportamiento si falla |
+|---|---|---|---|
+| [sistema] | [SLA] | [timeout] | [degradacion graceful / fallback / bloqueo] |
+
+## 6. Politica de Gestion de Cambios
+
 Todo cambio en produccion MUST:
-1. Tener ticket con descripcion
-2. Tener aprobacion del responsable
-3. Tener plan de rollback documentado
-4. Quedar registrado en log de cambios
+- Tener ticket aprobado con descripcion del cambio
+- Tener plan de rollback documentado
+- Ejecutarse en ventana de bajo trafico: [definir horario]
+
+Cambios que requieren aprobacion adicional del SA:
+- Cambios en schema de base de datos
+- Cambios en contratos de API
+- Cambios en integraciones con sistemas externos
+- Actualizaciones de dependencias mayores
+
+> **NOTA PARA OPERATIONS:** Usar este documento como base para crear
+> el runbook detallado con procedimientos paso a paso, comandos especificos
+> y scripts de diagnostico.

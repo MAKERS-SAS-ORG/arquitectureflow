@@ -66,7 +66,7 @@ Presentar al arquitecto:
 Leer `references/protocolo-iteracion.md` para la metodologia completa.
 
 ### Secuencia por Defecto
-RFC -> ADR -> PRD -> Tech Spec -> System Design -> Runbook
+RFC -> ADR -> PRD -> Tech Spec -> System Design -> Requisitos Operacionales
 
 ### Adaptacion
 El orquestador PUEDE recomendar una secuencia diferente segun el contexto:
@@ -157,7 +157,7 @@ Antes de que ingenieria empiece a implementar, el arquitecto firma:
 - [ ] PRD aprobado con Product Owner (si aplica)
 - [ ] Tech Spec revisada
 - [ ] System Design revisado
-- [ ] Runbook redactado (si va a produccion)
+- [ ] Requisitos operacionales definidos (si va a produccion)
 - [ ] System Prompt Spec aprobado (si hay LLM)
 
 ### Calidad

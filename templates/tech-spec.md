@@ -73,13 +73,16 @@ tags: []
 |---|---|---|---|
 | [FF-001] | Atomic/Holistic | [atributo] | [como se ejecuta] |
 
-## 6. Convenciones a Nivel de Solucion
+## 6. Politicas a Nivel de Solucion (SA define politica, SWA implementa)
 
-- Nomenclatura de APIs: [convencion]
-- Formato de errores: [estructura estandar]
-- Versionamiento de APIs: [estrategia]
-- Logging: [formato y niveles]
-- Secretos: [donde y como se gestionan]
+| Politica | Decision SA | SWA implementa |
+|---|---|---|
+| Errores API | "Todos los errores siguen RFC 7807 Problem Details" | Framework, middleware, formato exacto |
+| Versionamiento API | "URL-based: /v1/, /v2/" o "Header-based" | Routing, backward compat |
+| Autenticacion | "JWT con expiracion [X]min, MFA obligatorio" | Middleware, token refresh |
+| Secretos | "Todos en vault, rotacion cada [X] dias" | Config de vault, integracion |
+| Logging | "Centralizado en [plataforma], correlation-id obligatorio" | Formato JSON, structured fields |
+| Idempotencia | "Todas las escrituras aceptan Idempotency-Key" | Storage de keys, deduplicacion |
 
 ## 7. Decisiones Pendientes
 

@@ -5,6 +5,16 @@
 
 ---
 
+## Scope SA en este catalogo
+
+Este catalogo documenta **decisiones de politica** que el SA toma sobre integracion.
+La **implementacion** (framework, libreria, configuracion) es responsabilidad del Software Architect.
+
+- **SA decide:** "Comunicacion asincrona via cola de mensajes entre servicio A y B"
+- **SWA decide:** "Usar RabbitMQ vs SQS, configurar prefetch count, dead-letter policy"
+
+---
+
 ## Patrones por Tipo de Comunicacion
 
 ### Sincrona (Request-Reply)
