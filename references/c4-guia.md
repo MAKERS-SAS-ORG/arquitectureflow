@@ -14,14 +14,28 @@ L3: Component        ──  Una rama (hojas = componentes)
 L4: Code             ──  Una hoja (nervaduras = clases)
 ```
 
-## Scope del Arquitecto de Soluciones
+## Uso Estrategico de Diagramas (Scope del SA)
 
-| Nivel | Scope SA | Scope SWA | Notas |
+> **Regla:** El SA se enfoca UNICAMENTE en L1 (Context) para comunicar con negocio
+> y L2 (Container) para comunicar con desarrollo. Detallar componentes internos
+> (L3 y L4) es responsabilidad del equipo de software.
+
+| Nivel | Scope SA | Scope SWA | Audiencia |
 |---|---|---|---|
-| **L1 Context** | MUST crear | Revisar | SA lidera. Es el diagrama de comunicacion principal. |
-| **L2 Container** | MUST crear | Co-crear | SA define contenedores y relaciones. SWA valida viabilidad. |
-| **L3 Component** | Revisar | MUST crear | SWA lidera. SA revisa que cumpla NFRs y contratos. |
-| **L4 Code** | Fuera de scope | Opcional | Auto-generar si es necesario. |
+| **L1 Context** | MUST crear | Revisar | Stakeholders de negocio, C-level, todos |
+| **L2 Container** | MUST crear | Co-crear | Equipo tecnico, arquitectos, DevOps |
+| **L3 Component** | Solo revisar | MUST crear | Desarrolladores del equipo |
+| **L4 Code** | Fuera de scope | Opcional | Desarrolladores (auto-generar si es necesario) |
+
+### Cuando usar cada nivel
+
+- **L1 Context:** SIEMPRE como primer diagrama de cualquier proyecto. Es la herramienta
+  principal de comunicacion del SA con stakeholders no tecnicos. Si solo puedes hacer
+  un diagrama, haz este.
+- **L2 Container:** Para cualquier sistema con mas de un componente deployable. Es el
+  diagrama central de la Tech Spec. Muestra las decisiones tecnologicas del SA.
+- **L3 Component:** El SA NO crea este diagrama. Lo revisa para verificar que
+  cumpla con los contratos y NFRs definidos en la Tech Spec.
 
 ## Vocabulario C4
 

@@ -26,24 +26,34 @@ todos los artefactos antes de entregar valor. Cada artefacto entregado es valor.
 ### Orden recomendado
 
 ```
-  1. RFC                    "Que problema resolvemos y como?"
+  0. Context Brief           "Cual es el problema y el contexto?"
+     |                       (OBLIGATORIO antes de cualquier artefacto)
      |
-  2. ADR                    "Que decisiones tomamos y por que?"
+  1. RFC                     "Que opciones tenemos y cual recomendamos?"
      |
-  3. PRD                    "Que funcionalidades exactamente?"
+  2. ADR                     "Que decisiones tomamos y por que?"
      |
-  4. Tech Spec + Diagramas  "Con que tecnologias y como se integran?"
-     |                      (Diagrama C4 Level 2 via Excalidraw MCP)
+  3. PRD                     "Que funcionalidades exactamente?"
      |
-  5. System Design          "Como escala, como es seguro?"
+  4. Tech Spec + Diagramas   "Con que tecnologias y como se integran?"
+     |                       (Diagrama C4 Level 2 via Excalidraw MCP)
      |
-  6. Runbook (*)            "Que necesita Operations para operar?"
+  5. System Design           "Como escala, como es seguro?"
      |
-  7. Post-Mortem (**)       "Que aprendimos cuando fallo?"
+  6. Req. Operacionales (*)  "Que necesita Operations para operar?"
+     |
+  7. Post-Mortem (**)        "Que aprendimos cuando fallo?"
 
   (*) El SA define REQUISITOS operacionales; Operations redacta los procedimientos
   (**) Solo cuando ocurre un incidente
 ```
+
+### Regla de oro: iteracion sobre perfeccion
+
+> Un RFC Draft entregado hoy tiene mas valor que un RFC perfecto que nunca se publica.
+
+Los artefactos maduran de Draft a Approved conforme avanza la comunicacion con los equipos.
+No esperar a tener toda la informacion para empezar a escribir.
 
 ### Si el sistema incluye un agente LLM:
 Agregar **System Prompt Spec** en paralelo con la Tech Spec.
@@ -58,19 +68,23 @@ Agregar **System Prompt Spec** en paralelo con la Tech Spec.
 
 ## Como empezar
 
-### 1. Abrir el orquestador
-El punto de entrada es `skills/orquestador/SKILL.md`. El orquestador:
-- Captura el contexto del proyecto (problema, stakeholders, restricciones)
-- Selecciona que artefactos aplican segun `references/matriz-decision.md`
+### 1. Llenar el Context Brief
+Empezar SIEMPRE con `templates/context-brief.md`. Es obligatorio antes de cualquier
+otro artefacto. Captura problema, stakeholders, restricciones y scope en un solo documento.
+
+### 2. Abrir el orquestador
+Con el Context Brief listo, `skills/orquestador/SKILL.md` determina:
+- Que artefactos aplican segun `references/matriz-decision.md`
+- En que orden crearlos
 - Enruta al skill de artefacto apropiado
 
-### 2. Crear artefactos iterativamente
+### 3. Crear artefactos iterativamente
 Cada artefacto tiene:
 - **Skill** (`skills/[nombre]/SKILL.md`) — workflow guiado paso a paso
 - **Template** (`templates/[nombre].md`) — plantilla con YAML frontmatter estandarizado
 - **Niveles de madurez** — Draft → Review → Approved → Superseded
 
-### 3. Generar diagramas C4
+### 4. Generar diagramas C4
 Los diagramas se generan con el MCP server de Excalidraw (`skills/diagramas/SKILL.md`):
 - Iniciar canvas server: `cd /path/to/mcp_excalidraw && PORT=3000 npm run canvas`
 - Abrir http://localhost:3000 en el navegador
@@ -101,6 +115,7 @@ arquitectureflow/
 |
 |-- templates/                 # Plantillas de artefactos
 |   |-- _frontmatter.md        # Frontmatter YAML comun
+|   |-- context-brief.md       # Context Brief (Fase 0 — OBLIGATORIO)
 |   |-- rfc.md
 |   |-- adr-madr.md            # Formato MADR 4.0
 |   |-- adr-nygard.md          # Formato Nygard lightweight
@@ -132,9 +147,15 @@ arquitectureflow/
 |
 '-- examples/                  # Ejemplos completos
     '-- inversion-pasiva/      # Plataforma de inversion en renta fija
-        |-- RFC-001.md
-        |-- ADR-001.md
-        |-- TS-001.md
+        |-- CB-001.md          # Context Brief (Fase 0)
+        |-- RFC-001.md         # Request for Comments
+        |-- ADR-001.md         # Decision: event-driven con SQS
+        |-- PRD-001.md         # Product Requirements + QA scenarios
+        |-- TS-001.md          # Tech Spec + contratos
+        |-- SD-001.md          # System Design + STRIDE
+        |-- RO-001.md          # Requisitos Operacionales
+        |-- CM-001.md          # Context Map DDD
+        |-- FF-001.md          # Fitness Functions
         '-- c4-container-diagram.excalidraw
 ```
 
@@ -144,12 +165,15 @@ arquitectureflow/
 
 | Artefacto | El SA define | NO define (scope de otros) |
 |---|---|---|
-| **RFC** | Problema, opciones, recomendacion, riesgos | Detalles de implementacion |
-| **ADR** | Decision, justificacion, consecuencias | Configuracion especifica |
-| **PRD** | NFRs cuantificados, restricciones, scope | Features detalladas (Product Owner) |
-| **Tech Spec** | Stack, contratos de integracion, fitness functions | Patrones de codigo, estructura de clases |
+| **Context Brief** | Problema, stakeholders, restricciones, scope IN/OUT | -- (es 100% SA) |
+| **RFC** | Opciones, recomendacion, riesgos, plan de rollback | Detalles de implementacion |
+| **ADR** | Decision, justificacion, consecuencias, validacion | Configuracion especifica |
+| **PRD** | NFRs cuantificados, quality attribute scenarios, scope | Features detalladas (Product Owner) |
+| **Tech Spec** | Stack, contratos de integracion, politicas de solucion | Patrones de codigo, estructura de clases |
 | **System Design** | SLOs, STRIDE, escalabilidad, deployment logico | Infra fisica, CI/CD pipelines |
-| **Runbook** | Requisitos operacionales, metricas criticas, SLAs | Procedimientos paso a paso (Operations) |
+| **Fitness Functions** | Que medir, umbrales, que bloquea deploy | Implementacion de tests automatizados |
+| **Req. Operacionales** | Metricas criticas, SLAs, criterios de rollback | Procedimientos paso a paso (Operations) |
+| **Context Map** | Bounded contexts, patrones de integracion DDD | Implementacion de ACL, adapters |
 | **Post-Mortem** | Facilitacion, causa raiz sistemica, acciones | Fixes de codigo |
 | **System Prompt Spec** | Allowlist, denylist, compliance, test cases | Fine-tuning, prompt engineering avanzado |
 

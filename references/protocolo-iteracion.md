@@ -16,6 +16,14 @@ La arquitectura se entrega **iterativamente**:
 - El SA mantiene la vision pero acepta que los detalles emergen
 - La IA acelera la creacion pero el SA valida cada entrega
 
+### Regla de oro: iteracion sobre perfeccion
+
+> Un RFC Draft entregado hoy tiene mas valor que un RFC perfecto que nunca se publica.
+
+Los artefactos DEBEN madurar de Draft a Approved conforme avanza la comunicacion
+con los equipos. El SA no espera a tener toda la informacion para empezar a escribir.
+Los gaps se marcan con 🔴 TODO y se resuelven en iteraciones posteriores.
+
 ## Ciclo de Iteracion
 
 ```

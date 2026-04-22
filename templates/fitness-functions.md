@@ -16,6 +16,12 @@ tags: []
 > Referencia: Ford, N.; Parsons, R.; Kua, P. *Building Evolutionary Architectures.* 2nd Ed. O'Reilly, 2023.
 > Definicion: Una fitness function es una evaluacion objetiva y automatizada de alguna
 > caracteristica de la arquitectura.
+>
+> **Fitness Functions como contrato:** Las definiciones del SA (latencia < 200ms,
+> retencion de audit trail 7 anos, zero vulnerabilidades criticas) se convierten en
+> pruebas automatizadas que el equipo de ingenieria implementa. Asi, las decisiones
+> del SA no se quedan en documentos — se vuelven verificaciones objetivas que corren
+> en cada deploy y durante toda la vida del sistema.
 
 ## Catalogo de Fitness Functions
 
