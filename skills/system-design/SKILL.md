@@ -22,6 +22,7 @@ Mientras la Tech Spec define la estructura, el System Design define el **comport
 
 ## Prerequisitos
 
+- Context Brief aprobado (`CB-NNN` — Fase 0 del orquestador)
 - Tech Spec aprobada (o al menos en Review)
 
 ## Workflow de Creacion

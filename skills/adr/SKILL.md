@@ -30,8 +30,8 @@ Ejemplos que SIEMPRE necesitan ADR:
 
 ## Prerequisitos
 
+- Context Brief aprobado (`CB-NNN` — Fase 0 del orquestador)
 - RFC aprobado que origina la decision (SHOULD, excepto decisiones urgentes)
-- Contexto del proyecto capturado
 
 ## Formatos Disponibles
 

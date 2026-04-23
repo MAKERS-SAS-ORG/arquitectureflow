@@ -37,6 +37,7 @@ NO INCLUYE (scope Software Architect/Ingenieria):
 
 ## Prerequisitos
 
+- Context Brief aprobado (`CB-NNN` — Fase 0 del orquestador)
 - RFC aprobado
 - ADRs criticos aceptados
 - PRD aprobado

@@ -35,6 +35,7 @@ Si la respuesta es no, los requisitos operacionales estan incompletos.
 
 ## Prerequisitos
 
+- Context Brief aprobado (`CB-NNN` — Fase 0 del orquestador)
 - System Design aprobado (o en Review)
 
 ## Workflow de Creacion

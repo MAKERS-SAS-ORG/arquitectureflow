@@ -28,8 +28,8 @@ Si no puedes formularla, el problema no esta suficientemente entendido.
 
 ## Prerequisitos
 
-- Contexto del proyecto capturado por el orquestador
-- NO requiere artefactos previos (el RFC es el punto de partida)
+- Context Brief aprobado (`CB-NNN` — Fase 0 del orquestador, `templates/context-brief.md`)
+- El RFC es el primer artefacto DESPUES del Context Brief
 
 ## Workflow de Creacion
 

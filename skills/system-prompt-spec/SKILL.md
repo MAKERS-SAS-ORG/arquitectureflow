@@ -17,6 +17,7 @@ Sin esta especificacion, el comportamiento del agente es impredecible y no audit
 
 ## Prerequisitos
 
+- Context Brief aprobado (`CB-NNN` — debe indicar "Integra IA/LLM: Si")
 - PRD aprobado (define que hace el agente para el usuario)
 - ADRs de tecnologia (que modelo LLM, que proveedor)
 

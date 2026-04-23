@@ -34,6 +34,7 @@ El Product Owner contribuye con:
 
 ## Prerequisitos
 
+- Context Brief aprobado (`CB-NNN` — Fase 0 del orquestador)
 - RFC aprobado
 
 ## Workflow de Creacion

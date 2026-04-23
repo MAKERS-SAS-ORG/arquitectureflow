@@ -16,6 +16,11 @@ Cada incidente es una oportunidad de aprendizaje del sistema, no de culpar perso
 1. **Blameless:** Buscar causas sistemicas, no culpables
 2. **Accionable:** Cada post-mortem MUST terminar con acciones concretas con dueno y fecha
 
+## Prerequisitos
+
+- Context Brief del sistema afectado (si existe)
+- No requiere otros artefactos previos — el Post-Mortem se crea por un incidente
+
 ## Cuando Escribir
 
 - Incidentes de severidad alta (sistema caido o degradado > 15 min)

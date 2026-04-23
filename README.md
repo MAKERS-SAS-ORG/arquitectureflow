@@ -73,6 +73,11 @@ Tu le das el contexto de negocio, y la IA genera borradores de artefactos
 que tu revisas, corriges y apruebas. Tu sigues siendo el arquitecto — la IA
 es tu asistente.
 
+**El punto de entrada SIEMPRE es el orquestador (`/orquestador`).**
+El orquestador te guia por todas las fases: captura de contexto, seleccion
+de artefactos, creacion, critica y diagramas. No necesitas cargar skills
+individuales manualmente — el orquestador lo hace por ti.
+
 ### Prerequisito: elegir tu herramienta de IA
 
 | Herramienta | Donde se usa | Como se instala |
@@ -81,117 +86,123 @@ es tu asistente.
 | **GitHub Copilot** | VS Code, JetBrains | Extension de Copilot + Copilot Chat |
 | **Cursor** | Editor Cursor | Ya incluido |
 
-### Opcion A: Usar con Claude Code (recomendado)
+### Con Claude Code (recomendado)
 
-Claude Code lee automaticamente el archivo `CLAUDE.md` de este proyecto
-y carga los skills. Solo necesitas:
+Claude Code lee automaticamente `CLAUDE.md` y conoce todos los skills.
 
 ```bash
-# 1. Clonar este repositorio en tu maquina
+# 1. Clonar este repositorio
 git clone https://github.com/MAKERS-SAS-ORG/arquitectureflow.git
 cd arquitectureflow
 
-# 2. Abrir Claude Code en este directorio
+# 2. Abrir Claude Code
 claude
 
-# 3. Pedirle que empiece el flujo de arquitectura
-#    Claude leera CLAUDE.md, cargara el orquestador, y te guiara
+# 3. Iniciar el orquestador — SIEMPRE es el punto de entrada
 ```
 
-**Que decirle a Claude (ejemplos):**
+**Que decirle a Claude:**
 
 ```
+> /orquestador
+  → Inicia el flujo completo. Claude te pedira el Context Brief (Fase 0),
+    seleccionara artefactos (Fase 1), y te guiara por cada uno.
+
 > "Necesito disenar la arquitectura de un nuevo sistema de inversiones"
-  → Claude cargara el orquestador, te pedira llenar el Context Brief,
-    y te guiara por cada artefacto
+  → Claude carga el orquestador automaticamente, empieza por el Context Brief
 
-> "Ayudame a crear un RFC para migrar nuestra base de datos"
-  → Claude cargara el skill de RFC y la plantilla
+> /orquestador — ya tengo el CB-001 listo, quiero crear el RFC
+  → Claude valida que CB-001 existe y carga el skill de RFC
 
-> "Genera un diagrama C4 Level 2 para la Tech Spec TS-001"
-  → Claude cargara el skill de diagramas y usara Excalidraw MCP
+> /orquestador — critica el RFC-001
+  → Claude aplica la Fase 4 (critica automatica con 🔴🟡🟢)
 
-> "Critica este ADR, encuentra problemas"
-  → Claude aplicara la fase de critica del orquestador
+> /orquestador — genera diagrama C4 para la Tech Spec
+  → Claude carga el skill de diagramas y usa Excalidraw MCP
 ```
 
-### Opcion B: Usar con GitHub Copilot
+### Con GitHub Copilot
 
-Copilot Chat puede leer los archivos del proyecto como contexto:
+Copilot no tiene `/orquestador` nativo, pero puedes simular el flujo
+referenciando el skill del orquestador en Copilot Chat:
 
 ```
-1. Abrir el proyecto en VS Code con Copilot activado
-2. En Copilot Chat, referenciar los archivos del framework:
+# Paso 1: Iniciar con el orquestador
+@workspace Lee skills/orquestador/SKILL.md y guiame desde la Fase 0.
+Necesito disenar un sistema de pagos.
 
-   @workspace Lee skills/orquestador/SKILL.md y ayudame a crear
-   un Context Brief para un sistema de pagos
+# Paso 2: El orquestador te pedira el Context Brief
+@workspace Lee templates/context-brief.md y ayudame a llenarlo
+con el contexto que te acabo de dar.
 
-3. Para cada artefacto, referenciar el skill y la plantilla:
+# Paso 3: El orquestador selecciona artefactos y carga cada skill
+@workspace Segun el Context Brief CB-001 y references/matriz-decision.md,
+que artefactos necesito? Empieza con el primero.
 
-   @workspace Lee skills/rfc/SKILL.md y templates/rfc.md
-   Genera un RFC para el problema descrito en CB-001.md
+# Paso 4: Para cada artefacto siguiente
+@workspace Sigue con el siguiente artefacto del flujo del orquestador.
 ```
 
-### Opcion C: Usar con Cursor
+### Con Cursor
 
-Cursor lee automaticamente los archivos `.cursorrules` o `CLAUDE.md`:
+Cursor lee `CLAUDE.md` automaticamente:
 
 ```
 1. Abrir el proyecto en Cursor
-2. En el chat, pedir directamente:
-
-   "Lee el orquestador y ayudame a empezar un proyecto de arquitectura"
+2. En el chat: "/orquestador — necesito disenar un nuevo sistema"
+3. Cursor seguira el flujo del orquestador
 ```
 
 ---
 
-## Flujo paso a paso
+## Flujo guiado por el orquestador
 
-### Paso 1: Llenar el Context Brief
-Empezar SIEMPRE con `templates/context-brief.md`. Es obligatorio antes de cualquier
-otro artefacto. Captura problema, stakeholders, restricciones y scope.
+Cuando escribes `/orquestador`, la IA ejecuta estas fases en orden:
 
-**Que decirle a la IA:**
-```
-Lee templates/context-brief.md y ayudame a llenar un Context Brief.
-El problema es: [describir en 2 oraciones]
-```
+### Fase 0: Context Brief (OBLIGATORIO)
+La IA te hace preguntas de contexto y genera `CB-NNN.md`:
+- Problema de negocio (max 2 oraciones)
+- Stakeholders y gobernanza
+- Restricciones tecnicas
+- Scope IN/OUT
 
-### Paso 2: Seleccionar artefactos
-Con el Context Brief listo, la IA determina que artefactos necesitas:
-```
-Lee references/matriz-decision.md. Segun el Context Brief CB-001,
-que artefactos necesito para este proyecto?
-```
+> Sin Context Brief aprobado, no se crea ningun otro artefacto.
 
-### Paso 3: Crear artefactos iterativamente
-Para cada artefacto, la IA carga el skill y la plantilla:
-```
-Lee skills/rfc/SKILL.md y templates/rfc.md.
-Genera un RFC basado en el Context Brief CB-001.
-Marca con TODO lo que necesite validacion.
-```
+### Fase 1: Seleccion de artefactos
+La IA consulta `references/matriz-decision.md` y te dice:
+- Que artefactos son obligatorios (MUST) para tu tipo de proyecto
+- Que artefactos son recomendados (SHOULD)
+- En que orden crearlos
 
-Cada artefacto tiene niveles de madurez: Draft → Review → Approved → Superseded.
-No necesitas tenerlo perfecto — un Draft con TODOs tiene mas valor que nada.
+### Fase 2: Creacion iterativa
+Para cada artefacto, la IA:
+1. Carga el skill correspondiente (`skills/[nombre]/SKILL.md`)
+2. Carga la plantilla (`templates/[nombre].md`)
+3. Genera un borrador basado en tu Context Brief
+4. Marca con 🔴 TODO lo que necesita tu validacion
 
-### Paso 4: Generar diagramas C4
-Para diagramas visuales con Excalidraw MCP:
+> No necesitas tenerlo perfecto — un Draft con TODOs tiene mas valor que nada.
+
+### Fase 3: Critica automatica
+Despues de cada artefacto, la IA actua como arquitecto esceptico:
+- Encuentra minimo 3 problemas
+- Clasifica: 🔴 Critico | 🟡 Importante | 🟢 Sugerencia
+
+### Fase 4: Diagramas C4
+Cuando un artefacto necesita diagrama (Tech Spec, System Design):
+- La IA carga `skills/diagramas/SKILL.md`
+- Genera el diagrama con Excalidraw MCP server (L1 o L2 segun el artefacto)
+- Tu lo revisas en http://localhost:3000
+
+### Fase 5: Siguiente artefacto
+La IA verifica consistencia entre artefactos y te guia al siguiente.
+El ciclo se repite hasta que el checklist de aprobacion esta completo.
+
+### Para diagramas: iniciar el canvas Excalidraw
 ```bash
-# Iniciar el canvas server (una vez)
+# Solo necesario cuando vas a generar diagramas (Fase 4)
 cd /ruta/a/mcp_excalidraw && PORT=3000 npm run canvas
-# Abrir http://localhost:3000 en el navegador
-```
-```
-Lee skills/diagramas/SKILL.md.
-Genera un diagrama C4 Level 2 para la Tech Spec TS-001.
-```
-
-### Paso 5: Criticar y aprobar
-Antes de aprobar cualquier artefacto:
-```
-Actua como arquitecto esceptico. Lee RFC-001.md.
-Encuentra minimo 3 problemas. Clasifica como critico, importante o sugerencia.
+# Abrir http://localhost:3000 en el navegador para ver el canvas en vivo
 ```
 
 ---
