@@ -66,30 +66,186 @@ Agregar **System Prompt Spec** en paralelo con la Tech Spec.
 
 ---
 
-## Como empezar
+## Como usar este framework (guia para arquitectos)
 
-### 1. Llenar el Context Brief
+Este framework funciona como un **asistente de IA** que te guia paso a paso.
+Tu le das el contexto de negocio, y la IA genera borradores de artefactos
+que tu revisas, corriges y apruebas. Tu sigues siendo el arquitecto — la IA
+es tu asistente.
+
+### Prerequisito: elegir tu herramienta de IA
+
+| Herramienta | Donde se usa | Como se instala |
+|---|---|---|
+| **Claude Code** (recomendado) | Terminal o VS Code | `npm install -g @anthropic-ai/claude-code` |
+| **GitHub Copilot** | VS Code, JetBrains | Extension de Copilot + Copilot Chat |
+| **Cursor** | Editor Cursor | Ya incluido |
+
+### Opcion A: Usar con Claude Code (recomendado)
+
+Claude Code lee automaticamente el archivo `CLAUDE.md` de este proyecto
+y carga los skills. Solo necesitas:
+
+```bash
+# 1. Clonar este repositorio en tu maquina
+git clone https://github.com/MAKERS-SAS-ORG/arquitectureflow.git
+cd arquitectureflow
+
+# 2. Abrir Claude Code en este directorio
+claude
+
+# 3. Pedirle que empiece el flujo de arquitectura
+#    Claude leera CLAUDE.md, cargara el orquestador, y te guiara
+```
+
+**Que decirle a Claude (ejemplos):**
+
+```
+> "Necesito disenar la arquitectura de un nuevo sistema de inversiones"
+  → Claude cargara el orquestador, te pedira llenar el Context Brief,
+    y te guiara por cada artefacto
+
+> "Ayudame a crear un RFC para migrar nuestra base de datos"
+  → Claude cargara el skill de RFC y la plantilla
+
+> "Genera un diagrama C4 Level 2 para la Tech Spec TS-001"
+  → Claude cargara el skill de diagramas y usara Excalidraw MCP
+
+> "Critica este ADR, encuentra problemas"
+  → Claude aplicara la fase de critica del orquestador
+```
+
+### Opcion B: Usar con GitHub Copilot
+
+Copilot Chat puede leer los archivos del proyecto como contexto:
+
+```
+1. Abrir el proyecto en VS Code con Copilot activado
+2. En Copilot Chat, referenciar los archivos del framework:
+
+   @workspace Lee skills/orquestador/SKILL.md y ayudame a crear
+   un Context Brief para un sistema de pagos
+
+3. Para cada artefacto, referenciar el skill y la plantilla:
+
+   @workspace Lee skills/rfc/SKILL.md y templates/rfc.md
+   Genera un RFC para el problema descrito en CB-001.md
+```
+
+### Opcion C: Usar con Cursor
+
+Cursor lee automaticamente los archivos `.cursorrules` o `CLAUDE.md`:
+
+```
+1. Abrir el proyecto en Cursor
+2. En el chat, pedir directamente:
+
+   "Lee el orquestador y ayudame a empezar un proyecto de arquitectura"
+```
+
+---
+
+## Flujo paso a paso
+
+### Paso 1: Llenar el Context Brief
 Empezar SIEMPRE con `templates/context-brief.md`. Es obligatorio antes de cualquier
-otro artefacto. Captura problema, stakeholders, restricciones y scope en un solo documento.
+otro artefacto. Captura problema, stakeholders, restricciones y scope.
 
-### 2. Abrir el orquestador
-Con el Context Brief listo, `skills/orquestador/SKILL.md` determina:
-- Que artefactos aplican segun `references/matriz-decision.md`
-- En que orden crearlos
-- Enruta al skill de artefacto apropiado
+**Que decirle a la IA:**
+```
+Lee templates/context-brief.md y ayudame a llenar un Context Brief.
+El problema es: [describir en 2 oraciones]
+```
 
-### 3. Crear artefactos iterativamente
-Cada artefacto tiene:
-- **Skill** (`skills/[nombre]/SKILL.md`) — workflow guiado paso a paso
-- **Template** (`templates/[nombre].md`) — plantilla con YAML frontmatter estandarizado
-- **Niveles de madurez** — Draft → Review → Approved → Superseded
+### Paso 2: Seleccionar artefactos
+Con el Context Brief listo, la IA determina que artefactos necesitas:
+```
+Lee references/matriz-decision.md. Segun el Context Brief CB-001,
+que artefactos necesito para este proyecto?
+```
 
-### 4. Generar diagramas C4
-Los diagramas se generan con el MCP server de Excalidraw (`skills/diagramas/SKILL.md`):
-- Iniciar canvas server: `cd /path/to/mcp_excalidraw && PORT=3000 npm run canvas`
-- Abrir http://localhost:3000 en el navegador
-- La IA crea los diagramas element-by-element via MCP tools o REST API
-- Librerias C4 incluidas en `mcp-excalidraw/libs/`
+### Paso 3: Crear artefactos iterativamente
+Para cada artefacto, la IA carga el skill y la plantilla:
+```
+Lee skills/rfc/SKILL.md y templates/rfc.md.
+Genera un RFC basado en el Context Brief CB-001.
+Marca con TODO lo que necesite validacion.
+```
+
+Cada artefacto tiene niveles de madurez: Draft → Review → Approved → Superseded.
+No necesitas tenerlo perfecto — un Draft con TODOs tiene mas valor que nada.
+
+### Paso 4: Generar diagramas C4
+Para diagramas visuales con Excalidraw MCP:
+```bash
+# Iniciar el canvas server (una vez)
+cd /ruta/a/mcp_excalidraw && PORT=3000 npm run canvas
+# Abrir http://localhost:3000 en el navegador
+```
+```
+Lee skills/diagramas/SKILL.md.
+Genera un diagrama C4 Level 2 para la Tech Spec TS-001.
+```
+
+### Paso 5: Criticar y aprobar
+Antes de aprobar cualquier artefacto:
+```
+Actua como arquitecto esceptico. Lee RFC-001.md.
+Encuentra minimo 3 problemas. Clasifica como critico, importante o sugerencia.
+```
+
+---
+
+## Skills con Tessl (opcional — evaluacion y distribucion)
+
+[Tessl](https://tessl.io) es el package manager para skills de agentes IA.
+Permite instalar, versionar y evaluar skills compatibles con Claude, Copilot y Cursor.
+
+### Skills relevantes en el registro de Tessl
+
+| Skill | Que hace | Score |
+|---|---|---|
+| [c4-architecture](https://tessl.io/registry/skills/github/softaworks/agent-toolkit/c4-architecture) | Genera diagramas C4 en Mermaid con workflow de 4 pasos | Quality: 86%, Impact: 95% |
+| [architecture-patterns](https://tessl.io/registry/skills/github/secondsky/claude-skills/architecture-patterns) | Clean Architecture, Hexagonal, DDD patterns | Quality: 52% (en mejora) |
+
+### Como usar Tessl para evaluar y distribuir skills
+
+```bash
+# Instalar Tessl
+curl -fsSL https://get.tessl.io | sh
+tessl login
+
+# Inicializar en tu proyecto (detecta Claude Code y Copilot automaticamente)
+cd arquitectureflow
+tessl init
+
+# Buscar skills de arquitectura
+tessl search architecture
+tessl search "C4 model"
+
+# Instalar un skill del registro
+tessl install softaworks/agent-toolkit --skill c4-architecture
+
+# Listar skills instalados
+tessl list
+```
+
+### Evaluar nuestros skills con Tessl
+
+Tessl permite evaluar la calidad de skills propios contra metricas objetivas:
+```bash
+# Evaluar un skill local
+tessl skill review --optimize ./skills/rfc/SKILL.md
+tessl skill review --optimize ./skills/tech-spec/SKILL.md
+```
+
+### Publicar skills al registro (futuro)
+Si quieres compartir los skills de ArquitectureFlow con otros arquitectos:
+```bash
+tessl publish ./skills/orquestador
+```
+
+Ver registro completo en: https://tessl.io/registry
 
 ---
 
