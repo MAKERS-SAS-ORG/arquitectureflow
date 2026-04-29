@@ -68,3 +68,4 @@ El Arquitecto de Soluciones trabaja primariamente en **C4 Level 1 y Level 2**:
 | Runbook | Decision tree operacional | Mermaid flowchart | SHOULD |
 | Post-Mortem | Timeline del incidente | Mermaid timeline | SHOULD |
 | System Prompt Spec | Flujo behavioral del agente | Mermaid stateDiagram | SHOULD |
+| Tablero Adherencia | (ninguno tipicamente) | -- | -- |

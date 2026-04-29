@@ -42,7 +42,10 @@ todos los artefactos antes de entregar valor. Cada artefacto entregado es valor.
      |
   6. Req. Operacionales (*)  "Que necesita Operations para operar?"
      |
-  7. Post-Mortem (**)        "Que aprendimos cuando fallo?"
+  7. Tablero Adherencia      "Como rastreamos avance y alineacion?"
+     |                       (Puente entre arquitectura e implementacion)
+     |
+  8. Post-Mortem (**)        "Que aprendimos cuando fallo?"
 
   (*) El SA define REQUISITOS operacionales; Operations redacta los procedimientos
   (**) Solo cuando ocurre un incidente
@@ -77,6 +80,9 @@ es tu asistente.
 El orquestador te guia por todas las fases: captura de contexto, seleccion
 de artefactos, creacion, critica y diagramas. No necesitas cargar skills
 individuales manualmente — el orquestador lo hace por ti.
+
+> **Primer uso?** Ver `taller.md` para un taller guiado paso a paso con prompts
+> de ejemplo, flujo completo y el Tablero de Adherencia Arquitectonica.
 
 ### Prerequisito: elegir tu herramienta de IA
 
@@ -198,6 +204,14 @@ Cuando un artefacto necesita diagrama (Tech Spec, System Design):
 La IA verifica consistencia entre artefactos y te guia al siguiente.
 El ciclo se repite hasta que el checklist de aprobacion esta completo.
 
+### Fase 6: Tablero de Adherencia Arquitectonica
+Cuando los artefactos criticos estan listos, la IA genera el **TAA** (`templates/tablero-adherencia.md`):
+- Estado de todos los artefactos y criterio de "arquitectura suficiente"
+- Mapa de trazabilidad: decision → modulo → validacion
+- Gates de revision por sprint (Planning, Code Review, Pre-Deploy, Post-Deploy)
+- Registro de desviaciones para cuando el equipo se desvia de la arquitectura
+- Dashboard de Fitness Functions con estado de automatizacion
+
 ### Para diagramas: iniciar el canvas Excalidraw
 ```bash
 # Solo necesario cuando vas a generar diagramas (Fase 4)
@@ -293,7 +307,8 @@ arquitectureflow/
 |   |-- post-mortem.md
 |   |-- system-prompt-spec.md
 |   |-- context-map.md         # DDD Context Map
-|   '-- fitness-functions.md   # Architecture Fitness Functions
+|   |-- fitness-functions.md   # Architecture Fitness Functions
+|   '-- tablero-adherencia.md  # Tablero de Adherencia Arquitectonica (TAA)
 |
 |-- references/                # Material de referencia
 |   |-- bibliografia.md        # 20+ estandares citados
@@ -311,6 +326,8 @@ arquitectureflow/
 |-- mcp-excalidraw/            # Excalidraw MCP server (integrado)
 |   |-- libs/                  # Librerias C4 + software architecture
 |   '-- excalidraw-skill/      # Skill, scripts CLI y cheatsheet
+|
+|-- taller.md                  # Taller guiado paso a paso
 |
 '-- examples/                  # Ejemplos completos
     '-- inversion-pasiva/      # Plataforma de inversion en renta fija
@@ -341,6 +358,7 @@ arquitectureflow/
 | **Fitness Functions** | Que medir, umbrales, que bloquea deploy | Implementacion de tests automatizados |
 | **Req. Operacionales** | Metricas criticas, SLAs, criterios de rollback | Procedimientos paso a paso (Operations) |
 | **Context Map** | Bounded contexts, patrones de integracion DDD | Implementacion de ACL, adapters |
+| **Tablero Adherencia** | Estado de artefactos, trazabilidad, gates de revision, desviaciones | Procedimientos de desarrollo, CI/CD |
 | **Post-Mortem** | Facilitacion, causa raiz sistemica, acciones | Fixes de codigo |
 | **System Prompt Spec** | Allowlist, denylist, compliance, test cases | Fine-tuning, prompt engineering avanzado |
 

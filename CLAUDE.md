@@ -1,6 +1,6 @@
 # ArquitectureFlow — Framework Modular de Arquitectura de Soluciones
 
-**Version:** 2026.2
+**Version:** 2026.3
 **Idioma:** Todo el contenido se escribe en Espanol.
 
 ## Que es ArquitectureFlow
@@ -40,6 +40,18 @@ El orquestador evalua el contexto y enruta al skill de artefacto apropiado:
 - `/post-mortem` — Post-Mortem de Incidentes
 - `/system-prompt-spec` — Especificacion de Agente LLM
 - `/diagramas` — Generacion de diagramas C4 con Excalidraw MCP
+
+## Adherencia Arquitectonica
+
+El **Tablero de Adherencia Arquitectonica (TAA)** es el artefacto que conecta la arquitectura
+documentada con la implementacion. Rastrea estado de artefactos, trazabilidad de decisiones,
+gates de revision por sprint y desviaciones justificadas.
+Template: `templates/tablero-adherencia.md`. Se genera en la Fase 7 del orquestador.
+
+## Taller Guiado
+
+Ver `taller.md` para un taller paso a paso con prompts de ejemplo, flujo completo
+y el Tablero de Adherencia como artefacto final.
 
 ## Metodologia Specs-Driven
 

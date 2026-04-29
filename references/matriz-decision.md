@@ -7,16 +7,16 @@
 
 ## Matriz Principal
 
-| Tipo de trabajo | RFC | ADR | PRD | Tech Spec | System Design | Runbook | Post-Mortem | System Prompt Spec | Context Map | Fitness Functions |
-|---|---|---|---|---|---|---|---|---|---|---|
-| **Nuevo sistema completo** | MUST | MUST | MUST | MUST | MUST | MUST | Cuando aplique | Si hay LLM | MUST | SHOULD |
-| **Nueva funcionalidad mayor** | MUST | Si aplica | MUST | MUST | Si afecta escala | -- | -- | Si hay LLM | SHOULD | SHOULD |
-| **Integracion con sistema externo** | MUST | MUST | MUST | MUST | Si afecta escala | Actualizar | -- | -- | MUST | SHOULD |
-| **Cambio de decision arquitectonica** | MUST | MUST | -- | Si aplica | Si aplica | Actualizar | -- | -- | Si aplica | -- |
-| **Incidente de produccion** | -- | Si se aprende algo | -- | -- | -- | Actualizar | MUST | -- | -- | -- |
-| **Spike / investigacion tecnica** | RFC lite | Si aplica | -- | -- | -- | -- | -- | -- | -- | -- |
-| **Agente LLM o componente IA** | MUST | MUST | MUST | MUST | MUST | MUST | -- | MUST | SHOULD | SHOULD |
-| **Migracion de plataforma** | MUST | MUST | -- | MUST | MUST | MUST | -- | Si hay LLM | MUST | MUST |
+| Tipo de trabajo | RFC | ADR | PRD | Tech Spec | System Design | Runbook | Post-Mortem | System Prompt Spec | Context Map | Fitness Functions | Tablero Adherencia |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| **Nuevo sistema completo** | MUST | MUST | MUST | MUST | MUST | MUST | Cuando aplique | Si hay LLM | MUST | SHOULD | SHOULD |
+| **Nueva funcionalidad mayor** | MUST | Si aplica | MUST | MUST | Si afecta escala | -- | -- | Si hay LLM | SHOULD | SHOULD | Si hay equipo nuevo |
+| **Integracion con sistema externo** | MUST | MUST | MUST | MUST | Si afecta escala | Actualizar | -- | -- | MUST | SHOULD | SHOULD |
+| **Cambio de decision arquitectonica** | MUST | MUST | -- | Si aplica | Si aplica | Actualizar | -- | -- | Si aplica | -- | Actualizar |
+| **Incidente de produccion** | -- | Si se aprende algo | -- | -- | -- | Actualizar | MUST | -- | -- | -- | -- |
+| **Spike / investigacion tecnica** | RFC lite | Si aplica | -- | -- | -- | -- | -- | -- | -- | -- | -- |
+| **Agente LLM o componente IA** | MUST | MUST | MUST | MUST | MUST | MUST | -- | MUST | SHOULD | SHOULD | SHOULD |
+| **Migracion de plataforma** | MUST | MUST | -- | MUST | MUST | MUST | -- | Si hay LLM | MUST | MUST | MUST |
 
 ## Guia Rapida de Seleccion
 

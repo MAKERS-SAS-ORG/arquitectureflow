@@ -176,6 +176,23 @@ Leer `references/niveles-madurez.md` seccion "Triggers de Refactoring".
 
 ---
 
+## Fase 7: Tablero de Adherencia Arquitectonica
+
+Cuando los artefactos criticos estan listos (minimo CB + RFC + ADR + PRD + Tech Spec + FF),
+generar el **Tablero de Adherencia Arquitectonica (TAA)** usando `templates/tablero-adherencia.md`.
+
+El TAA es el puente entre la arquitectura documentada y la implementacion:
+- **Estado de artefactos:** vista rapida de que existe y en que estado
+- **Mapa de trazabilidad:** cada decision arquitectonica mapeada a modulos de codigo
+- **Gates de revision:** checkpoints por sprint para validar alineacion
+- **Registro de desviaciones:** cuando el equipo se desvia, se documenta y justifica
+- **Dashboard de Fitness Functions:** estado de automatizacion de cada FF
+
+El TAA se actualiza en cada sprint/ciclo de desarrollo. Es un documento vivo
+que el SA mantiene junto con el Tech Lead.
+
+---
+
 ## Checklist de Aprobacion Arquitectonica
 
 Antes de que ingenieria empiece a implementar, el arquitecto firma:
@@ -197,6 +214,10 @@ Antes de que ingenieria empiece a implementar, el arquitecto firma:
 - [ ] Plan de rollback es ejecutable
 - [ ] NFRs tienen objetivos medibles
 - [ ] Fitness Functions son automatizables (contrato verificable)
+
+### Gobernanza
+- [ ] Tablero de Adherencia Arquitectonica generado (TAA-NNN)
+- [ ] Gates de revision acordados con Tech Lead
 
 ### Equipo
 - [ ] El equipo leyo los artefactos relevantes

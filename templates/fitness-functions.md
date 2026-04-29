@@ -23,6 +23,21 @@ tags: []
 > del SA no se quedan en documentos — se vuelven verificaciones objetivas que corren
 > en cada deploy y durante toda la vida del sistema.
 
+## Clasificacion por Modo de Ejecucion
+
+Toda fitness function se clasifica ademas por **como se ejecuta**:
+
+| Modo | Que valida | Cuando corre | Herramientas tipicas |
+|---|---|---|---|
+| **Estatica** | Reglas estructurales en el codigo (capas, dependencias, convenciones) | Build time / CI en cada PR | NetArchTest, ArchUnit, dependency-cruiser, eslint-plugin-boundaries |
+| **Dinamica** | Comportamiento real bajo carga o en produccion (latencia, throughput, disponibilidad) | CI con load test / Monitoring continuo | k6, JMeter, Gatling, CloudWatch, Datadog |
+| **Juicio** | Coherencia y vigencia de los artefactos arquitectonicos (.md) | Bajo demanda / Gate de sprint review | Agente IA que analiza artefactos y responde: "el sistema sigue siendo apto (fit)?" |
+
+> **Juicio con Agente IA:** El agente lee los artefactos .md del proyecto (CB, RFC, ADR, Tech Spec,
+> System Design, FF) y evalua: consistencia entre artefactos, TODOs criticos sin resolver,
+> decisiones que ya no aplican, NFRs sin fitness function, y desviaciones no documentadas.
+> No reemplaza las FF estaticas/dinamicas — las complementa con analisis semantico.
+
 ## Catalogo de Fitness Functions
 
 ### FF-001: [Nombre]
@@ -30,17 +45,19 @@ tags: []
 |---|---|
 | Atributo de calidad | Performance / Security / Reliability / Coupling / ... |
 | Tipo | Atomic (una dimension) / Holistic (multiples dimensiones) |
-| Trigger | CI Pipeline / Deployment / Continuo (monitoring) / Manual |
+| Modo | Estatica / Dinamica / Juicio |
+| Trigger | CI Pipeline / Deployment / Continuo (monitoring) / Sprint Review |
 | Metrica | [que se mide] |
 | Umbral | [valor aceptable] |
 | Herramienta | [como se automatiza] |
-| Accion si falla | Bloquear deploy / Alarma / Ticket automatico |
+| Accion si falla | Bloquear deploy / Alarma / Ticket automatico / Escalar a SA |
 
 ### FF-002: [Nombre]
 | Campo | Valor |
 |---|---|
 | Atributo de calidad | |
 | Tipo | |
+| Modo | |
 | Trigger | |
 | Metrica | |
 | Umbral | |
@@ -72,7 +89,8 @@ tags: []
 
 ## Dashboard de Fitness Functions
 
-| FF | Estado | Ultima ejecucion | Resultado |
-|---|---|---|---|
-| FF-001 | Activo | YYYY-MM-DD | PASS / FAIL |
-| FF-002 | Pendiente implementacion | -- | -- |
+| FF | Modo | Estado | Ultima ejecucion | Resultado |
+|---|---|---|---|---|
+| FF-001 | Estatica | Activo | YYYY-MM-DD | PASS / FAIL |
+| FF-002 | Dinamica | Pendiente implementacion | -- | -- |
+| FF-003 | Juicio | Activo | YYYY-MM-DD | FIT / UNFIT |

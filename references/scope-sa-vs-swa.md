@@ -47,6 +47,7 @@
 - Diagramas C4 L1 (Context) y L2 (Container)
 - Specification de NFRs con objetivos medibles
 - Decisiones de stack y plataforma
+- Tablero de Adherencia Arquitectonica (gobernanza de implementacion)
 
 ---
 

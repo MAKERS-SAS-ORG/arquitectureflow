@@ -110,7 +110,11 @@ Cada entrada incluye: citacion completa, aplicabilidad y artefactos donde se usa
   - Fitness functions: evaluacion objetiva y automatizada de caracteristicas de arquitectura
   - Last Responsible Moment: diferir decisiones hasta tener informacion suficiente
   - Sacrificial Architecture: planear para reemplazabilidad
-- **Artefactos donde aplica:** Todos (metodologia transversal)
+- **Modos de ejecucion de fitness functions (extension del framework):**
+  - Estatica: valida reglas estructurales en codigo en build time (NetArchTest, ArchUnit)
+  - Dinamica: valida comportamiento real bajo carga o en produccion (k6, CloudWatch)
+  - Juicio: agente IA analiza artefactos .md y evalua coherencia arquitectonica
+- **Artefactos donde aplica:** Todos (metodologia transversal), Tablero de Adherencia
 
 ## Domain-Driven Design {#ddd}
 

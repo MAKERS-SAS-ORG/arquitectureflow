@@ -158,6 +158,21 @@ Claude:     Siguientes artefactos segun la secuencia:
 
 **Resultado:** 4 artefactos Draft completando el flujo
 
+### 9. Fase 7 → TAA-001.md (Tablero de Adherencia Arquitectonica)
+
+```
+Claude:     Cargo templates/tablero-adherencia.md.
+            Consolido el estado de todos los artefactos, genero el mapa
+            de trazabilidad (decision → modulo → validacion), defino
+            gates de revision por sprint y enlazo el dashboard de FF.
+            [genera TAA-001.md como Draft]
+
+Arquitecto: Reviso con el Tech Lead. Acordamos gates de revision
+            en sprint planning y code review arquitectonico.
+```
+
+**Resultado:** `TAA-001.md` — Tablero de Adherencia (documento vivo)
+
 ---
 
 ## Mapa de artefactos y como se conectan
@@ -192,6 +207,10 @@ CB-001 (Approved)
   |                 |
   |                 └── FF-001 (Draft)
   |                       6 fitness functions como contrato
+  |
+  └── TAA-001 (Draft — documento vivo)
+        Estado de artefactos, trazabilidad, gates de revision,
+        desviaciones, dashboard de FF
 ```
 
 ## Que demuestra este ejemplo
@@ -201,4 +220,5 @@ CB-001 (Approved)
 3. **Scope SA claro:** TS-001 tiene "SA define politica | SWA implementa"
 4. **Fitness Functions como contrato:** FF-001 traza cada FF a un NFR del PRD
 5. **Diagramas C4 solo L1/L2:** el SA no creo diagramas L3/L4
-6. **Orquestador como guia:** todo el flujo fue dirigido por `/orquestador`
+6. **Tablero de Adherencia:** TAA-001 conecta decisiones con modulos de implementacion
+7. **Orquestador como guia:** todo el flujo fue dirigido por `/orquestador`

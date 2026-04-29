@@ -98,6 +98,7 @@ La arquitectura es "suficiente" para que ingenieria empiece cuando:
 - [ ] Los NFRs tienen objetivos medibles (no "debe ser rapido" sino "< 200ms p99")
 - [ ] Los riesgos criticos tienen plan de mitigacion
 - [ ] El equipo puede empezar sin bloqueos de informacion
+- [ ] Tablero de Adherencia generado con gates de revision acordados (TAA-NNN)
 
 NO se requiere:
 - Todos los ADRs (las decisiones reversibles pueden tomarse durante implementacion)
