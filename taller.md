@@ -42,99 +42,144 @@ asi puedes comparar tus resultados con los artefactos de referencia en cualquier
 
 ## Paso 0: Instalacion y Setup
 
-### Opcion A: Claude Code (recomendado)
+### Como funcionan los slash commands en este framework
 
-Claude Code lee `CLAUDE.md` automaticamente y conoce todos los skills.
-Los skills funcionan nativamente — no hay instalacion adicional.
+`/orquestador` es un slash command registrado en `.claude/commands/orquestador.md`.
+Claude Code y Claude Desktop leen esa carpeta al abrir el proyecto y lo muestran
+en el menu `/`. **No es un comando global** — necesitas abrir Claude dentro del
+directorio `arquitectureflow/` para que aparezca.
+
+```
+arquitectureflow/
+└── .claude/
+    └── commands/
+        └── orquestador.md   ← Claude Code y Desktop lo leen automaticamente
+```
+
+---
+
+### Opcion A: Claude Code — terminal / VS Code extension
+
+**Instalacion (una sola vez):**
 
 ```bash
-# 1. Instalar Claude Code (si no lo tienes)
 npm install -g @anthropic-ai/claude-code
+```
 
-# 2. Clonar el framework
+**Uso — CRITICO: entrar al directorio primero:**
+
+```bash
 git clone https://github.com/MAKERS-SAS-ORG/arquitectureflow.git
-cd arquitectureflow
-
-# 3. Crear carpeta para TU proyecto dentro del repo
-mkdir -p mi-proyecto
-
-# 4. Abrir Claude Code
-claude
-
-# 5. Verificar que los skills estan disponibles
-#    Escribe /orquestador — si Claude responde con el flujo de fases, estas listo
+cd arquitectureflow        # <-- sin esto /orquestador no aparece
+claude                     # inicia Claude Code en este directorio
 ```
 
-**Como funcionan los skills en Claude Code:**
-- Claude lee `CLAUDE.md` al iniciar y carga las instrucciones del framework
-- Los skills viven en `skills/*/SKILL.md` — Claude los carga bajo demanda
-- Tu solo escribes `/orquestador` y el framework se encarga del resto
-- Los templates en `templates/` se usan automaticamente al crear cada artefacto
-
-### Opcion B: GitHub Copilot
-
-Copilot no tiene skills nativos, pero puedes simular el flujo referenciando los archivos:
+Dentro de Claude Code:
 
 ```
-# Paso 1: Clonar el repo e instalar skills manualmente
-git clone https://github.com/MAKERS-SAS-ORG/arquitectureflow.git
-cd arquitectureflow
+# Escribe / en el chat — apareceran los comandos del proyecto
+# Selecciona "orquestador" del menu
 
-# Paso 2: Configurar Copilot para que lea los skills
-#   En VS Code: abrir el proyecto con el repo clonado
-#   Copilot Chat leera los archivos cuando se los referencie con @workspace
-
-# Paso 3: (Opcional) Instalar skills via Tessl
-curl -fsSL https://get.tessl.io | sh
-tessl login
-tessl init
-tessl install softaworks/agent-toolkit --skill c4-architecture
-```
-
-**Como invocar skills en Copilot Chat:**
-
-En lugar de `/orquestador`, usa este patron:
-
-```
-@workspace Lee skills/orquestador/SKILL.md y ejecuta la Fase 0.
-Necesito disenar un sistema de [tu problema].
-```
-
-Para cada artefacto:
-
-```
-@workspace Lee skills/rfc/SKILL.md y templates/rfc.md.
-Usa el contexto del CB-001.md para generar el RFC.
-```
-
-### Opcion C: Cursor
-
-Cursor lee `CLAUDE.md` automaticamente (similar a Claude Code):
-
-```
-# 1. Clonar el repo
-git clone https://github.com/MAKERS-SAS-ORG/arquitectureflow.git
-
-# 2. Abrir en Cursor
-cursor arquitectureflow
-
-# 3. En el chat de Cursor:
 /orquestador
 ```
 
-### Setup del Excalidraw MCP (para diagramas)
+Claude lee `.claude/commands/orquestador.md`, luego carga
+`skills/orquestador/SKILL.md` y empieza la Fase 0.
 
-Solo necesario cuando llegues a la Fase 5 (diagramas). Puedes avanzar sin esto y agregar diagramas despues.
+**Si usas la extension de VS Code:**
+
+```
+1. Abrir VS Code en la carpeta arquitectureflow/
+   code arquitectureflow
+
+2. Abrir Claude Code desde la barra lateral (icono Claude)
+
+3. En el chat escribir /orquestador
+   → aparece porque VS Code + extension leen .claude/commands/
+```
+
+---
+
+### Opcion B: Claude Desktop (app Mac/Windows)
+
+```
+1. Abrir Claude Desktop
+2. Boton "+" o menu File → Open Folder
+3. Seleccionar la carpeta arquitectureflow/
+4. En el chat del proyecto, escribir /
+   → "orquestador" aparece en el menu
+5. Seleccionar /orquestador
+```
+
+Claude Desktop lee `.claude/commands/` del proyecto abierto igual que Claude Code.
+
+---
+
+### Opcion C: GitHub Copilot — VS Code
+
+Copilot lee `.github/copilot-instructions.md` automaticamente al abrir el proyecto.
+No tiene slash commands propios — se usa con `@workspace`:
+
+```bash
+git clone https://github.com/MAKERS-SAS-ORG/arquitectureflow.git
+code arquitectureflow     # abre VS Code en el proyecto
+```
+
+En Copilot Chat:
+
+```
+# Iniciar el orquestador
+@workspace Actua como el orquestador de arquitectura. Lee
+skills/orquestador/SKILL.md y ejecuta la Fase 0. Necesito
+disenar [tu problema].
+
+# Para cada artefacto siguiente
+@workspace Lee skills/rfc/SKILL.md y templates/rfc.md.
+Genera el RFC usando el contexto de mi-proyecto/CB-001.md.
+
+@workspace Lee skills/adr/SKILL.md y templates/adr-madr.md.
+Genera el ADR para la decision de [patron de integracion].
+```
+
+Copilot ya conoce el framework porque `.github/copilot-instructions.md`
+le explica los skills disponibles. No necesitas instalar nada adicional.
+
+---
+
+### Opcion D: Cursor
+
+Cursor lee `CLAUDE.md` automaticamente:
+
+```bash
+git clone https://github.com/MAKERS-SAS-ORG/arquitectureflow.git
+cursor arquitectureflow    # abre Cursor en el proyecto
+```
+
+En el chat de Cursor:
+
+```
+/orquestador
+```
+
+Cursor sigue `CLAUDE.md` que apunta a `skills/orquestador/SKILL.md`.
+
+---
+
+### Setup del Excalidraw MCP (para diagramas — Fase 5)
+
+Solo necesario cuando el orquestador llegue a la Fase 5 de diagramas.
+Puedes avanzar sin esto y agregar los diagramas al final.
 
 ```bash
 # Desde el directorio del framework
 cd mcp-excalidraw
 npm install
 
-# Iniciar el canvas (cuando necesites generar diagramas)
+# Iniciar el canvas
 PORT=3000 npm run canvas
 
-# Abrir http://localhost:3000 en el navegador para ver el canvas en vivo
+# Ver el canvas en vivo
+open http://localhost:3000
 ```
 
 ---
@@ -160,25 +205,41 @@ integraciones con Deceval (custodia), PSE (pagos) y core bancario (KYC).
 El orquestador es el unico punto de entrada. Evaluara tu contexto y te guiara
 por las fases automaticamente.
 
-### En Claude Code o Cursor
+### En Claude Code (terminal o VS Code extension)
+
+Escribe `/` en el chat — aparece el menu con los comandos del proyecto:
 
 ```
 Tu:
 > /orquestador
 
+Claude lee .claude/commands/orquestador.md + skills/orquestador/SKILL.md
+
 Claude:
-> Voy a guiarte por el flujo de arquitectura. Empecemos con la Fase 0:
-> Context Brief. Necesito entender el contexto de negocio.
-> Cuentame: que problema de negocio quieres resolver?
+> Voy a guiarte por el flujo de arquitectura de soluciones.
+> Empecemos con la Fase 0: Context Brief (obligatorio antes de cualquier artefacto).
+> Cuentame: que problema de negocio necesitas resolver?
 ```
 
-### En GitHub Copilot
+### En Claude Desktop
+
+Igual que Claude Code — escribe `/` y selecciona `orquestador` del menu.
+
+### En GitHub Copilot (VS Code)
 
 ```
 Tu:
-> @workspace Lee skills/orquestador/SKILL.md y guiame desde la Fase 0.
-> Necesito disenar la arquitectura de una plataforma de inversion en
-> renta fija para personas naturales en Colombia.
+> @workspace Actua como el orquestador de arquitectura. Lee
+> skills/orquestador/SKILL.md y ejecuta la Fase 0. Necesito disenar
+> la arquitectura de una plataforma de inversion en renta fija para
+> personas naturales en Colombia.
+```
+
+### En Cursor
+
+```
+Tu:
+> /orquestador — necesito disenar una plataforma de inversion en renta fija
 ```
 
 ---
