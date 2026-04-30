@@ -77,12 +77,83 @@ que tu revisas, corriges y apruebas. Tu sigues siendo el arquitecto — la IA
 es tu asistente.
 
 **El punto de entrada SIEMPRE es el orquestador (`/orquestador`).**
-El orquestador te guia por todas las fases: captura de contexto, seleccion
-de artefactos, creacion, critica y diagramas. No necesitas cargar skills
-individuales manualmente — el orquestador lo hace por ti.
+El orquestador detecta automaticamente si hay artefactos existentes y te pregunta
+si quieres continuar o iniciar un flujo nuevo.
 
-> **Primer uso?** Ver `taller.md` para un taller guiado paso a paso con prompts
-> de ejemplo, flujo completo y el Tablero de Adherencia Arquitectonica.
+| Comando | Que hace |
+|---|---|
+| `/orquestador` | Auto-detecta: si hay artefactos muestra estado, si no inicia nuevo |
+| `/orquestador nuevo` | Inicia arquitectura nueva en carpeta nueva |
+| `/orquestador continuar` | Lista arquitecturas del proyecto y pregunta cual continuar |
+| `/orquestador estado` | Muestra estado de artefactos sin preguntar |
+| `/micro-cdt` | Taller guiado con el ejercicio de micro-inversion en CDTs |
+
+> **Primer uso?** Ver `taller.md` para un taller paso a paso con prompts de ejemplo.
+> O ejecuta `/micro-cdt` para el taller guiado directamente.
+
+---
+
+### Dos modos de uso: standalone o dentro de un repo existente
+
+#### Modo 1: Standalone (clonar el framework)
+
+Para arquitectos que quieren usar el framework como proyecto independiente:
+
+```bash
+git clone https://github.com/MAKERS-SAS-ORG/arquitectureflow.git
+cd arquitectureflow
+claude                  # o abrir en Claude Desktop / Cursor / VS Code
+/orquestador nuevo      # inicia Fase 0
+```
+
+Los artefactos se guardan en subcarpetas dentro del repo:
+```
+arquitectureflow/
+├── .claude/commands/   # slash commands (/orquestador, /micro-cdt)
+├── skills/             # skills del framework
+├── templates/          # plantillas de artefactos
+├── references/         # material de referencia
+└── mi-proyecto/        # TU arquitectura va aqui
+    ├── CB-001.md
+    ├── RFC-001.md
+    └── ...
+```
+
+#### Modo 2: Dentro de un repo existente
+
+Para equipos que quieren agregar arquitectura a un codebase existente:
+
+```bash
+cd mi-aplicacion-existente
+
+# Opcion A: Submodulo git (recomendado — mantiene framework actualizable)
+git submodule add https://github.com/MAKERS-SAS-ORG/arquitectureflow.git .arquitectura
+
+# Opcion B: Copiar solo lo necesario
+mkdir -p .claude/commands docs/arquitectura
+cp arquitectureflow/.claude/commands/orquestador.md .claude/commands/
+cp -r arquitectureflow/skills arquitectureflow/templates arquitectureflow/references docs/arquitectura/
+```
+
+**Con submodulo**, la estructura queda:
+```
+mi-aplicacion/
+├── src/                    # tu codigo
+├── .arquitectura/          # submodulo de arquitectureflow
+│   ├── skills/
+│   ├── templates/
+│   └── references/
+├── .claude/commands/       # COPIAR orquestador.md aqui (o symlink)
+│   └── orquestador.md     # apunta a .arquitectura/skills/orquestador/SKILL.md
+└── docs/arquitectura/      # tus artefactos van aqui
+    ├── CB-001.md
+    ├── RFC-001.md
+    └── ...
+```
+
+**Importante si usas submodulo:** Copiar `.claude/commands/orquestador.md` a la raiz
+del repo (Claude Code lee `.claude/commands/` de la raiz, no de submodulos).
+Editar las rutas dentro del archivo para apuntar a `.arquitectura/skills/...`.
 
 ### Prerequisito: elegir tu herramienta de IA
 

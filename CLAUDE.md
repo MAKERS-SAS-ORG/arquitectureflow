@@ -1,6 +1,6 @@
 # ArquitectureFlow — Framework Modular de Arquitectura de Soluciones
 
-**Version:** 2026.3
+**Version:** 2026.4
 **Idioma:** Todo el contenido se escribe en Espanol.
 
 ## Que es ArquitectureFlow
@@ -28,18 +28,28 @@ Ver `references/scope-sa-vs-swa.md` para la delineacion completa.
 ## Punto de Entrada
 
 El skill principal es el **orquestador**: `skills/orquestador/SKILL.md`
-Usa `/orquestador` para iniciar un flujo de arquitectura.
+Registrado como slash command en `.claude/commands/orquestador.md`.
 
-El orquestador evalua el contexto y enruta al skill de artefacto apropiado:
-- `/rfc` — Request for Comments
-- `/adr` — Architecture Decision Record
-- `/prd` — Product Requirements Document
-- `/tech-spec` — Technical Specification
-- `/system-design` — System Design Document
-- `/runbook` — Runbook de Operaciones
-- `/post-mortem` — Post-Mortem de Incidentes
-- `/system-prompt-spec` — Especificacion de Agente LLM
-- `/diagramas` — Generacion de diagramas C4 con Excalidraw MCP
+### Modos de invocacion
+
+| Comando | Que hace |
+|---|---|
+| `/orquestador` | Auto-detecta: si hay artefactos muestra estado, si no inicia nuevo |
+| `/orquestador nuevo` | Inicia arquitectura nueva (pregunta tipo de proyecto y carpeta) |
+| `/orquestador continuar` | Lista arquitecturas existentes y pregunta cual retomar |
+| `/orquestador estado` | Muestra estado de artefactos sin preguntar |
+| `/micro-cdt` | Taller guiado con ejercicio de micro-inversion en CDTs |
+
+El orquestador carga internamente el skill de artefacto apropiado:
+- `skills/rfc/SKILL.md` — Request for Comments
+- `skills/adr/SKILL.md` — Architecture Decision Record
+- `skills/prd/SKILL.md` — Product Requirements Document
+- `skills/tech-spec/SKILL.md` — Technical Specification
+- `skills/system-design/SKILL.md` — System Design Document
+- `skills/runbook/SKILL.md` — Runbook de Operaciones
+- `skills/post-mortem/SKILL.md` — Post-Mortem de Incidentes
+- `skills/system-prompt-spec/SKILL.md` — Especificacion de Agente LLM
+- `skills/diagramas/SKILL.md` — Generacion de diagramas C4 con Excalidraw MCP
 
 ## Adherencia Arquitectonica
 

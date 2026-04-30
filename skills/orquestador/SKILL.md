@@ -1,5 +1,5 @@
 # Skill: Orquestador de Arquitectura de Soluciones
-# Version: 2026.3
+# Version: 2026.4
 # Tipo: Orquestador principal
 
 ---
@@ -11,10 +11,64 @@ de negocio hasta la entrega iterativa de artefactos arquitectonicos.
 
 Este skill se activa cuando el usuario quiere:
 - Iniciar un nuevo proyecto o solucion arquitectonica
+- Continuar una arquitectura existente desde donde se dejo
 - Crear cualquier artefacto de arquitectura (RFC, ADR, PRD, etc.)
 - Seguir la metodologia de arquitectura de soluciones
 - Evaluar que artefactos necesita un proyecto
 - Revisar el estado de madurez de artefactos existentes
+
+---
+
+## Pre-vuelo: Deteccion de Estado
+
+**ANTES de ejecutar cualquier fase**, el orquestador MUST escanear el directorio actual
+y subdirectorios buscando artefactos existentes: `CB-*.md`, `RFC-*.md`, `ADR-*.md`,
+`PRD-*.md`, `TS-*.md`, `SD-*.md`, `RO-*.md`, `CM-*.md`, `FF-*.md`, `TAA-*.md`.
+
+### Si hay artefactos existentes
+
+Leer el frontmatter YAML de cada artefacto encontrado (campo `estado`) y presentar:
+
+```
+Arquitectura detectada en [carpeta/]:
+
+| # | Artefacto | ID | Estado |
+|---|---|---|---|
+| 0 | Context Brief | CB-001 | Approved |
+| 1 | RFC | RFC-001 | Approved |
+| ... | ... | ... | ... |
+
+TODOs pendientes: [buscar 🔴 TODO en todos los artefactos]
+Siguiente artefacto recomendado: [el primero que falta o esta en Draft]
+
+Que quieres hacer?
+1. Continuar con [siguiente artefacto]
+2. Resolver TODOs pendientes
+3. Crear un artefacto especifico
+4. Critica (Fase 4) sobre un artefacto
+5. Generar/actualizar Tablero de Adherencia
+6. Iniciar arquitectura NUEVA en otra carpeta
+```
+
+### Si hay multiples carpetas con artefactos
+
+Presentar lista de arquitecturas encontradas y preguntar en cual continuar.
+
+### Si no hay artefactos
+
+Flujo nuevo: preguntar tipo de proyecto (segun `references/matriz-decision.md`),
+nombre de carpeta, e iniciar Fase 0.
+
+### Modos de invocacion
+
+| Comando | Comportamiento |
+|---|---|
+| `/orquestador` | Auto-detecta: si hay artefactos muestra estado, si no inicia nuevo |
+| `/orquestador nuevo` | Ignora artefactos existentes, inicia Fase 0 en carpeta nueva |
+| `/orquestador continuar` | Lista todas las arquitecturas del proyecto y pregunta cual continuar |
+| `/orquestador estado` | Muestra estado sin preguntar que hacer |
+| `/orquestador critica [artefacto]` | Ejecuta Fase 4 sobre un artefacto especifico |
+| `/orquestador diagrama` | Ejecuta Fase 5 (diagramas C4) |
 
 ---
 
