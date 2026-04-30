@@ -46,7 +46,7 @@ El orquestador carga internamente el skill de artefacto apropiado:
 - `skills/prd/SKILL.md` — Product Requirements Document
 - `skills/tech-spec/SKILL.md` — Technical Specification
 - `skills/system-design/SKILL.md` — System Design Document
-- `skills/runbook/SKILL.md` — Runbook de Operaciones
+- `skills/runbook/SKILL.md` — Requisitos Operacionales (RO)
 - `skills/post-mortem/SKILL.md` — Post-Mortem de Incidentes
 - `skills/system-prompt-spec/SKILL.md` — Especificacion de Agente LLM
 - `skills/diagramas/SKILL.md` — Generacion de diagramas C4 con Excalidraw MCP

@@ -108,7 +108,7 @@ claude                  # o abrir en Claude Desktop / Cursor / VS Code
 Los artefactos se guardan en subcarpetas dentro del repo:
 ```
 arquitectureflow/
-├── .claude/commands/   # slash commands (/orquestador, /micro-cdt)
+├── .claude/commands/   # slash commands (/orquestador)
 ├── skills/             # skills del framework
 ├── templates/          # plantillas de artefactos
 ├── references/         # material de referencia
@@ -250,7 +250,7 @@ La IA consulta `references/matriz-decision.md` y te dice:
 - Que artefactos son recomendados (SHOULD)
 - En que orden crearlos
 
-### Fase 2: Creacion iterativa
+### Fases 2-3: Creacion iterativa y hand-off a skill
 Para cada artefacto, la IA:
 1. Carga el skill correspondiente (`skills/[nombre]/SKILL.md`)
 2. Carga la plantilla (`templates/[nombre].md`)
@@ -259,22 +259,22 @@ Para cada artefacto, la IA:
 
 > No necesitas tenerlo perfecto — un Draft con TODOs tiene mas valor que nada.
 
-### Fase 3: Critica automatica
+### Fase 4: Critica automatica
 Despues de cada artefacto, la IA actua como arquitecto esceptico:
 - Encuentra minimo 3 problemas
 - Clasifica: 🔴 Critico | 🟡 Importante | 🟢 Sugerencia
 
-### Fase 4: Diagramas C4
+### Fase 5: Diagramas C4
 Cuando un artefacto necesita diagrama (Tech Spec, System Design):
 - La IA carga `skills/diagramas/SKILL.md`
 - Genera el diagrama con Excalidraw MCP server (L1 o L2 segun el artefacto)
 - Tu lo revisas en http://localhost:3000
 
-### Fase 5: Siguiente artefacto
-La IA verifica consistencia entre artefactos y te guia al siguiente.
-El ciclo se repite hasta que el checklist de aprobacion esta completo.
+### Fase 6: Consistencia entre artefactos
+La IA verifica que los artefactos no se contradigan entre si
+y te guia al siguiente. El ciclo se repite hasta completar el checklist.
 
-### Fase 6: Tablero de Adherencia Arquitectonica
+### Fase 7: Tablero de Adherencia Arquitectonica
 Cuando los artefactos criticos estan listos, la IA genera el **TAA** (`templates/tablero-adherencia.md`):
 - Estado de todos los artefactos y criterio de "arquitectura suficiente"
 - Mapa de trazabilidad: decision → modulo → validacion
@@ -284,7 +284,7 @@ Cuando los artefactos criticos estan listos, la IA genera el **TAA** (`templates
 
 ### Para diagramas: iniciar el canvas Excalidraw
 ```bash
-# Solo necesario cuando vas a generar diagramas (Fase 4)
+# Solo necesario cuando vas a generar diagramas (Fase 5)
 cd /ruta/a/mcp_excalidraw && PORT=3000 npm run canvas
 # Abrir http://localhost:3000 en el navegador para ver el canvas en vivo
 ```
@@ -410,6 +410,7 @@ arquitectureflow/
         |-- RO-001.md          # Requisitos Operacionales
         |-- CM-001.md          # Context Map DDD
         |-- FF-001.md          # Fitness Functions
+        |-- TAA-001.md         # Tablero de Adherencia Arquitectonica
         '-- c4-container-diagram.excalidraw
 ```
 
