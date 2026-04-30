@@ -86,10 +86,9 @@ si quieres continuar o iniciar un flujo nuevo.
 | `/orquestador nuevo` | Inicia arquitectura nueva en carpeta nueva |
 | `/orquestador continuar` | Lista arquitecturas del proyecto y pregunta cual continuar |
 | `/orquestador estado` | Muestra estado de artefactos sin preguntar |
-| `/micro-cdt` | Taller guiado con el ejercicio de micro-inversion en CDTs |
+| `/orquestador critica [artefacto]` | Ejecuta critica (Fase 4) sobre un artefacto |
 
 > **Primer uso?** Ver `taller.md` para un taller paso a paso con prompts de ejemplo.
-> O ejecuta `/micro-cdt` para el taller guiado directamente.
 
 ---
 
@@ -394,9 +393,9 @@ arquitectureflow/
 |   |-- c4-guia.md             # C4 Model para SA (L1-L2)
 |   '-- mcp-excalidraw-guia.md # Guia practica del MCP server
 |
-|-- mcp-excalidraw/            # Excalidraw MCP server (integrado)
-|   |-- libs/                  # Librerias C4 + software architecture
-|   '-- excalidraw-skill/      # Skill, scripts CLI y cheatsheet
+|-- mcp_excalidraw/            # Excalidraw MCP server (yctimlin — recomendado)
+|   |-- ext/                   # Librerias C4, BPMN, hexagonal architecture
+|   '-- skills/                # Skill Excalidraw y scripts CLI
 |
 |-- taller.md                  # Taller guiado paso a paso
 |

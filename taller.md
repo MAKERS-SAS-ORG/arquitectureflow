@@ -172,7 +172,7 @@ Puedes avanzar sin esto y agregar los diagramas al final.
 
 ```bash
 # Desde el directorio del framework
-cd mcp-excalidraw
+cd mcp_excalidraw
 npm install
 
 # Iniciar el canvas

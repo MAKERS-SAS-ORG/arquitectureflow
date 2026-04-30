@@ -41,7 +41,7 @@ curl -s http://localhost:3000/health
 
 ## Librerias C4 Disponibles
 
-Ubicacion: `mcp-excalidraw/libs/`
+Ubicacion: `mcp_excalidraw/ext/`
 
 ### c4-architecture.excalidrawlib (10 items)
 | Item | Elementos | Uso |
@@ -136,7 +136,7 @@ Ubicacion: `mcp-excalidraw/libs/`
 4. Verificar con screenshot
 5. Guardar nuevo snapshot
 
-### Scripts utiles (en mcp-excalidraw/excalidraw-skill/scripts/)
+### Scripts utiles (en mcp_excalidraw/skills/excalidraw-skill/scripts/)
 
 ```bash
 node scripts/healthcheck.cjs              # Verificar server

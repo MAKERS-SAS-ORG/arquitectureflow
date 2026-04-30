@@ -38,7 +38,7 @@ Registrado como slash command en `.claude/commands/orquestador.md`.
 | `/orquestador nuevo` | Inicia arquitectura nueva (pregunta tipo de proyecto y carpeta) |
 | `/orquestador continuar` | Lista arquitecturas existentes y pregunta cual retomar |
 | `/orquestador estado` | Muestra estado de artefactos sin preguntar |
-| `/micro-cdt` | Taller guiado con ejercicio de micro-inversion en CDTs |
+| `/orquestador critica [artefacto]` | Ejecuta critica (Fase 4) sobre un artefacto |
 
 El orquestador carga internamente el skill de artefacto apropiado:
 - `skills/rfc/SKILL.md` — Request for Comments
@@ -81,5 +81,6 @@ C4 Model, Arc42, MADR 4.0, ISO/IEC 25010:2023, Google SRE Book.
 
 ## Diagramas
 
-Los diagramas se generan via Excalidraw MCP (C4 Model como notacion principal).
+Los diagramas se generan via Excalidraw MCP server (`mcp_excalidraw/`).
+C4 Model como notacion principal. Librerias en `mcp_excalidraw/ext/`.
 Ver `references/diagramas-estrategia.md` para la estrategia y `skills/diagramas/SKILL.md` para el skill.

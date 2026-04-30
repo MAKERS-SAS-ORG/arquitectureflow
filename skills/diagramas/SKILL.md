@@ -38,9 +38,11 @@ tokens masivamente y no permite iteracion.
 
 El MCP server de Excalidraw vive en: `/Users/themakers/mcp_excalidraw/`
 
-### Librerias C4 disponibles
-- `mcp-excalidraw/libs/c4-architecture.excalidrawlib` — Person, Web App, Mobile App, Component, System, Existing System, Database, Group, Relation
-- `mcp-excalidraw/libs/software-architecture.excalidrawlib` — Shapes adicionales de arquitectura
+### Librerias disponibles (en `mcp_excalidraw/ext/`)
+- `c4-architecture.excalidrawlib` — Person, Web App, Mobile App, Component, System, Existing System, Database, Group, Relation
+- `hexagonal-architecture.excalidrawlib` — Shapes de arquitectura hexagonal
+- `bpmn.excalidrawlib` — Notacion BPMN para procesos de negocio
+- `library.excalidrawlib` — Shapes generales de arquitectura
 
 ### Iniciar el canvas server
 ```bash
