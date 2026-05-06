@@ -435,6 +435,7 @@ arquitectureflow/
 
 ---
 
+
 ## Estandares de referencia
 
 Todos los artefactos estan alineados con estandares documentados en `references/bibliografia.md`:
@@ -454,7 +455,31 @@ Todos los artefactos estan alineados con estandares documentados en `references/
 | **Team Topologies** (Skelton, Pais, 2019) | Alineacion equipo-arquitectura |
 
 ---
-
+# Glosario de Arquitectura de Software
+0. Context Brief (Resumen de Contexto)
+No es una sigla en sí, sino un documento de alineación inicial.
+* Significado: Es el "porqué" del proyecto. Antes de tirar una sola línea de código o diseñar una base de datos, el equipo debe entender el valor de negocio y el problema real que intenta resolver el usuario.
+1. RFC — Request for Comments
+* Traducción: Solicitud de Comentarios.
+* Propósito: Es un documento colaborativo donde se propone una solución o cambio importante. Su objetivo es recibir feedback de otros ingenieros antes de que la idea esté "grabada en piedra". Ayuda a identificar puntos ciegos y fomenta el consenso técnico.
+2. ADR — Architecture Decision Record
+* Traducción: Registro de Decisión de Arquitectura.
+* Propósito: Un documento corto que captura una decisión técnica específica, su contexto y sus consecuencias.¿Por qué es vital? Para que en dos años, cuando alguien pregunte "¿Por qué usamos una base de datos de grafos aquí?", haya un registro histórico que explique el razonamiento detrás de esa elección.
+3. PRD — Product Requirements Document
+* Traducción: Documento de Requerimientos del Producto.
+* Propósito: Define qué se va a construir. Generalmente lo escribe el Product Manager (PM) y detalla las funcionalidades, los criterios de aceptación y los flujos de usuario. Es la guía para que el equipo técnico sepa qué problemas debe solucionar el sistema.
+4. Tech Spec — Technical Specification
+* Traducción: Especificación Técnica.
+* Propósito: Define cómo se va a construir lo que pide el PRD. Aquí entran los detalles de bajo nivel:
+    * Esquemas de base de datos.
+    * Contratos de API (endpoints, payloads).
+    * Diagramas de secuencia y Diagramas C4 (Contexto, Contenedores, Componentes, Código).
+5. System Design
+* Traducción: Diseño de Sistema.
+* Propósito: La visión macro de la infraestructura. Se enfoca en los atributos de calidad (los famosos -ilities):
+    * Escalabilidad: ¿Cómo aguanta el sistema 1 millón de usuarios?
+    * Disponibilidad: ¿Qué pasa si falla un servidor?
+    * Seguridad: ¿Cómo protegemos los datos en tránsito y en reposo?
 ## Principio Anti-Vibecoding
 
 > Si no puedes explicar en un parrafo que problema resuelve lo que estas
