@@ -1,1 +1,11 @@
 *.DS_Store
+
+# Claude Code worktrees (no deben committearse al repo)
+.claude/worktrees/
+
+# Build artifacts y deps de mcp_excalidraw vendorizado
+mcp_excalidraw/node_modules/
+mcp_excalidraw/dist/
+mcp_excalidraw/public/dist/
+mcp_excalidraw/.env
+mcp_excalidraw/*.log
