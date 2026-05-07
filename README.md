@@ -18,6 +18,121 @@ NO es para implementacion (eso lo resuelve el Software Architect y el equipo de 
 
 ---
 
+## Roles que colaboran con el Arquitecto de Soluciones
+
+El framework esta disenado para el **Arquitecto de Soluciones (SA)**, pero ningun
+artefacto se construye en aislamiento. En cada fase, el SA dialoga con un rol
+distinto segun la naturaleza de la decision (alineado con TOGAF 10th Ed,
+seccion *Stakeholder Management* y la guia *Architecture Skills Framework*).
+
+| Rol | Quien es | Aporta al SA |
+|---|---|---|
+| **Acelerador** | Experto de negocio y financiero (entiende cliente, valor, ROI) | Necesidad real, viabilidad de negocio, criterios de aceptacion funcionales |
+| **Especialista Tecnico** | Software Architect / Tech Lead (experto en ingenieria) | Viabilidad tecnica, contratos, patrones, consecuencias de cada decision |
+| **DevOps / SRE / Infra** | Operaciones e infraestructura | Despliegue, escalabilidad, metricas e informes para fitness functions, SLAs |
+| **QA** | Calidad y verificacion | Quality Attribute Scenarios, criterios de aceptacion automatizables |
+| **Equipo de Desarrollo** | Quien implementa el QUE | Recibe contratos claros, registra desviaciones, ejecuta acciones correctivas |
+
+### Diagrama de interaccion: que rol colabora en cada artefacto
+
+```mermaid
+flowchart LR
+ subgraph FLOW["Artefactos liderados por el SA - flujo iterativo, specs-driven"]
+    direction TB
+        CB[("0. Context Brief")]
+        RFC[("1. RFC")]
+        ADR[("2. ADR")]
+        PRD[("3. PRD + NFRs")]
+        TS[("4. Tech Spec + Diagrama C4 L2")]
+        FF[("Fitness Functions")]
+        SD[("5. System Design")]
+        RO[("6. Req. Operacionales")]
+        TAA[("7. Tablero de Adherencia")]
+        PM[("8. Post-Mortem")]
+  end
+    SA["Arquitecto de Soluciones (SA)<br>eje del framework: QUE y POR QUE"] -. lidera, integra y aprueba .-> FLOW
+    CB --> RFC
+    RFC --> ADR
+    ADR --> PRD
+    PRD --> TS
+    TS --> SD & FF
+    SD --> RO
+    RO --> TAA
+    FF --> SD
+    TAA -. cuando hay incidente .-> PM
+    TS -. entrega contratos al equipo .-> DEV["Equipo de Desarrollo"]
+    AC["Acelerador<br>Negocio / Financiero"] -. problema y valor de negocio .-> CB
+    AC -. ROI, viabilidad de negocio .-> RFC
+    AC -. funcionalidades y aceptacion .-> PRD
+    ET["Especialista Tecnico<br>Software Architect / Ingenieria"] -. viabilidad tecnica, riesgos .-> RFC
+    ET -. consecuencias tecnicas .-> ADR
+    ET -. contratos, stack, patrones .-> TS
+    ET -. implementa tests automatizados .-> FF
+    ET -. despliegue logico, STRIDE .-> SD
+    ET -. Gate Code Review .-> TAA
+    OPS["DevOps / SRE / Infra"] -. metricas e informes continuos .-> FF
+    OPS -. infraestructura, escalabilidad .-> SD
+    OPS -. SLAs, rollback, runbook detallado .-> RO
+    OPS -. "Gate Pre / Post-Deploy" .-> TAA
+    OPS -. timeline del incidente .-> PM
+    QA["QA"] -. quality attribute scenarios .-> PRD
+    QA -. valida criterios automatizados .-> FF
+    QA -. Gate Sprint Planning / aceptacion .-> TAA
+    DEV -. registra desviaciones .-> TAA
+    DEV -. acciones correctivas .-> PM
+
+     SA:::sa
+     AC:::ac
+     ET:::et
+     OPS:::ops
+     QA:::qa
+     DEV:::dev
+     CB:::artifact
+     RFC:::artifact
+     ADR:::artifact
+     PRD:::artifact
+     TS:::artifact
+     FF:::artifact
+     SD:::artifact
+     RO:::artifact
+     TAA:::artifact
+     PM:::artifact
+    classDef sa fill:#1e40af,stroke:#1e3a8a,color:#fff,font-weight:bold
+    classDef ac fill:#15803d,stroke:#14532d,color:#fff
+    classDef et fill:#b91c1c,stroke:#7f1d1d,color:#fff
+    classDef ops fill:#a16207,stroke:#713f12,color:#fff
+    classDef qa fill:#7e22ce,stroke:#581c87,color:#fff
+    classDef dev fill:#475569,stroke:#1e293b,color:#fff
+    classDef artifact fill:#f1f5f9,stroke:#0f172a,color:#0f172a
+```
+
+### Como leer el diagrama
+
+- El **SA es el eje**: lidera, integra y aprueba **todos** los artefactos
+  (cuadro central). Los demas roles **alimentan** el artefacto correspondiente
+  con la informacion que el SA por si solo no posee.
+- Las **flechas continuas** del flujo central muestran la secuencia recomendada
+  de artefactos (ver `references/protocolo-iteracion.md`).
+- Las **flechas punteadas** muestran la colaboracion: el rol externo aporta
+  contenido o validacion al artefacto en esa fase.
+- **PRD**: el SA dialoga con el **Acelerador** porque alli se traduce la
+  necesidad del cliente en NFRs cuantificados; **QA** entra para definir
+  *Quality Attribute Scenarios* (ISO/IEC 25010:2023).
+- **Tech Spec**: el SA detalla con el **Especialista Tecnico** los contratos de
+  integracion, y desde ahi el equipo de desarrollo recibe el QUE con claridad.
+- **Fitness Functions**: las **define el SA** (que medir y umbrales), las
+  **implementa Ingenieria**, y **DevOps reporta** las metricas que validan que
+  la arquitectura sigue siendo "fit" (ver `templates/fitness-functions.md`).
+- **Tablero de Adherencia**: cada gate tiene un dueno operativo distinto
+  (ver `templates/tablero-adherencia.md` seccion 3).
+
+> **Nota TOGAF:** Este modelo respeta el principio de *separation of concerns*
+> entre Solution Architecture (QUE/POR QUE) y Software Architecture / Operations
+> (COMO), y formaliza los puntos de colaboracion sin convertir al SA en cuello
+> de botella. Ver `references/scope-sa-vs-swa.md` para la delineacion completa.
+
+---
+
 ## Flujo de Trabajo
 
 El framework sigue una metodologia **specs-driven iterativa**: no es necesario completar
