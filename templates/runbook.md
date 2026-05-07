@@ -16,6 +16,18 @@ tags: []
 > Este documento define los REQUISITOS que Operations/SRE necesita para
 > crear el runbook detallado. El SA define QUE operar; Operations define COMO.
 
+## Roles colaboradores
+
+> Aqui el dialogo principal del SA es con **DevOps / SRE**. Sin ellos este documento
+> queda en abstracto. Ver diagrama de roles en `README.md`.
+
+| Rol | Que aporta al SA | Cuando consultarlo |
+|---|---|---|
+| **DevOps / SRE / Infra** | Health check viable, ventana de deployment realista, criterios de rollback automatizables, integracion con plataforma de monitoreo, severidades reales del oncall | Secciones 2-4 (deployment, rollback, metricas) — son los duenos operativos |
+| **Especialista Tecnico** | Comportamiento esperado del sistema bajo cada metrica, dependencias internas que pueden fallar | Seccion 4 (metricas criticas) y seccion 6 (cambios que requieren aprobacion arq.) |
+| **Vendor / Proveedores externos** | SLAs reales contratados, ventanas de mantenimiento, contactos de soporte | Seccion 5 (dependencias externas) |
+| **Compliance** | Politicas de cambio en sistemas regulados (SOX, PCI), evidencia auditable | Seccion 6 (gestion de cambios) si aplica |
+
 ## 1. Informacion del Sistema
 
 | Item | Valor |

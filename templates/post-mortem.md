@@ -14,6 +14,19 @@ tags: []
 
 # Post-Mortem: [Titulo]
 
+## Roles colaboradores
+
+> El SA facilita la sesion blameless y firma la causa raiz sistemica.
+> Los datos vienen de **DevOps** (timeline tecnico) y del **Equipo de Desarrollo**
+> (acciones correctivas). Ver diagrama de roles en `README.md`.
+
+| Rol | Que aporta al SA | Cuando consultarlo |
+|---|---|---|
+| **DevOps / SRE / Oncall** | Timeline exacto del incidente, alertas, primeras acciones de mitigacion, evidencia de monitoring | Seccion 2 (timeline) y header de severidad |
+| **Equipo de Desarrollo** | Detalle tecnico del fallo, accion correctiva proxima (fix de codigo, parche), dueno de cada tarea | Secciones 5-6 (lo que no funciono, acciones correctivas) |
+| **Especialista Tecnico** (SWA) | Validar que la causa raiz sistemica es real (no solo proxima) y proponer cambios estructurales | Seccion 3 (5 Por Ques) — el SA insiste, el SWA aterriza |
+| **Acelerador / PO** | Si hubo impacto a clientes, comunicacion externa y compromiso de mejora | Seccion 7 (lecciones aprendidas) y comunicacion downstream |
+
 | Campo | Valor |
 |---|---|
 | Fecha del incidente | YYYY-MM-DD HH:MM UTC-5 |

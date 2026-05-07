@@ -21,6 +21,21 @@ Cada incidente es una oportunidad de aprendizaje del sistema, no de culpar perso
 - Context Brief del sistema afectado (si existe)
 - No requiere otros artefactos previos — el Post-Mortem se crea por un incidente
 
+## Roles colaboradores en este artefacto
+
+> Ver bloque "Roles colaboradores" en `templates/post-mortem.md` y diagrama en `README.md`.
+> El SA facilita; los datos vienen de DevOps y Equipo de Desarrollo.
+
+| Rol | Que pedirle al consultarlo | En que paso del workflow |
+|---|---|---|
+| **DevOps / SRE / Oncall** | **Principal.** Timeline exacto, alertas, primeras acciones de mitigacion, evidencia de monitoring | Paso 1 (timeline) y campos de severidad/duracion |
+| **Equipo de Desarrollo** | Detalle tecnico del fallo, accion correctiva proxima (fix, parche), dueno de cada tarea | Paso 3 (lo que no funciono) y Paso 4 (acciones correctivas) |
+| **Especialista Tecnico** (SWA) | Validar que la causa raiz es **sistemica** (no solo proxima) y proponer cambios estructurales | Paso 2 (5 Por Ques) — el SA insiste, el SWA aterriza |
+| **Acelerador / PO** | Si hubo impacto a clientes: comunicacion externa, compromisos de mejora | Paso 5 (lecciones para compartir) |
+
+> Principio blameless: la culpa nunca es de personas, es del sistema que permitio el fallo.
+> El SA modera para mantenerlo asi.
+
 ## Cuando Escribir
 
 - Incidentes de severidad alta (sistema caido o degradado > 15 min)

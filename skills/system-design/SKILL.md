@@ -25,6 +25,20 @@ Mientras la Tech Spec define la estructura, el System Design define el **comport
 - Context Brief aprobado (`CB-NNN` — Fase 0 del orquestador)
 - Tech Spec aprobada (o al menos en Review)
 
+## Roles colaboradores en este artefacto
+
+> Ver bloque "Roles colaboradores" en `templates/system-design.md` y diagrama en `README.md`.
+
+| Rol | Que pedirle al consultarlo | En que paso del workflow |
+|---|---|---|
+| **DevOps / SRE / Infra** | **Principal.** Capacidad real, costos de auto-scaling, plataforma de observabilidad, viabilidad de SLOs declarados | Paso 1 (drivers — disponibilidad, escalabilidad), Paso 4 (observabilidad), Paso 5 (capacity planning) |
+| **Especialista Tecnico** (SWA) | Modelado STRIDE realista, despliegue logico (que corre donde), patrones de tolerancia a fallos | Paso 2 (STRIDE), Paso 5 (SPOFs), Paso 6 (Context Map si aplica) |
+| **Seguridad / SecOps** | Validar STRIDE en sistemas con datos sensibles; controles existentes | Paso 2 (STRIDE) — bloqueante si maneja datos sensibles |
+| **QA** | Disenar load tests y chaos engineering que validan los NFRs antes de produccion | Paso 1 (rendimiento) — define como se prueba |
+
+> Sin DevOps el System Design es un PowerPoint. Si DevOps no esta disponible, marcar
+> 🔴 TODO en SLOs/RPO/RTO y dejar el SD en Draft.
+
 ## Workflow de Creacion
 
 ### Paso 1: Drivers de Arquitectura

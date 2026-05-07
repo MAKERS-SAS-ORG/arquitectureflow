@@ -15,6 +15,10 @@ tags: []
 
 # ADR-[NNN]: [Titulo de la Decision]
 
+## Roles colaboradores
+
+> ADR formato lightweight: decision ya tomada o de bajo impacto. El SA aprueba y, si la decision toca operacion, valida con **Especialista Tecnico** y/o **DevOps**. Ver diagrama de roles en `README.md`.
+
 ## Estado
 Aceptado
 

@@ -16,6 +16,19 @@ tags: []
 
 # PRD: [Nombre del Producto/Funcionalidad]
 
+## Roles colaboradores
+
+> El SA aporta NFRs y restricciones tecnicas. El **Acelerador** aporta funcionalidades
+> y criterios de aceptacion. **QA** entra por primera vez para hacer los criterios verificables.
+> Ver diagrama de roles en `README.md`.
+
+| Rol | Que aporta al SA | Cuando consultarlo |
+|---|---|---|
+| **Acelerador** (Negocio/PO) | Casos de uso reales, prioridades Must/Should/Nice, reglas de negocio invariantes, metricas de exito de producto | Secciones 1-4 (objetivo, usuarios, casos de uso, user stories) y seccion 9 (metricas) |
+| **QA** | Convertir criterios de aceptacion en escenarios Gherkin verificables y proponer **Quality Attribute Scenarios** medibles (ISO/IEC 25010) | Seccion 4 (criterios Given/When/Then) y seccion 5 (QA scenarios — formato Bass et al.) |
+| **Especialista Tecnico** | Validar que los NFRs son realistas con la arquitectura existente y que las dependencias estan completas | Seccion 5 (NFRs) y seccion 8 (dependencias y restricciones) |
+| **Compliance / Legal** | Restricciones regulatorias que afectan funcionalidades (consentimiento, audit trail, retencion) | Seccion 6 (reglas de negocio) y seccion 8 |
+
 ## 1. Objetivo del Producto
 > Una sola oracion: que resultado de negocio logra esta funcionalidad.
 

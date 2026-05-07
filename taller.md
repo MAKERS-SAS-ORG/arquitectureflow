@@ -21,6 +21,29 @@ asi puedes comparar tus resultados con los artefactos de referencia en cualquier
 
 ---
 
+## Roles que vas a coordinar como Arquitecto de Soluciones
+
+> El SA NO trabaja solo. En cada paso del taller dialogas con un rol distinto.
+> Esta tabla te dice cuando llamar a quien (ver tambien el diagrama en `README.md`).
+
+| Paso del taller | Artefacto | Rol(es) que coordinas | Que les pides |
+|---|---|---|---|
+| Paso 2 | Context Brief (CB-001) | **Acelerador** (Negocio/Financiero) | Problema real, costo de NO resolver, deadline |
+| Paso 4 | RFC-001 | **Acelerador** + **Especialista Tecnico** | ROI por opcion + viabilidad tecnica + riesgos |
+| Paso 5 | ADR-001 | **Especialista Tecnico** | Consecuencias tecnicas, deuda esperada |
+| Paso 6 | PRD-001 | **Acelerador** + **QA** | Casos de uso + Quality Attribute Scenarios verificables |
+| Paso 7 | Tech Spec (TS-001) | **Especialista Tecnico** + entrega a **Equipo Desarrollo** | Contratos de integracion realistas |
+| Paso 8 | System Design (SD-001) | **Especialista Tecnico** + **DevOps / SRE** | STRIDE + infra + escalabilidad |
+| Paso 9 | RO-001 | **DevOps / SRE** | SLAs, rollback, runbook detallado |
+| Paso 9 | FF-001 | **Especialista Tecnico** + **DevOps** + **QA** | Implementa tests + reporta metricas + mapea a QA-Scenarios |
+| Paso 10 | TAA-001 | **Todos** (cada gate tiene dueno distinto) | Sprint Planning (QA), Code Review (ET), Pre/Post-Deploy (Ops), desviaciones (Dev) |
+
+> **Tip:** Si en un paso no tienes acceso al rol que necesitas, marca con :red_circle: TODO
+> los items que dependen de ese rol y avanza con lo que puedas. NO declares Approved un
+> artefacto cuyas decisiones criticas no fueron validadas con el rol indicado.
+
+---
+
 ## Prerequisitos
 
 ### Conocimiento previo
@@ -246,6 +269,10 @@ Tu:
 
 ## Paso 2: Context Brief (Fase 0 — OBLIGATORIO)
 
+> 👥 **Coordinas con: Acelerador (Negocio/Financiero).**
+> Sin negocio claro no hay arquitectura util. NO avances sin alinear problema,
+> costo de no resolver y deadline. (Ver `templates/context-brief.md`.)
+
 El orquestador te pedira informacion sobre 5 bloques. Dale el contexto de
 forma natural — no necesitas llenar la plantilla tu mismo.
 
@@ -337,6 +364,10 @@ Tu:
 
 ## Paso 4: RFC — Request for Comments
 
+> 👥 **Coordinas con: Acelerador + Especialista Tecnico (SWA).**
+> El Acelerador valida ROI por opcion; el SWA aporta viabilidad tecnica y riesgos.
+> Si te falta uno, el RFC queda incompleto. (Ver `templates/rfc.md`.)
+
 El orquestador carga `skills/rfc/SKILL.md` y genera el borrador.
 
 ### Prompt de ejemplo
@@ -385,6 +416,9 @@ Claude:
 
 ## Paso 5: ADR — Architecture Decision Record
 
+> 👥 **Coordinas con: Especialista Tecnico (principal) + DevOps si la decision toca operacion.**
+> El SWA anticipa consecuencias tecnicas que el SA no ve solo. (Ver `templates/adr-madr.md`.)
+
 El ADR documenta las decisiones tecnicas irreversibles que emergen del RFC.
 
 ### Prompt de ejemplo
@@ -422,6 +456,10 @@ Claude:
 ---
 
 ## Paso 6: PRD — Product Requirements Document
+
+> 👥 **Coordinas con: Acelerador (casos de uso) + QA (Quality Attribute Scenarios).**
+> Primer paso donde QA aparece — su trabajo aqui evita reescribir despues.
+> (Ver `templates/prd.md`.)
 
 El PRD define QUE se construye. Como SA, tu enfoque son los NFRs cuantificados
 y los Quality Attribute Scenarios (QAS).
@@ -477,6 +515,11 @@ Claude:
 ---
 
 ## Paso 7: Tech Spec + Diagrama C4
+
+> 👥 **Coordinas con: Especialista Tecnico (principal). Entregas a: Equipo de Desarrollo.**
+> Esta es la bisagra del flujo: aqui el SA traduce decisiones a contratos que el equipo
+> implementa. NO declares Approved sin haber recorrido contratos con el SWA.
+> (Ver `templates/tech-spec.md`.)
 
 La Tech Spec define el stack, los contratos de integracion y las politicas
 de solucion. Aqui es donde se genera el diagrama C4 Level 2.
@@ -548,6 +591,10 @@ Claude:
 
 ## Paso 8: System Design
 
+> 👥 **Coordinas con: Especialista Tecnico (STRIDE, despliegue logico) + DevOps / SRE
+> (infraestructura, escalabilidad, observabilidad).** Sin DevOps el SD es teoria.
+> (Ver `templates/system-design.md`.)
+
 El System Design cubre: como escala, como es seguro, como se observa y opera.
 
 ### Prompt de ejemplo
@@ -587,6 +634,12 @@ Tu:
 ---
 
 ## Paso 9: Artefactos Complementarios
+
+> 👥 **Coordinas con (segun el sub-artefacto):**
+> - **RO-001:** DevOps / SRE (principal) — define SLAs, runbook detallado.
+> - **CM-001:** Especialista Tecnico (DDD tactico) + Acelerador (Core/Supporting/Generic).
+> - **FF-001:** SWA implementa tests + DevOps reporta metricas + QA valida criterios.
+> (Ver templates en `templates/runbook.md`, `templates/context-map.md`, `templates/fitness-functions.md`.)
 
 ### Requisitos Operacionales (RO-001)
 
@@ -646,6 +699,15 @@ la Tech Spec, NFRs sin FF automatizada, y desviaciones no documentadas.
 ---
 
 ## Paso 10: Tablero de Adherencia Arquitectonica
+
+> 👥 **Coordinas con: TODOS los roles.** El TAA es el unico artefacto donde se reune
+> el equipo completo alrededor del SA:
+> - **Acelerador / PO:** firma riesgo aceptable (seccion 6).
+> - **Especialista Tecnico:** lidera Gate 2 (Code Review).
+> - **DevOps / SRE:** lidera Gates 3-4 (Pre/Post-Deploy).
+> - **QA:** lidera Gate 1 (Sprint Planning) y aceptacion.
+> - **Equipo Desarrollo:** registra desviaciones (seccion 4).
+> (Ver `templates/tablero-adherencia.md`.)
 
 Este es el artefacto que responde: **como sabemos que la implementacion sigue
 la arquitectura?** Es el "plano de avance" entre el SA y el equipo de desarrollo.

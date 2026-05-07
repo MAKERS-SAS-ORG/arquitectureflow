@@ -72,6 +72,36 @@ nombre de carpeta, e iniciar Fase 0.
 
 ---
 
+## Tabla maestra de roles por artefacto
+
+> El SA es el dueno de TODO el flujo. Esta tabla le indica con QUIEN dialogar en cada
+> artefacto y QUE pedirle. El bloque "Roles colaboradores" de cada template/skill
+> profundiza por seccion. Diagrama completo: `README.md`.
+
+| Artefacto | Acelerador (Negocio) | Especialista Tecnico (SWA) | DevOps / SRE | QA | Equipo Desarrollo |
+|---|---|---|---|---|---|
+| **0. Context Brief** | **PRINCIPAL** — problema, valor, costo | -- | -- | -- | -- |
+| **1. RFC** | ROI, viabilidad de negocio | Viabilidad tecnica, riesgos | -- | -- | -- |
+| **2. ADR** | Solo si hay impacto economico | **PRINCIPAL** — consecuencias tecnicas | Si afecta operacion | -- | -- |
+| **3. PRD** | **PRINCIPAL** — funcionalidades | Validar NFRs realistas | -- | **Quality Attribute Scenarios** | -- |
+| **4. Tech Spec** | -- | **PRINCIPAL** — contratos, stack | Restricciones de infra | Contract testing | **Recibe los contratos** |
+| **5. System Design** | -- | STRIDE, despliegue logico | **PRINCIPAL** — infra, escalabilidad | Load tests | -- |
+| **Fitness Functions** | -- | Implementa tests | **Metricas e informes continuos** | Mapea a QA-Scenarios | Acepta bloqueo de deploy |
+| **6. Req. Operacionales** | -- | Comportamiento esperado | **PRINCIPAL** — SLAs, rollback, runbook | -- | -- |
+| **7. Tablero Adherencia** | Firma riesgo seccion 6 | Gate 2 (Code Review) | Gates 3-4 (Pre/Post-Deploy) | Gate 1 (Sprint Planning) | **Registra desviaciones** |
+| **8. Post-Mortem** | Comunicacion a clientes | Causa raiz sistemica | **PRINCIPAL** — timeline tecnico | -- | Acciones correctivas |
+| **System Prompt Spec** | Tono, idioma, casos | Estructura del prompt | -- | **Test cases adversariales** | -- |
+| **Context Map** | Core/Supporting/Generic | **PRINCIPAL** — patrones DDD | -- | -- | Validar interfaces actuales |
+
+**Como usar esta tabla en cada handoff (Fase 3):**
+
+Al cargar un skill especifico, el orquestador debe recordarle al SA:
+1. "Para este artefacto necesitas dialogar con: [roles principales]"
+2. "Que les vas a preguntar especificamente: [referencia a la tabla del template]"
+3. "Si no tienes acceso a [rol], marca con :red_circle: TODO los items que dependen de ese rol"
+
+---
+
 ## Fase 0: Context Brief (OBLIGATORIO — antes de cualquier artefacto)
 
 > Principio Anti-Vibecoding: "Si no puedes explicar en un parrafo que problema resuelve
@@ -79,6 +109,9 @@ nombre de carpeta, e iniciar Fase 0.
 
 El Context Brief captura el contexto esencial ANTES de generar cualquier otro artefacto.
 **Sin Context Brief aprobado, no se inicia ningun RFC, ADR ni Tech Spec.**
+
+> **Roles en esta fase:** principalmente el **Acelerador**. El SA NO debe avanzar a Fase 1
+> sin haber alineado el problema, el costo de no resolver y el deadline con negocio.
 
 ### Usar plantilla: `templates/context-brief.md`
 
@@ -159,7 +192,8 @@ Cuando el arquitecto elige un artefacto, el orquestador:
 
 1. Resume el contexto del Context Brief (CB-NNN)
 2. Indica los artefactos prerequisito y su estado
-3. Carga el skill especifico:
+3. **Le recuerda al SA con que roles debe dialogar** (ver tabla maestra arriba)
+4. Carga el skill especifico:
 
 ```
 Lee skills/[artefacto]/SKILL.md
@@ -173,8 +207,13 @@ Contexto del proyecto (de CB-NNN):
 - Scope: [IN/OUT]
 - Artefactos previos: [estado]
 
+Roles a involucrar para este artefacto (de tabla maestra):
+- [rol 1]: [que pedirle]
+- [rol 2]: [que pedirle]
+
 Genera el artefacto siguiendo el skill y la plantilla.
 Marca con 🔴 TODO lo que necesita validacion del arquitecto.
+Marca con 👥 [ROL] lo que necesita input de un rol especifico que aun no se ha consultado.
 ```
 
 ---

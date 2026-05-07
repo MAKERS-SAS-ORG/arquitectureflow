@@ -16,6 +16,18 @@ tags: []
 > Referencia: Evans, E. *Domain-Driven Design.* 2003. Capitulo 14: Context Map.
 > Referencia: Vernon, V. *Domain-Driven Design Distilled.* 2016. Capitulo 4.
 
+## Roles colaboradores
+
+> El SA mapea bounded contexts a nivel de solucion. El **Especialista Tecnico** es el
+> aliado natural (DDD tactico). El **Acelerador** ayuda a separar Core de Supporting/Generic
+> segun valor de negocio. Ver diagrama de roles en `README.md`.
+
+| Rol | Que aporta al SA | Cuando consultarlo |
+|---|---|---|
+| **Acelerador** (Negocio) | Cuales subdominios son Core (diferenciador), cuales Supporting (necesarios) y cuales Generic (commodity) | Tabla de Bounded Contexts — clasificacion Core/Supporting/Generic |
+| **Especialista Tecnico** (SWA / Tech Lead) | Patrones de relacion realistas (ACL, Conformist, Customer-Supplier), eventos de dominio existentes, riesgo de acoplamiento | Tabla de relaciones y tabla de domain events |
+| **Equipos de cada bounded context** (si ya existen) | Realidad de sus interfaces y contratos actuales | Antes de definir Conformist o Partnership con su contexto |
+
 ## Bounded Contexts Identificados
 
 | Bounded Context | Subdominio | Tipo | Responsabilidad |

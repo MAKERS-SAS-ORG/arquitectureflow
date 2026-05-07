@@ -13,6 +13,18 @@ tags: []
 
 # Architecture Fitness Functions: [Nombre del Sistema]
 
+## Roles colaboradores
+
+> Las FF son el contrato del SA hecho prueba automatica. El SA define **que medir y umbrales**;
+> los demas roles las hacen ejecutables. Ver diagrama de roles en `README.md`.
+
+| Rol | Que aporta al SA | Cuando consultarlo |
+|---|---|---|
+| **Especialista Tecnico** (SWA / Ingenieria) | Implementa las FF estaticas (NetArchTest, ArchUnit, dependency-cruiser) y dinamicas (k6, JMeter) en el pipeline CI | Definir herramienta en cada ficha FF y al integrar con el pipeline |
+| **DevOps / SRE** | Provee las **metricas e informes continuos** (Datadog, CloudWatch, Grafana), configura alertas, dueno del dashboard | Modo "Dinamica" y dashboard de FF (seccion final) |
+| **QA** | Valida que los criterios automatizados cubren los Quality Attribute Scenarios del PRD; complementa con casos edge | Mapear cada FF a un QA-Scenario del PRD |
+| **Equipo de Desarrollo** | Acepta el bloqueo de deploy cuando una FF falla; reporta falsos positivos | "Accion si falla" (bloquear deploy / alarma) |
+
 > Referencia: Ford, N.; Parsons, R.; Kua, P. *Building Evolutionary Architectures.* 2nd Ed. O'Reilly, 2023.
 > Definicion: Una fitness function es una evaluacion objetiva y automatizada de alguna
 > caracteristica de la arquitectura.

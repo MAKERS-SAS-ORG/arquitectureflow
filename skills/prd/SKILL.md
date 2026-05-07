@@ -37,6 +37,18 @@ El Product Owner contribuye con:
 - Context Brief aprobado (`CB-NNN` — Fase 0 del orquestador)
 - RFC aprobado
 
+## Roles colaboradores en este artefacto
+
+> Ver bloque "Roles colaboradores" en `templates/prd.md` y diagrama en `README.md`.
+> El PRD es el primer artefacto donde **QA aparece**: su trabajo aqui evita reescribir despues.
+
+| Rol | Que pedirle al consultarlo | En que paso del workflow |
+|---|---|---|
+| **Acelerador** (Negocio / PO) | **Principal.** Casos de uso reales, prioridades Must/Should/Nice, reglas de negocio, metricas de exito | Pasos 1-4 (objetivo, usuarios, casos de uso, user stories) |
+| **QA** | Convertir criterios de aceptacion en escenarios Gherkin verificables. Aterrizar **Quality Attribute Scenarios** medibles (Bass et al., ISO/IEC 25010) | Paso 4 (Gherkin) y Paso 5 (QA-Scenarios) |
+| **Especialista Tecnico** (SWA) | Validar que NFRs son realistas con la arquitectura existente; identificar dependencias bloqueantes | Paso 5 (NFRs) y Paso 7 (scope explicito) |
+| **Compliance / Legal** | Restricciones regulatorias que afectan funcionalidades (consentimiento, audit, retencion) | Paso 6 (reglas de negocio) |
+
 ## Workflow de Creacion
 
 ### Paso 1: Objetivo del Producto

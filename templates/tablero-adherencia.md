@@ -22,6 +22,23 @@ tags: []
 
 ---
 
+## Roles colaboradores
+
+> El TAA es donde **todos** los roles se reunen alrededor del SA. Cada gate tiene un dueno
+> operativo distinto. Ver diagrama de roles en `README.md`.
+
+| Rol | Que aporta al SA | Donde colabora en el TAA |
+|---|---|---|
+| **Especialista Tecnico** (SWA / Tech Lead) | Llena la columna "Modulo afectado" del mapa de trazabilidad; lidera **Gate 2: Code Review Arquitectonico** | Seccion 2 (trazabilidad) y seccion 3 — Gate 2 |
+| **DevOps / SRE** | Lidera **Gate 3: Pre-Deploy** (FF en CI, alarmas, criterios de rollback) y **Gate 4: Post-Deploy / Review Mensual** (SLOs reales) | Seccion 3 — Gates 3 y 4; seccion 5 (dashboard FF) |
+| **QA** | Aporta cobertura de tests por decision; firma criterios de aceptacion en **Gate 1: Sprint Planning** | Seccion 3 — Gate 1; seccion 5 (FF de QA) |
+| **Equipo de Desarrollo** | **Registra desviaciones** en seccion 4 con justificacion; ejecuta acciones derivadas | Seccion 4 (registro de desviaciones) — entrada principal |
+| **Acelerador / PO** | Lee la seccion 6 (resumen ejecutivo) y firma riesgo arquitectonico aceptable | Seccion 6 (resumen ejecutivo) |
+
+> El SA modera. Los demas roles llenan. Sin ellos el TAA es teoria.
+
+---
+
 ## 1. Estado de Artefactos Arquitectonicos
 
 > Vista rapida: que tenemos, en que estado esta, y que falta.

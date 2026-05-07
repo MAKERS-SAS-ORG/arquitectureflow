@@ -38,6 +38,21 @@ Si la respuesta es no, los requisitos operacionales estan incompletos.
 - Context Brief aprobado (`CB-NNN` — Fase 0 del orquestador)
 - System Design aprobado (o en Review)
 
+## Roles colaboradores en este artefacto
+
+> Ver bloque "Roles colaboradores" en `templates/runbook.md` y diagrama en `README.md`.
+> Sin **DevOps / SRE** este artefacto queda en abstracto — son los duenos operativos.
+
+| Rol | Que pedirle al consultarlo | En que paso del workflow |
+|---|---|---|
+| **DevOps / SRE / Infra** | **Principal.** Health check viable, ventana de deployment realista, criterios de rollback automatizables, severidades del oncall, integracion con plataforma de monitoreo | Pasos 2-4 (deployment, rollback, metricas) |
+| **Especialista Tecnico** (SWA) | Comportamiento esperado bajo cada metrica; dependencias internas que pueden fallar | Paso 4 (metricas) y Paso 6 (cambios que requieren aprobacion arq.) |
+| **Vendor / Proveedores externos** | SLAs reales contratados, ventanas de mantenimiento, contactos de soporte | Paso 5 (dependencias externas) |
+| **Compliance** | Politicas de cambio en sistemas regulados (SOX, PCI), evidencia auditable | Paso 6 si aplica |
+
+> El SA define QUE operar; DevOps define COMO. Si no se puede coordinar con DevOps,
+> el Runbook queda en estado "Requisitos Operacionales" y NO avanza a runbook completo.
+
 ## Workflow de Creacion
 
 ### Paso 1: Informacion del Sistema

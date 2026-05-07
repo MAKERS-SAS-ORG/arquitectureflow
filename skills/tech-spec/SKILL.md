@@ -42,6 +42,21 @@ NO INCLUYE (scope Software Architect/Ingenieria):
 - ADRs criticos aceptados
 - PRD aprobado
 
+## Roles colaboradores en este artefacto
+
+> Ver bloque "Roles colaboradores" en `templates/tech-spec.md` y diagrama en `README.md`.
+> Esta es la **bisagra**: aqui el SA traduce decisiones a contratos que el equipo implementa.
+
+| Rol | Que pedirle al consultarlo | En que paso del workflow |
+|---|---|---|
+| **Especialista Tecnico** (SWA / Tech Lead) | **Principal.** Validar el stack, contratos realistas, capacidad del equipo, identificar que es politica (SA) vs implementacion (SWA) | Pasos 1-3 (stack, contenedores, contratos) y Paso 4 (politicas) |
+| **Equipo de Desarrollo** | Recibe la Tech Spec. Devuelve preguntas, supuestos descubiertos al implementar | Despues de Approved — leen antes de cada sprint y reportan gaps |
+| **DevOps / SRE** | Restricciones de infraestructura, plataformas disponibles, costos del stack | Paso 1 (stack) y contenedores tipo Worker/Queue/DB |
+| **QA** | Que es testeable como contract testing; necesidades de entornos de prueba | Paso 3 (contratos) y Paso 5 (Fitness Functions) |
+
+> El SA NO debe declarar la Tech Spec en Approved sin haber recorrido los contratos
+> con el Especialista Tecnico — el costo de una integracion mal especificada es alto.
+
 ## Workflow de Creacion
 
 ### Paso 1: Stack Tecnologico

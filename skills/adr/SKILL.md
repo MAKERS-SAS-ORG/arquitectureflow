@@ -33,6 +33,19 @@ Ejemplos que SIEMPRE necesitan ADR:
 - Context Brief aprobado (`CB-NNN` — Fase 0 del orquestador)
 - RFC aprobado que origina la decision (SHOULD, excepto decisiones urgentes)
 
+## Roles colaboradores en este artefacto
+
+> Ver bloque "Roles colaboradores" en `templates/adr-madr.md` y diagrama en `README.md`.
+
+| Rol | Que pedirle al consultarlo | En que paso del workflow |
+|---|---|---|
+| **Especialista Tecnico** (SWA / Tech Lead) | **Principal interlocutor.** Validar consecuencias tecnicas, deuda esperada, alternativas no consideradas | Paso 2 (opciones), Paso 4 (consecuencias) |
+| **DevOps / SRE** | Solo si la decision impacta operacion (cloud, deployment, monitoring) | Paso 4 (consecuencias operativas) |
+| **Acelerador** (Negocio) | Solo si la decision tiene impacto economico (vendor lock-in, licencias, talento) | Paso 3 (justificacion economica si aplica) |
+
+> Un ADR sin dialogo con el Especialista Tecnico es un ADR ciego. Si no esta disponible,
+> marcar 🔴 TODO en "Consecuencias" y dejar el ADR en estado **Propuesto**, no Aceptado.
+
 ## Formatos Disponibles
 
 ### MADR (Markdown Any Decision Records) — Para decisiones que requieren comparacion

@@ -16,6 +16,20 @@ tags: []
 
 # RFC-[NNN]: [Titulo]
 
+## Roles colaboradores
+
+> El SA lidera y aprueba el RFC. Es el primer artefacto donde aparecen **dos roles**:
+> el Acelerador (sigue siendo necesario) y el Especialista Tecnico (entra al juego).
+> Ver diagrama de roles en `README.md`.
+
+| Rol | Que aporta al SA | Cuando consultarlo |
+|---|---|---|
+| **Acelerador** (Negocio/Financiero) | Confirmar el problema y el costo, validar ROI de cada opcion, alinear urgencia | Secciones 1-2 (resumen, motivacion) y al puntuar criterios de negocio en la matriz |
+| **Especialista Tecnico** (SWA / Tech Lead) | Viabilidad tecnica de cada opcion, riesgos no evidentes, dependencias internas, plan de rollback realista | Seccion 3 (opciones), seccion 4 (matriz) y seccion 5 (riesgos + rollback) |
+| **Compliance / Legal** | Solo si una opcion impacta regulacion | Seccion 5.4 (impacto regulatorio) |
+
+> QA y DevOps todavia NO participan — entran en PRD/Tech Spec/System Design.
+
 ## 1. Resumen Ejecutivo
 > Una sola oracion: que problema resuelve y como.
 

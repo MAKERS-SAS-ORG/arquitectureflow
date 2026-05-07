@@ -21,6 +21,21 @@ tags: []
 
 ---
 
+## Roles colaboradores
+
+> El SA lidera y aprueba este artefacto. Aqui dialoga **principalmente con el Acelerador**:
+> sin negocio claro no hay arquitectura util. Ver diagrama de roles en `README.md`.
+
+| Rol | Que aporta al SA | Cuando consultarlo |
+|---|---|---|
+| **Acelerador** (Negocio/Financiero) | Problema real, beneficiario, costo de NO resolver, deadline, ROI, restricciones de negocio | Antes de redactar (seccion 1) y al validar el costo cuantificado y el deadline |
+| **Patrocinador / Product Owner** | Aprobacion del exito del producto, priorizacion | Al cerrar la seccion 2 (Stakeholders) |
+| **Compliance / Legal** | Restricciones regulatorias (GDPR, PCI-DSS, regulacion local) | Solo si seccion 4 marca compliance aplicable |
+
+> En esta fase NO se involucra todavia al Especialista Tecnico, DevOps ni QA — el CB es 100% negocio.
+
+---
+
 ## 1. Contexto de Negocio
 
 **Problema principal** (maximo 2 oraciones):

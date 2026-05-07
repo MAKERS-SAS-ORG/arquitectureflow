@@ -15,6 +15,19 @@ tags: []
 
 # System Prompt Spec: [Nombre del Agente]
 
+## Roles colaboradores
+
+> El SA define guardrails (allowlist/denylist) y compliance. El **Especialista Tecnico**
+> con experiencia en LLM aterriza el system prompt. **QA** disena los tests adversariales.
+> Ver diagrama de roles en `README.md`.
+
+| Rol | Que aporta al SA | Cuando consultarlo |
+|---|---|---|
+| **Especialista Tecnico** (con experiencia en LLMs / IA) | Estructura del system prompt, eleccion de modelo y parametros, integracion con el resto del sistema | Secciones 4 (system prompt) y 5 (datos de contexto inyectados) |
+| **QA** | Test cases adversariales: prompt injection, jailbreaks, fuera de scope, casos edge — disenar el suite de regresion | Seccion 6 (test cases) — bloqueante antes de produccion |
+| **Compliance / Legal** | Disclosure obligatorio, regulacion local de IA (UE AI Act, NIST AI RMF, regulacion financiera), datos que NO pueden inyectarse en contexto | Seccion 8 (compliance) y revision de seccion 5 (datos inyectados) |
+| **Acelerador** (Negocio) | Comportamiento esperado por el cliente, tono, idioma, casos de uso priorizados | Seccion 1 (proposito) y seccion 2 (allowlist) |
+
 | Campo | Valor |
 |---|---|
 | Modelo LLM | [Claude / GPT / Gemini / modelo] |

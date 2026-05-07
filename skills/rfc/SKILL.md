@@ -31,6 +31,19 @@ Si no puedes formularla, el problema no esta suficientemente entendido.
 - Context Brief aprobado (`CB-NNN` — Fase 0 del orquestador, `templates/context-brief.md`)
 - El RFC es el primer artefacto DESPUES del Context Brief
 
+## Roles colaboradores en este artefacto
+
+> Ver bloque "Roles colaboradores" en `templates/rfc.md` y diagrama en `README.md`.
+
+| Rol | Que pedirle al consultarlo | En que paso del workflow |
+|---|---|---|
+| **Acelerador** (Negocio) | Confirmar el problema, validar el costo de cada opcion, alinear urgencia con el deadline del CB | Paso 1 (formulacion) y Paso 3 (matriz, criterios de negocio) |
+| **Especialista Tecnico** (SWA / Tech Lead) | Generar opciones tecnicas viables, anticipar riesgos no obvios, evaluar plan de rollback realista | Paso 2 (opciones), Paso 4 (riesgos y rollback) |
+| **Compliance / Legal** | Solo si una opcion impacta regulacion | Paso 4 (impacto regulatorio) |
+
+> Si el SA no consigue input de Acelerador o Especialista Tecnico, marcar 🔴 TODO en la
+> seccion afectada y NO declarar el RFC en Review hasta cerrarlo.
+
 ## Workflow de Creacion
 
 ### Paso 1: Formulacion del Problema

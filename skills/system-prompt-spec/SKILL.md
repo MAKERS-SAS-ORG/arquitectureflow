@@ -21,6 +21,19 @@ Sin esta especificacion, el comportamiento del agente es impredecible y no audit
 - PRD aprobado (define que hace el agente para el usuario)
 - ADRs de tecnologia (que modelo LLM, que proveedor)
 
+## Roles colaboradores en este artefacto
+
+> Ver bloque "Roles colaboradores" en `templates/system-prompt-spec.md` y diagrama en `README.md`.
+
+| Rol | Que pedirle al consultarlo | En que paso del workflow |
+|---|---|---|
+| **Especialista Tecnico** (con experiencia en LLMs) | **Principal.** Estructura del system prompt, eleccion de modelo y parametros, integracion con el resto del sistema | Paso 4 (system prompt) y Paso 5 (datos de contexto) |
+| **QA** | Casos adversariales: prompt injection, jailbreaks, fuera de scope, edge cases. Disenar el suite de regresion | Paso 5 (test cases) — bloqueante antes de produccion |
+| **Compliance / Legal** | Disclosure obligatorio, regulacion local (UE AI Act, NIST AI RMF, regulacion financiera), datos prohibidos en contexto | Paso 6 (compliance) y revision de datos inyectados |
+| **Acelerador** (Negocio) | Comportamiento esperado, tono, idioma, casos priorizados | Paso 1 (proposito) y Paso 2 (allowlist) |
+
+> Si compliance no firma, el agente NO va a produccion — sin importar cuan bueno sea el prompt.
+
 ## Workflow de Creacion
 
 ### Paso 1: Proposito del Agente

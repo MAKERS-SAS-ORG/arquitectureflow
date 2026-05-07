@@ -15,6 +15,19 @@ tags: []
 
 # System Design: [Nombre del Sistema]
 
+## Roles colaboradores
+
+> El SA define como escala y como es seguro. **Especialista Tecnico** aporta STRIDE y
+> despliegue logico. **DevOps** aporta infraestructura, escalabilidad real y observabilidad.
+> Ver diagrama de roles en `README.md`.
+
+| Rol | Que aporta al SA | Cuando consultarlo |
+|---|---|---|
+| **Especialista Tecnico** (SWA / Tech Lead) | Modelado STRIDE, decisiones de despliegue logico (que corre donde), patrones de tolerancia a fallos | Seccion 1 (deployment logico), seccion 3 (STRIDE) y seccion 9 (decisiones de diseno) |
+| **DevOps / SRE / Infra** | Capacidad real de la infraestructura, costos de auto-scaling, plataforma de observabilidad disponible, viabilidad de SLOs | Seccion 2 (rendimiento, disponibilidad, escalabilidad), seccion 5 (observabilidad) y seccion 7 (capacity planning) |
+| **Seguridad / SecOps** | Validacion del modelo STRIDE, controles existentes, requisitos de auditoria | Seccion 3 (STRIDE) — especialmente si el sistema maneja datos sensibles |
+| **QA** | Escenarios de carga y pruebas de resiliencia (chaos / load test) que validan los NFRs | Seccion 2 (rendimiento) — define como se prueba antes de produccion |
+
 ## 1. Diagrama de Arquitectura
 
 > Diagrama C4 L2 Container + Deployment logico generado con Excalidraw MCP.

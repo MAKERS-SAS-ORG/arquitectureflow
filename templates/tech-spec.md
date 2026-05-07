@@ -15,6 +15,19 @@ tags: []
 
 # Tech Spec: [Nombre del Sistema/Modulo]
 
+## Roles colaboradores
+
+> Aqui el SA detalla el QUE con el **Especialista Tecnico** y entrega contratos al
+> **Equipo de Desarrollo**. Es el artefacto de bisagra entre el dominio del SA y el del SWA.
+> Ver diagrama de roles en `README.md`.
+
+| Rol | Que aporta al SA | Cuando consultarlo |
+|---|---|---|
+| **Especialista Tecnico** (SWA / Tech Lead) | Validacion del stack, contratos de integracion realistas, estimaciones, capacidad real del equipo, identificacion de patrones de implementacion (que NO van aqui pero deben quedar claros) | Secciones 1-3 (stack, contenedores, contratos) y seccion 6 (politicas de solucion) |
+| **DevOps / SRE** | Restricciones de infraestructura, plataformas disponibles, costos operativos del stack propuesto | Seccion 1 (stack) y seccion 2 (contenedores con tipo Worker/DB/Queue) |
+| **QA** | Que de los contratos es testeable como contract testing, dependencias para entornos de prueba | Seccion 3 (contratos) y seccion 5 (Fitness Functions) |
+| **Equipo de Desarrollo** | **Recibe** los contratos y politicas para implementar. Devuelve preguntas, dudas, supuestos que descubre al implementar | Despues de Approved — el equipo lee la Tech Spec antes de cada sprint |
+
 ## 1. Stack Tecnologico
 
 | Capa | Tecnologia | Version | Justificacion (-> ADR) |
