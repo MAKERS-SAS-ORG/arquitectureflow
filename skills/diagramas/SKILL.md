@@ -23,6 +23,23 @@ Este skill se activa cuando:
 
 ---
 
+## Roles colaboradores en este artefacto
+
+> El skill de diagramas es transversal — se invoca desde Tech Spec, System Design,
+> RFC, etc. El rol consultado depende del diagrama. Ver diagrama de roles en `README.md`.
+
+| Rol | Que pedirle al consultarlo | En que diagrama |
+|---|---|---|
+| **Especialista Tecnico** (SWA / Tech Lead) | Validar que los containers del C4 L2 son los que el equipo va a construir; nombres y limites de cada container | C4 Container (Tech Spec) |
+| **DevOps / SRE** | Validar topologia de deployment; AZs, VPCs, networking | C4 Deployment (System Design) |
+| **Acelerador / Sponsor** | Audiencia principal del C4 L1 (System Context) — debe entenderlo sin contexto tecnico | C4 Context (RFC) |
+| **Compliance / Legal** | Solo en diagramas que muestran flujos de datos sensibles o cross-border | Flujo de datos (System Design) |
+
+> El SA es quien dibuja, pero NO debe declarar el diagrama "definitivo" sin
+> validacion del rol indicado segun el tipo de diagrama.
+
+---
+
 ## IMPORTANTE: Nunca Generar JSON Raw
 
 El MCP de Excalidraw tiene un canvas server con 26 herramientas que crean, modifican y

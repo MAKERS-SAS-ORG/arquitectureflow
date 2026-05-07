@@ -8,6 +8,7 @@ autor: "[Nombre - Arquitecto SA]"
 fecha-creacion: YYYY-MM-DD
 fecha-ultima-revision: YYYY-MM-DD
 artefactos-origen: ["SD-NNN"]
+firmas-roles: []   # MUST firma de DevOps para Approved. Ver _frontmatter.md
 tags: []
 ---
 

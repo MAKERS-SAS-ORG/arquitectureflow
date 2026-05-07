@@ -10,6 +10,7 @@ fecha-ultima-revision: YYYY-MM-DD
 revisores: []
 artefactos-origen: ["TS-NNN"]
 stakeholders: []
+firmas-roles: []   # MUST firma de DevOps + Especialista Tecnico para Approved. Ver _frontmatter.md
 tags: []
 ---
 

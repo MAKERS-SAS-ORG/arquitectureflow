@@ -10,6 +10,7 @@ fecha-ultima-revision: YYYY-MM-DD
 revisores: []
 artefactos-origen: ["RFC-NNN", "ADR-001", "ADR-002", "PRD-NNN"]
 stakeholders: []
+firmas-roles: []   # MUST firma del Especialista Tecnico para Approved. Ver _frontmatter.md
 tags: []
 ---
 

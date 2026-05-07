@@ -9,6 +9,7 @@ fecha-creacion: YYYY-MM-DD
 fecha-ultima-revision: YYYY-MM-DD
 revisores: []
 severidad: P1 | P2 | P3
+firmas-roles: []   # SHOULD firmas de Oncall + Tech Lead. Ver _frontmatter.md
 tags: []
 ---
 

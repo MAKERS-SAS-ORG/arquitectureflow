@@ -8,6 +8,7 @@ autor: "[Nombre]"
 fecha-creacion: YYYY-MM-DD
 fecha-ultima-revision: YYYY-MM-DD
 artefactos-origen: ["SD-NNN"]
+firmas-roles: []   # SHOULD firma del Especialista Tecnico (DDD). Ver _frontmatter.md
 tags: []
 ---
 

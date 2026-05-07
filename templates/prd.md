@@ -11,6 +11,7 @@ revisores: []
 artefactos-origen: ["RFC-NNN"]
 estimacion-esfuerzo: M
 stakeholders: []
+firmas-roles: []   # MUST firma de Acelerador + QA para Approved. Ver _frontmatter.md
 tags: []
 ---
 

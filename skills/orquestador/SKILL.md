@@ -69,6 +69,7 @@ nombre de carpeta, e iniciar Fase 0.
 | `/orquestador estado` | Muestra estado sin preguntar que hacer |
 | `/orquestador critica [artefacto]` | Ejecuta Fase 4 sobre un artefacto especifico |
 | `/orquestador diagrama` | Ejecuta Fase 5 (diagramas C4) |
+| `/orquestador critica-juicio` | Ejecuta FF-007 (Juicio IA): lee todos los .md y reporta hallazgos -> alimenta TAA seccion 4 (ver `references/protocolo-iteracion.md`) |
 
 ---
 
@@ -155,7 +156,27 @@ restricciones, el PRD hereda sus stakeholders.
 Con el Context Brief aprobado, leer `references/matriz-decision.md` y determinar
 que artefactos aplican segun el tipo de proyecto.
 
-Presentar al arquitecto:
+### Auto-deteccion obligatoria desde el Context Brief
+
+ANTES de presentar la seleccion, el orquestador MUST escanear el frontmatter y el
+contenido del CB y emitir avisos automaticos:
+
+| Senial en el CB | Aviso obligatorio del orquestador |
+|---|---|
+| Seccion 4: "Integra IA/LLM: Si" | :warning: **REQUERIDO: System Prompt Spec (SPS-NNN)** — bloqueante para go-live. Compliance MUST firmar. |
+| Seccion 4: requisito regulatorio (GDPR, HIPAA, PCI-DSS, SuperSalud, SOX, regulacion financiera local, Habeas Data) | :warning: **REQUERIDO: Stakeholder Map (incluir regulador)** + **TAA con firmas-roles obligatorio** + **FF para audit trail** |
+| Seccion 3: "Sistemas existentes involucrados" con > 2 integraciones externas | :warning: **REQUERIDO: Context Map (CM-NNN)** + Tech Spec con contratos detallados |
+| Seccion 3: Naturaleza "Migracion" | :warning: **REQUERIDO: ADR de estrategia de migracion** + plan de rollback en RFC |
+| Seccion 1: Deadline regulatorio | :warning: **CRITICO: incluir el deadline en RFC seccion 2.3 (Por Que Ahora)** y en el TAA seccion 6 |
+| Mas de 5 stakeholders en seccion 2 | :warning: **REQUERIDO: Stakeholder Map** (Mendelow Power-Interest) |
+
+Estos avisos NO son sugerencias — son ALERTAS que el SA debe atender o
+justificar por que NO aplican (con :red_circle: TODO en el TAA).
+
+### Presentacion al arquitecto
+
+Despues de los avisos automaticos:
+
 - Lista de artefactos MUST (obligatorios para este tipo de proyecto)
 - Lista de artefactos SHOULD (recomendados)
 - Lista de artefactos que NO aplican y por que
@@ -307,6 +328,13 @@ Antes de que ingenieria empiece a implementar, el arquitecto firma:
 - [ ] Plan de rollback es ejecutable
 - [ ] NFRs tienen objetivos medibles
 - [ ] Fitness Functions son automatizables (contrato verificable)
+
+### Firmas (evidencia auditable)
+- [ ] Cada artefacto Approved tiene `firmas-roles` poblado en su frontmatter
+- [ ] El **rol principal** indicado en el bloque "Roles colaboradores" del template
+      firmo (ver mapeo en `templates/_frontmatter.md`)
+- [ ] En sectores regulados: SPS-001 tiene firma de **Compliance** (BLOQUEANTE)
+- [ ] Las firmas son apend-only (no se borran — solo se reemplazan con notas)
 
 ### Gobernanza
 - [ ] Tablero de Adherencia Arquitectonica generado (TAA-NNN)

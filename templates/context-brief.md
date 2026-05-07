@@ -8,6 +8,7 @@ autor: "[Nombre - Arquitecto SA]"
 fecha-creacion: YYYY-MM-DD
 fecha-ultima-revision: YYYY-MM-DD
 stakeholders: []
+firmas-roles: []   # Evidencia auditable: [{rol, persona, fecha, nota}]. Ver _frontmatter.md
 tags: []
 ---
 

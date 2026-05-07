@@ -10,6 +10,7 @@ fecha-ultima-revision: YYYY-MM-DD
 revisores: []
 artefactos-origen: ["PRD-NNN"]
 nivel-riesgo: Alto | Medio | Bajo
+firmas-roles: []   # MUST firma de Compliance (BLOQUEANTE) + Especialista Tecnico + QA para go-live. Ver _frontmatter.md
 tags: []
 ---
 

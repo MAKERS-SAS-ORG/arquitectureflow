@@ -8,6 +8,7 @@ autor: "[Nombre]"
 fecha-creacion: YYYY-MM-DD
 fecha-ultima-revision: YYYY-MM-DD
 artefactos-origen: ["CB-NNN"]
+firmas-roles: []   # MUST firma por gate: Tech Lead (G2), DevOps (G3-G4), QA (G1). Ver _frontmatter.md
 tags: []
 ---
 
@@ -160,10 +161,16 @@ Checklist minimo para que el equipo de desarrollo pueda iniciar implementacion:
 > Cuando el equipo se desvia de la arquitectura documentada, registrar aqui.
 > Desviar NO es malo — lo malo es desviar sin documentar y sin justificar.
 > Una desviacion justificada puede convertirse en un nuevo ADR.
+>
+> **Fuentes de entradas D-NNN:**
+> 1. **Equipo de Desarrollo** registra desviaciones detectadas durante implementacion.
+> 2. **FF-007 (Juicio con IA)** alimenta automaticamente esta seccion con hallazgos
+>    de severidad `critico` / `importante`. Comando: `/orquestador critica-juicio`.
+>    Ver `references/protocolo-iteracion.md` seccion "Loop FF-007 -> TAA".
 
-| # | Fecha | Artefacto afectado | Desviacion | Justificacion | Impacto | Resolucion |
-|---|---|---|---|---|---|---|
-| D-001 | YYYY-MM-DD | ADR-NNN / TS-NNN | [que cambio vs lo documentado] | [por que fue necesario] | Alto / Medio / Bajo | ADR nuevo / Actualizar TS / Aceptar deuda |
+| # | Fecha | Artefacto afectado | Desviacion | Justificacion | Origen | Impacto | Resolucion |
+|---|---|---|---|---|---|---|---|
+| D-001 | YYYY-MM-DD | ADR-NNN / TS-NNN | [que cambio vs lo documentado] | [por que fue necesario] | Equipo Dev / FF-007 / Code Review | Alto / Medio / Bajo | ADR nuevo / Actualizar TS / Aceptar deuda |
 
 ### Flujo de desviacion
 

@@ -10,6 +10,7 @@ fecha-ultima-revision: YYYY-MM-DD
 artefactos-origen: ["RFC-NNN"]
 supersede: null
 superseded-by: null
+firmas-roles: []   # SHOULD firma del Especialista Tecnico. Ver _frontmatter.md
 tags: []
 ---
 
@@ -17,7 +18,15 @@ tags: []
 
 ## Roles colaboradores
 
-> ADR formato lightweight: decision ya tomada o de bajo impacto. El SA aprueba y, si la decision toca operacion, valida con **Especialista Tecnico** y/o **DevOps**. Ver diagrama de roles en `README.md`.
+> ADR formato lightweight: decision ya tomada o de bajo impacto. Aun asi conviene
+> dejar evidencia de quien valido. Ver diagrama de roles en `README.md`.
+
+| Rol | Que aporta al SA | Cuando consultarlo |
+|---|---|---|
+| **Especialista Tecnico** (SWA / Tech Lead) | Validacion rapida de consecuencias tecnicas; firma minimo | Antes de declarar "Aceptado" |
+| **DevOps / SRE** | Solo si la decision toca operacion (ej: cambio de runtime, plataforma) | Antes de "Aceptado" si aplica |
+
+> Para decisiones de mayor impacto o con multiples opciones, usar `templates/adr-madr.md` en su lugar.
 
 ## Estado
 Aceptado

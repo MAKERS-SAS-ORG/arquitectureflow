@@ -41,6 +41,7 @@ Registrado como slash command en `.claude/commands/orquestador.md`.
 | `/orquestador critica [artefacto]` | Ejecuta critica (Fase 4) sobre un artefacto |
 
 El orquestador carga internamente el skill de artefacto apropiado:
+- `skills/stakeholder-map/SKILL.md` — Stakeholder Map (TOGAF + Mendelow Power-Interest)
 - `skills/rfc/SKILL.md` — Request for Comments
 - `skills/adr/SKILL.md` — Architecture Decision Record
 - `skills/prd/SKILL.md` — Product Requirements Document

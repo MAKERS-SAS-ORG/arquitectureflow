@@ -325,6 +325,11 @@ Claude:
 
 ## Paso 3: Seleccion de Artefactos (Fase 1)
 
+> 👥 **Coordinas con: nadie externo (solo SA + matriz de decision).**
+> El orquestador tambien emite avisos automaticos si el CB marca IA/LLM, sector
+> regulado, multiples integraciones o deadline regulatorio. Ver
+> `skills/orquestador/SKILL.md` seccion "Auto-deteccion obligatoria desde el CB".
+
 El orquestador consulta `references/matriz-decision.md` y te presenta los
 artefactos que aplican.
 

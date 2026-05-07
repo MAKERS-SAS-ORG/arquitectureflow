@@ -115,3 +115,65 @@ NO se requiere:
 | REVISAR | Aplica critica contra el skill, identifica 🔴 TODOs | Valida con stakeholders reales |
 | DECIDIR | Actualiza estado y version | Aprueba o rechaza |
 | MONITOREAR | Detecta inconsistencias entre artefactos | Decide si refactorizar |
+
+---
+
+## Loop de Retroalimentacion: FF de Juicio (FF-007) -> TAA seccion 4
+
+> Conecta la **Fitness Function de Juicio** (agente IA que evalua coherencia entre
+> los `.md` arquitectonicos) con el **registro de desviaciones del Tablero de
+> Adherencia**. Sin este loop, la FF detecta gaps pero el TAA queda manual y
+> los hallazgos se pierden.
+
+### Trigger
+Sprint review (mensual) o bajo demanda. El agente IA lee TODOS los `.md` del
+proyecto (CB, RFC, ADRs, PRD, TS, SD, RO, CM, FF, SPS, TAA) y evalua:
+
+| Categoria de hallazgo | Ejemplo |
+|---|---|
+| **TODOs criticos sin resolver** | :red_circle: TODO en artefacto Approved hace > 30 dias |
+| **Contradicciones entre artefactos** | TS dice "REST" pero ADR-002 dice "gRPC" |
+| **NFRs sin Fitness Function** | PRD QA-003 (zero accesos no autorizados) sin FF correspondiente |
+| **Decisiones obsoletas** | ADR aprobado hace 6 meses cuya senial de alerta ya se disparo |
+| **Firmas faltantes** | Artefacto Approved sin `firmas-roles` poblado |
+| **Stakeholder Map desactualizado** | SM-001 anterior a 2 cambios organizacionales relevantes |
+
+### Output de la FF-007
+
+El agente IA produce un **reporte estructurado** con cada hallazgo en formato:
+
+```yaml
+hallazgos:
+  - id: H-001
+    categoria: "TODO sin resolver"
+    severidad: critico | importante | sugerencia
+    artefacto: "TS-001 seccion 6"
+    descripcion: "TODO 'definir formato exacto de prompts versionados' sin owner asignado hace 45 dias"
+    propuesta: "Asignar a Tech Lead, target sprint 4"
+```
+
+### Aplicacion al TAA seccion 4 (Registro de Desviaciones)
+
+Cada hallazgo de la FF-007 con severidad `critico` o `importante` MUST agregarse
+al TAA seccion 4 como una entrada D-NNN, con flag origen para trazabilidad:
+
+```markdown
+| D-NNN | YYYY-MM-DD | [artefacto] | [hallazgo] | Detectado por FF-007 | Alto/Medio/Bajo | [resolucion propuesta] |
+```
+
+### Cadencia y dueno
+
+- **Cadencia:** ejecutar FF-007 al menos mensualmente, idealmente al cierre de cada sprint review.
+- **Dueno:** el SA es el dueno de la ejecucion. Puede delegar al agente IA con un comando:
+  ```
+  /orquestador critica-juicio  → ejecuta FF-007 sobre todos los artefactos del proyecto
+  ```
+- **Cierre del loop:** cada D-NNN agregado MUST tener resolucion en el siguiente sprint
+  review o reclasificarse explicitamente como deuda aceptada (con justificacion).
+
+### Por que importa
+
+Este loop convierte la FF-007 (Juicio) de "metrica observable" a **mecanismo de
+control de calidad arquitectonica**. Sin el loop, los hallazgos se quedan en un
+reporte que nadie lee. Con el loop, alimentan el TAA — el unico documento vivo
+del proyecto.

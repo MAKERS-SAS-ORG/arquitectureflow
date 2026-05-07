@@ -11,6 +11,7 @@ revisores: ["@persona1", "@persona2"]
 decision-esperada: YYYY-MM-DD
 estimacion-esfuerzo: S | M | L | XL
 stakeholders: []
+firmas-roles: []   # Evidencia auditable. SHOULD para Approved (MUST en sectores regulados). Ver _frontmatter.md
 tags: []
 ---
 

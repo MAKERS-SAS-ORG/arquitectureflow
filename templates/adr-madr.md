@@ -11,6 +11,7 @@ revisores: ["@persona1"]
 artefactos-origen: ["RFC-NNN"]
 supersede: null
 superseded-by: null
+firmas-roles: []   # MUST firma del Especialista Tecnico para estado Aceptado. Ver _frontmatter.md
 tags: []
 ---
 

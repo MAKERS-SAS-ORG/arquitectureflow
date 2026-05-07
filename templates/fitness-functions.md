@@ -8,6 +8,7 @@ autor: "[Nombre]"
 fecha-creacion: YYYY-MM-DD
 fecha-ultima-revision: YYYY-MM-DD
 artefactos-origen: ["TS-NNN"]
+firmas-roles: []   # SHOULD firma de Especialista Tecnico + DevOps + QA. Ver _frontmatter.md
 tags: []
 ---
 
@@ -49,6 +50,12 @@ Toda fitness function se clasifica ademas por **como se ejecuta**:
 > System Design, FF) y evalua: consistencia entre artefactos, TODOs criticos sin resolver,
 > decisiones que ya no aplican, NFRs sin fitness function, y desviaciones no documentadas.
 > No reemplaza las FF estaticas/dinamicas — las complementa con analisis semantico.
+>
+> **Loop FF-007 -> TAA seccion 4:** los hallazgos de la FF de Juicio MUST cerrarse
+> agregandose al **Registro de Desviaciones del Tablero de Adherencia** como entradas
+> D-NNN. Sin este loop la FF de Juicio se queda en reporte sin accion. Ver
+> `references/protocolo-iteracion.md` seccion "Loop de Retroalimentacion".
+> Comando rapido: `/orquestador critica-juicio`.
 
 ## Catalogo de Fitness Functions
 
