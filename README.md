@@ -202,6 +202,7 @@ si quieres continuar o iniciar un flujo nuevo.
 | `/orquestador continuar` | Lista arquitecturas del proyecto y pregunta cual continuar |
 | `/orquestador estado` | Muestra estado de artefactos sin preguntar |
 | `/orquestador critica [artefacto]` | Ejecuta critica (Fase 4) sobre un artefacto |
+| `/orquestador drawflow` | Abre el hub unificado de diagramación (Excalidraw + Python) |
 
 > **Primer uso?** Ver `taller.md` para un taller paso a paso con prompts de ejemplo.
 
@@ -309,7 +310,7 @@ claude
   → Claude aplica la Fase 4 (critica automatica con 🔴🟡🟢)
 
 > /orquestador — genera diagrama C4 para la Tech Spec
-  → Claude carga el skill de diagramas y usa Excalidraw MCP
+  → Claude abre el hub `drawflow/` y usa `excalidraw-local` para C4 interactivo, o `diagrams-python` para infraestructura as code.
 ```
 
 ### Con GitHub Copilot

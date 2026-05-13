@@ -554,14 +554,15 @@ Tu:
    - Politicas: autenticacion (JWT RS256), idempotencia, retry con backoff
    - Tabla "SA define | SWA implementa" para cada politica
 
-2. **Diagrama C4 Level 2** (si tienes Excalidraw MCP):
+2. **Diagrama C4 Level 2** (vía el hub `drawflow/`):
 
 ```
 Tu:
-> /orquestador — genera el diagrama C4 L2 para la Tech Spec
+> /orquestador — usa drawflow para generar el diagrama C4 L2 de la Tech Spec.
+> Usemos excalidraw-local para tener un canvas interactivo.
 
 Claude:
-> Cargando skills/diagramas/SKILL.md...
+> Abriendo hub drawflow... Seleccionando excalidraw-local.
 > Generando diagrama con Excalidraw MCP en http://localhost:3000
 > [Crea containers, relaciones y sistemas externos en el canvas]
 > Diagrama guardado como c4-container-diagram.excalidraw
