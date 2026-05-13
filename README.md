@@ -381,10 +381,41 @@ Despues de cada artefacto, la IA actua como arquitecto esceptico:
 - Clasifica: 🔴 Critico | 🟡 Importante | 🟢 Sugerencia
 
 ### Fase 5: Diagramas C4
-Cuando un artefacto necesita diagrama (Tech Spec, System Design):
-- La IA carga `skills/diagramas/SKILL.md`
-- Genera el diagrama con Excalidraw MCP server (L1 o L2 segun el artefacto)
-- Tu lo revisas en http://localhost:3000
+
+Cuando un artefacto necesita diagrama (Tech Spec, System Design), la IA:
+
+1. **Selecciona herramienta** — Carga `drawflow/SKILL.md` y consulta la tabla de decisión:
+   - C4 Context/Container/Component → `excalidraw-local` (canvas interactivo, 26 MCP tools)
+   - Infraestructura AWS/GCP/K8s → `diagrams-python` (iconos oficiales cloud)
+   - Boceto rápido → `excalidraw-remote`
+   - Secuencias/flujos → Mermaid inline
+
+2. **Si usa Excalidraw Local** — La IA sigue `skills/diagramas/SKILL.md` que define:
+   - **Colores C4:** Persona `#08427b`, Container `#438dd5`, Sistema externo `#999999`, Boundary `#e8f4f8` dashed
+   - **Workflow MCP:** `clear_canvas` → `batch_create_elements` (shapes + texto + arrows) → `set_viewport` → `get_canvas_screenshot` → iterar
+   - **Estructura:** Cada container = rectangle + text nombre + text tecnología + text descripción
+   - **Anti-patrones:** NO generar JSON raw, NO usar fontSize < 14, NO cruzar flechas
+   - Tu lo revisas en http://localhost:3000
+
+3. **Si usa Diagrams Python** — La IA crea un script `.py` basado en los templates
+   de `drawflow/tools/diagrams-python/templates/` y lo ejecuta para generar PNG.
+
+> **Referencia completa para la IA:** `skills/diagramas/SKILL.md` contiene la receta paso a paso
+> con colores, tamaños, estructura de elementos C4 y el protocolo MCP completo.
+> `drawflow/SKILL.md` contiene la tabla de decisión de herramientas.
+
+| Comando | Acción |
+|---|---|
+| `/orquestador drawflow` | Menú interactivo de herramientas de diagramación |
+| `/orquestador excalidraw-local` | Directo al canvas Excalidraw MCP local |
+| `/orquestador diagrams-python` | Directo a Diagrams Python (iconos cloud) |
+
+### Para diagramas: iniciar el canvas Excalidraw
+```bash
+# Solo necesario cuando vas a generar diagramas (Fase 5)
+cd drawflow/tools/excalidraw-local/server && PORT=3000 npm run canvas
+# Abrir http://localhost:3000 en el navegador para ver el canvas en vivo
+```
 
 ### Fase 6: Consistencia entre artefactos
 La IA verifica que los artefactos no se contradigan entre si
@@ -397,13 +428,6 @@ Cuando los artefactos criticos estan listos, la IA genera el **TAA** (`templates
 - Gates de revision por sprint (Planning, Code Review, Pre-Deploy, Post-Deploy)
 - Registro de desviaciones para cuando el equipo se desvia de la arquitectura
 - Dashboard de Fitness Functions con estado de automatizacion
-
-### Para diagramas: iniciar el canvas Excalidraw
-```bash
-# Solo necesario cuando vas a generar diagramas (Fase 5)
-cd drawflow/tools/excalidraw-local/server && PORT=3000 npm run canvas
-# Abrir http://localhost:3000 en el navegador para ver el canvas en vivo
-```
 
 ---
 
@@ -509,9 +533,24 @@ arquitectureflow/
 |   |-- c4-guia.md             # C4 Model para SA (L1-L2)
 |   '-- mcp-excalidraw-guia.md # Guia practica del MCP server
 |
-|-- drawflow/tools/excalidraw-local/server/            # Excalidraw MCP server (yctimlin — recomendado)
-|   |-- ext/                   # Librerias C4, BPMN, hexagonal architecture
-|   '-- skills/                # Skill Excalidraw y scripts CLI
+|-- drawflow/                  # Hub unificado de diagramacion (3 herramientas)
+|   |-- SKILL.md               # Tabla de decision: que herramienta usar
+|   |-- README.md              # Comparacion y documentacion
+|   '-- tools/
+|       |-- excalidraw-local/  # Excalidraw MCP (26 tools, C4 iterativo)
+|       |   |-- TOOL.md        # Guia de las 26 herramientas MCP
+|       |   |-- libs/          # Librerias C4, software-architecture
+|       |   |-- references/    # Cheatsheet de referencia
+|       |   |-- scripts/       # Scripts CLI (create, delete, clear, etc.)
+|       |   '-- server/        # Excalidraw MCP server (yctimlin)
+|       |       |-- ext/       # Librerias C4, BPMN, hexagonal
+|       |       '-- dist/      # Build compilado (index.js)
+|       |-- excalidraw-remote/ # Excalidraw oficial (bocetos rapidos)
+|       |   '-- TOOL.md        # Config MCP remoto
+|       '-- diagrams-python/   # Diagrams mingrammer (iconos cloud)
+|           |-- TOOL.md        # Guia de providers y uso
+|           |-- templates/     # Templates: C4, AWS, K8s, Microservicios
+|           '-- output/        # PNGs generados
 |
 |-- taller.md                  # Taller guiado paso a paso
 |

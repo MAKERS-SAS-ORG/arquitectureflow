@@ -205,6 +205,34 @@ PORT=3000 npm run canvas
 open http://localhost:3000
 ```
 
+#### ¿Cómo la IA genera los diagramas C4?
+
+Cuando le pides un diagrama C4 al orquestador, la IA:
+
+1. **Carga** `skills/diagramas/SKILL.md` que contiene la receta completa:
+   colores C4, estructura de elementos, protocolo MCP, anti-patrones.
+2. **Selecciona herramienta** via `drawflow/SKILL.md` (tabla de decisión).
+3. **Ejecuta el workflow MCP** en orden:
+   - `clear_canvas` — limpia el canvas
+   - `batch_create_elements` — crea rectangles (containers), text (nombres, tech, desc), arrows (relaciones)
+   - `set_viewport(scrollToContent: true)` — ajusta el zoom
+   - `get_canvas_screenshot` — verifica visualmente el resultado
+   - `update_element` — corrige lo que se ve mal
+4. **Tu revisas** en http://localhost:3000 y pides ajustes.
+
+**Herramientas de diagramación disponibles** (hub `drawflow/`):
+
+| Herramienta | Comando | Cuándo usarla |
+|---|---|---|
+| **Excalidraw Local** | `/orquestador excalidraw-local` | C4 (Context, Container, Component), iterativo con feedback visual |
+| **Diagrams Python** | `/orquestador diagrams-python` | Infraestructura cloud con iconos AWS/GCP/Azure/K8s |
+| **Excalidraw Remote** | `/orquestador excalidraw-remote` | Bocetos rápidos desde un prompt |
+
+> **Tip:** Puedes pedirle a la IA: *"genera un diagrama C4 Container para la Tech Spec
+> usando excalidraw-local"* y ella seguirá la receta de `skills/diagramas/SKILL.md`
+> automáticamente, usando los colores C4 (#08427b personas, #438dd5 containers,
+> #999999 externos) y el workflow MCP completo.
+
 ---
 
 ## El Problema: Plataforma de Inversion en Renta Fija
