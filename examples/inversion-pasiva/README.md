@@ -119,7 +119,7 @@ Claude:     Cargo el skill de Tech Spec. Stack basado en restricciones de
 
 ```
 # Se inicio el canvas server
-cd /Users/themakers/mcp_excalidraw && PORT=3000 npm run canvas
+cd /Users/didierrestrepo/MK/arquitectureflow-main/drawflow/tools/excalidraw-local/server && PORT=3000 npm run canvas
 
 Claude:     Creo el diagrama via REST API del MCP server:
             - Batch 1: titulo + persona (Inversionista)

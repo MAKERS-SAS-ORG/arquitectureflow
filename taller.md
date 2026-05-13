@@ -195,7 +195,7 @@ Puedes avanzar sin esto y agregar los diagramas al final.
 
 ```bash
 # Desde el directorio del framework
-cd mcp_excalidraw
+cd drawflow/tools/excalidraw-local/server
 npm install
 
 # Iniciar el canvas

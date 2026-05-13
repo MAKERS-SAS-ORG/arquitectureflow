@@ -400,7 +400,7 @@ Cuando los artefactos criticos estan listos, la IA genera el **TAA** (`templates
 ### Para diagramas: iniciar el canvas Excalidraw
 ```bash
 # Solo necesario cuando vas a generar diagramas (Fase 5)
-cd /ruta/a/mcp_excalidraw && PORT=3000 npm run canvas
+cd drawflow/tools/excalidraw-local/server && PORT=3000 npm run canvas
 # Abrir http://localhost:3000 en el navegador para ver el canvas en vivo
 ```
 
@@ -508,7 +508,7 @@ arquitectureflow/
 |   |-- c4-guia.md             # C4 Model para SA (L1-L2)
 |   '-- mcp-excalidraw-guia.md # Guia practica del MCP server
 |
-|-- mcp_excalidraw/            # Excalidraw MCP server (yctimlin — recomendado)
+|-- drawflow/tools/excalidraw-local/server/            # Excalidraw MCP server (yctimlin — recomendado)
 |   |-- ext/                   # Librerias C4, BPMN, hexagonal architecture
 |   '-- skills/                # Skill Excalidraw y scripts CLI
 |

@@ -1,7 +1,7 @@
 # Guia de Uso: Excalidraw MCP Server para Arquitectura
 
 > Server: yctimlin/mcp_excalidraw — https://github.com/yctimlin/mcp_excalidraw
-> Ubicacion local: `/Users/themakers/mcp_excalidraw/`
+> Ubicacion local: `/Users/didierrestrepo/MK/arquitectureflow-main/drawflow/tools/excalidraw-local/server/`
 
 ---
 
@@ -28,7 +28,7 @@ PORT=3000 npm run canvas
 ```bash
 claude mcp add excalidraw -s user \
   -e EXPRESS_SERVER_URL=http://localhost:3000 \
-  -- node /Users/themakers/mcp_excalidraw/dist/index.js
+  -- node /Users/didierrestrepo/MK/arquitectureflow-main/drawflow/tools/excalidraw-local/server/dist/index.js
 ```
 
 ### 3. Verificar
@@ -41,7 +41,7 @@ curl -s http://localhost:3000/health
 
 ## Librerias C4 Disponibles
 
-Ubicacion: `mcp_excalidraw/ext/`
+Ubicacion: `drawflow/tools/excalidraw-local/libs/`
 
 ### c4-architecture.excalidrawlib (10 items)
 | Item | Elementos | Uso |
@@ -136,7 +136,7 @@ Ubicacion: `mcp_excalidraw/ext/`
 4. Verificar con screenshot
 5. Guardar nuevo snapshot
 
-### Scripts utiles (en mcp_excalidraw/skills/excalidraw-skill/scripts/)
+### Scripts utiles (en drawflow/tools/excalidraw-local/scripts/)
 
 ```bash
 node scripts/healthcheck.cjs              # Verificar server

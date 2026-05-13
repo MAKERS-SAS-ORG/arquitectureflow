@@ -82,6 +82,9 @@ C4 Model, Arc42, MADR 4.0, ISO/IEC 25010:2023, Google SRE Book.
 
 ## Diagramas
 
-Los diagramas se generan via Excalidraw MCP server (`mcp_excalidraw/`).
-C4 Model como notacion principal. Librerias en `mcp_excalidraw/ext/`.
-Ver `references/diagramas-estrategia.md` para la estrategia y `skills/diagramas/SKILL.md` para el skill.
+Los diagramas se generan via el hub `drawflow/` que integra 3 herramientas:
+- Excalidraw MCP local (26 tools, C4 iterativo) — `drawflow/tools/excalidraw-local/`
+- Excalidraw MCP remoto (bocetos rápidos) — `drawflow/tools/excalidraw-remote/`
+- Diagrams Python (iconos cloud AWS/GCP/Azure/K8s) — `drawflow/tools/diagrams-python/`
+C4 Model como notacion principal. Librerias en `drawflow/tools/excalidraw-local/libs/`.
+Ver `drawflow/SKILL.md` para el hub, `skills/diagramas/SKILL.md` para el skill de C4.

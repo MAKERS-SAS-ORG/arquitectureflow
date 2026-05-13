@@ -5,6 +5,8 @@
 > Referencia: Brown, S. *C4 Model.* c4model.com
 > Referencia: ISO/IEC/IEEE 42010:2022 — Architecture Views
 > Tooling: yctimlin/mcp_excalidraw — Canvas server + MCP con 26 herramientas
+> Tooling: diagrams.mingrammer.com — Diagram as Code con iconos cloud (AWS/GCP/Azure/K8s)
+> Hub: `drawflow/SKILL.md` — Hub unificado de herramientas de diagramación
 
 ---
 
@@ -53,9 +55,9 @@ tokens masivamente y no permite iteracion.
 
 ## Setup del Canvas Server
 
-El MCP server de Excalidraw vive en: `/Users/themakers/mcp_excalidraw/`
+El MCP server de Excalidraw vive en: `/Users/didierrestrepo/MK/arquitectureflow-main/drawflow/tools/excalidraw-local/server/`
 
-### Librerias disponibles (en `mcp_excalidraw/ext/`)
+### Librerias disponibles (en `drawflow/tools/excalidraw-local/libs/`)
 - `c4-architecture.excalidrawlib` — Person, Web App, Mobile App, Component, System, Existing System, Database, Group, Relation
 - `hexagonal-architecture.excalidrawlib` — Shapes de arquitectura hexagonal
 - `bpmn.excalidrawlib` — Notacion BPMN para procesos de negocio
@@ -63,7 +65,7 @@ El MCP server de Excalidraw vive en: `/Users/themakers/mcp_excalidraw/`
 
 ### Iniciar el canvas server
 ```bash
-cd /Users/themakers/mcp_excalidraw
+cd /Users/didierrestrepo/MK/arquitectureflow-main/drawflow/tools/excalidraw-local/server
 PORT=3000 npm run canvas
 # Abrir http://localhost:3000 en navegador para ver el canvas en vivo
 ```
@@ -72,7 +74,7 @@ PORT=3000 npm run canvas
 ```bash
 claude mcp add excalidraw -s user \
   -e EXPRESS_SERVER_URL=http://localhost:3000 \
-  -- node /Users/themakers/mcp_excalidraw/dist/index.js
+  -- node /Users/didierrestrepo/MK/arquitectureflow-main/drawflow/tools/excalidraw-local/server/dist/index.js
 ```
 
 ### Verificar que el server esta corriendo
@@ -97,6 +99,16 @@ curl -s http://localhost:3000/health
 - Diagramas de flujo simples
 - Diagramas C4 texto-based (Git-diffable)
 - Diagramas de estado/maquina de estados
+
+### Usar Diagrams Python (`diagrams-python`) cuando:
+- Arquitectura de infraestructura AWS/GCP/Azure/K8s — **iconos oficiales**
+- Diagram as Code (versionable en Git como Python)
+- Clusters con agrupación visual de servicios
+- Topologías de red con servicios cloud específicos
+- Se necesita output PNG/SVG de alta calidad sin canvas interactivo
+
+> **Hub completo:** Ver `drawflow/SKILL.md` para la tabla de decisión completa
+> y documentación de las 3 herramientas.
 
 ---
 
@@ -212,7 +224,7 @@ Cada contenedor se construye con:
 ```bash
 curl -s http://localhost:3000/health
 ```
-Si no responde, iniciar: `cd /Users/themakers/mcp_excalidraw && PORT=3000 npm run canvas`
+Si no responde, iniciar: `cd /Users/didierrestrepo/MK/arquitectureflow-main/drawflow/tools/excalidraw-local/server && PORT=3000 npm run canvas`
 
 ### Paso 2: Limpiar canvas
 MCP: `clear_canvas` / REST: `DELETE /api/elements/clear`

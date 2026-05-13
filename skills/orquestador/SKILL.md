@@ -69,6 +69,10 @@ nombre de carpeta, e iniciar Fase 0.
 | `/orquestador estado` | Muestra estado sin preguntar que hacer |
 | `/orquestador critica [artefacto]` | Ejecuta Fase 4 sobre un artefacto especifico |
 | `/orquestador diagrama` | Ejecuta Fase 5 (diagramas C4) |
+| `/orquestador drawflow` | Abre el hub de herramientas de diagramación (`drawflow/SKILL.md`) — selección interactiva |
+| `/orquestador excalidraw-local` | Directo a Excalidraw MCP local (26 tools, C4 iterativo) |
+| `/orquestador excalidraw-remote` | Directo a Excalidraw MCP remoto (bocetos rápidos) |
+| `/orquestador diagrams-python` | Directo a Diagrams Python (infra con iconos cloud AWS/GCP/Azure/K8s) |
 | `/orquestador critica-juicio` | Ejecuta FF-007 (Juicio IA): lee todos los .md y reporta hallazgos -> alimenta TAA seccion 4 (ver `references/protocolo-iteracion.md`) |
 
 ---
