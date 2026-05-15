@@ -5,7 +5,15 @@
 - Canvas base URL: `EXPRESS_SERVER_URL` (default `http://localhost:3000`)
 - Canvas health: `GET /health`
 
-## MCP Tools (26 total)
+## MCP Tools (28 total)
+
+### Library (USE FIRST for C4/BPMN/Hexagonal)
+
+| Tool | Description | Required params |
+|------|-------------|-----------------|
+| `list_library_items` | List items from .excalidrawlib files (C4, BPMN, hex, lib). **Call first when starting a C4 diagram.** | (optional) `library` |
+| `insert_library_item` | Insert a pre-styled library item at (x,y), with optional `label`/`description` overrides. Fresh IDs, preserved layout. | `library`, `name`, `x`, `y` |
+
 
 ### Element CRUD
 

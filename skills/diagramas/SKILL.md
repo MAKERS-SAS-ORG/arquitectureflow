@@ -1,5 +1,5 @@
 # Skill: Generacion de Diagramas de Arquitectura
-# Version: 2026.3
+# Version: 2026.4
 # Tipo: Skill de soporte (invocado por otros skills)
 
 > Referencia: Brown, S. *C4 Model.* c4model.com
@@ -131,17 +131,23 @@ curl -s http://localhost:3000/health
 
 ## Protocolo Excalidraw MCP Server
 
-### Modo MCP (preferido) — 26 herramientas
+### Modo MCP (preferido) — 28 herramientas
 
 Si las tools `excalidraw/*` estan disponibles (batch_create_elements, etc.):
 
 ```
 1. read_diagram_guide          → Mejores practicas de diseno
-2. clear_canvas                → Lienzo limpio
-3. batch_create_elements       → Crear shapes + text + arrows en un batch
+2. list_library_items          → DESCUBRIR shapes prefabricados de C4/BPMN/hexagonal
+                                  (es lo PRIMERO que debes hacer en un C4)
+3. clear_canvas                → Lienzo limpio
+4. insert_library_item         → REUSAR un shape de la librería en una posición
+   - Mucho mas barato en tokens que crear desde cero
+   - Mantiene colores y proporciones C4 oficiales
+   - Soporta override de label/description (nombre del container + tech)
+5. batch_create_elements       → Solo para flechas y boundaries no presentes en la lib
    - Shapes: usar "text" field para labels (auto-convierte)
    - Arrows: usar startElementId/endElementId para binding automatico
-4. set_viewport(scrollToContent: true) → Auto-fit
+6. set_viewport(scrollToContent: true) → Auto-fit
 5. get_canvas_screenshot       → Verificar visualmente (Quality Checklist)
 6. update_element              → Ajustar basado en feedback
 7. snapshot_scene("v1")        → Guardar version
@@ -171,6 +177,29 @@ Si las MCP tools no estan disponibles pero el canvas server corre en localhost:3
 | Labels en shapes | `"text": "Mi Label"` | `"label": {"text": "Mi Label"}` |
 | Arrow binding | `startElementId` / `endElementId` | `"start": {"id": "..."}` / `"end": {"id": "..."}` |
 | fontFamily | String `"1"` o omitir | String `"1"` o omitir |
+
+---
+
+## Workflow library-first para C4 (REGLA OBLIGATORIA)
+
+Cuando generes un diagrama C4 (Context, Container o Component), el orden es:
+
+1. **`list_library_items({ library: "c4-architecture" })`** — descubre Person, Web App,
+   Mobile App, Component, System, Existing System, Database, Group, Relation.
+2. Para cada container del diagrama: **`insert_library_item({ library: "c4-architecture",
+   name: "Web App", x: 100, y: 100, label: "API de Pagos", description: "[.NET 8]" })`**.
+3. Solo dibuja desde cero con `batch_create_elements` los elementos que NO existen
+   en la librería (flechas curvas específicas, boundary boxes con texto, leyendas).
+4. `set_viewport({ scrollToContent: true })` y `get_canvas_screenshot()` para validar.
+
+**Por qué:** los items de la librería ya traen colores oficiales C4, proporciones,
+tipografía y grupos. Reusarlos cuesta una fracción de tokens vs. armar cada container
+con rectangle + 3 textos + bindings manuales. Además los diagramas resultantes son
+visualmente coherentes entre proyectos.
+
+**Anti-patrón:** crear personas como `ellipse + rectangle + text` cuando existe
+`Person` en `c4-architecture.excalidrawlib`. Eso fue lo que reportó el usuario como
+"no usa la libreria C4, dibuja desde 0 gastando muchos tokens".
 
 ---
 

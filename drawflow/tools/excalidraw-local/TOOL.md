@@ -45,7 +45,13 @@ curl -s http://127.0.0.1:3000/health
 
 ---
 
-## Herramientas MCP (26 total)
+## Herramientas MCP (28 total)
+
+### Librerías .excalidrawlib (USAR PRIMERO para C4 / BPMN / hexagonal)
+| Tool | Descripción |
+|---|---|
+| `list_library_items` | Lista items de las librerías (C4, BPMN, hexagonal, lib general). **Primera llamada al diagramar C4** — descubre Person, Web App, Database, System, etc. |
+| `insert_library_item` | Inserta un item pre-estilado en `(x,y)` con `label`/`description` opcionales. Mucho mas barato en tokens que `batch_create_elements` desde cero. |
 
 ### CRUD de Elementos
 | Tool | Descripción |

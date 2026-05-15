@@ -820,6 +820,53 @@ const tools: Tool[] = [
         }
       }
     }
+  },
+  {
+    name: 'list_library_items',
+    description: 'List all available library items from the loaded .excalidrawlib libraries (C4, BPMN, hexagonal, software-architecture). Returns each item with its library, name, id, and element count. CALL THIS FIRST when drawing C4, BPMN or architecture diagrams — using library items is far cheaper than creating shapes from scratch.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        library: {
+          type: 'string',
+          description: 'Optional. Filter by library file name (without extension), e.g. "c4-architecture" or "bpmn". If omitted, returns items from all libraries.'
+        }
+      }
+    }
+  },
+  {
+    name: 'insert_library_item',
+    description: 'Insert a complete library item (a set of pre-styled elements) from a .excalidrawlib at a target position. Elements are placed on the canvas with fresh IDs, preserving their relative layout, colors and styling. Optionally override the main label. Use this instead of batch_create_elements when an appropriate library item exists — saves tokens and produces consistent diagrams. Discover available items with list_library_items.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        library: {
+          type: 'string',
+          description: 'Library name (file without extension), e.g. "c4-architecture"',
+        },
+        name: {
+          type: 'string',
+          description: 'The library item name, e.g. "Person", "Web App", "Database", "System"'
+        },
+        x: {
+          type: 'number',
+          description: 'Target X coordinate (top-left anchor of the inserted group)'
+        },
+        y: {
+          type: 'number',
+          description: 'Target Y coordinate (top-left anchor of the inserted group)'
+        },
+        label: {
+          type: 'string',
+          description: 'Optional. Override the main text label (typically the first text element of the item, e.g. the container name).'
+        },
+        description: {
+          type: 'string',
+          description: 'Optional. Override the secondary text label (typically the technology / description line of the item).'
+        }
+      },
+      required: ['library', 'name', 'x', 'y']
+    }
   }
 ];
 
@@ -2182,6 +2229,180 @@ server.setRequestHandler(CallToolRequestSchema, async (request: CallToolRequest)
           content: [{
             type: 'text',
             text: `Viewport updated successfully.\n\n${JSON.stringify(viewportResult, null, 2)}`
+          }]
+        };
+      }
+
+      case 'list_library_items': {
+        const params = z.object({
+          library: z.string().optional()
+        }).parse(args || {});
+
+        const extDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../ext');
+        if (!fs.existsSync(extDir)) {
+          return {
+            content: [{
+              type: 'text',
+              text: `No library directory found at ${extDir}. Place .excalidrawlib files there.`
+            }]
+          };
+        }
+
+        const files = fs.readdirSync(extDir)
+          .filter(f => f.endsWith('.excalidrawlib'))
+          .filter(f => !params.library || f.replace(/\.excalidrawlib$/, '') === params.library);
+
+        const summary: any[] = [];
+        for (const file of files) {
+          const libraryName = file.replace(/\.excalidrawlib$/, '');
+          try {
+            const raw = fs.readFileSync(path.join(extDir, file), 'utf-8');
+            const data = JSON.parse(raw);
+            const items = Array.isArray(data.libraryItems) ? data.libraryItems : [];
+            for (const item of items) {
+              summary.push({
+                library: libraryName,
+                name: item.name || '(unnamed)',
+                id: item.id,
+                elementCount: Array.isArray(item.elements) ? item.elements.length : 0
+              });
+            }
+          } catch (e) {
+            logger.warn(`Failed to parse library ${file}:`, e);
+          }
+        }
+
+        return {
+          content: [{
+            type: 'text',
+            text: `Found ${summary.length} library items across ${files.length} libraries.\n\nUse insert_library_item({ library, name, x, y, label?, description? }) to drop one onto the canvas instead of building from scratch.\n\n${JSON.stringify(summary, null, 2)}`
+          }]
+        };
+      }
+
+      case 'insert_library_item': {
+        const params = z.object({
+          library: z.string(),
+          name: z.string(),
+          x: z.number(),
+          y: z.number(),
+          label: z.string().optional(),
+          description: z.string().optional()
+        }).parse(args);
+
+        const extDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../ext');
+        const libPath = path.join(extDir, `${params.library}.excalidrawlib`);
+        if (!fs.existsSync(libPath)) {
+          throw new Error(`Library '${params.library}' not found at ${libPath}. Use list_library_items to see available libraries.`);
+        }
+
+        const data = JSON.parse(fs.readFileSync(libPath, 'utf-8'));
+        const items = Array.isArray(data.libraryItems) ? data.libraryItems : [];
+        const item = items.find((it: any) => it.name === params.name);
+        if (!item) {
+          const names = items.map((it: any) => it.name);
+          throw new Error(`Item '${params.name}' not found in library '${params.library}'. Available: ${JSON.stringify(names)}`);
+        }
+
+        const sourceElements: any[] = Array.isArray(item.elements) ? item.elements : [];
+        if (sourceElements.length === 0) {
+          throw new Error(`Library item '${params.name}' has no elements.`);
+        }
+
+        // Compute bounding box of source elements (top-left)
+        const minX = Math.min(...sourceElements.map(e => Number(e.x) || 0));
+        const minY = Math.min(...sourceElements.map(e => Number(e.y) || 0));
+        const dx = params.x - minX;
+        const dy = params.y - minY;
+
+        // Build ID remap: old element id -> fresh id; old group id -> fresh group id
+        const idMap = new Map<string, string>();
+        const groupMap = new Map<string, string>();
+        for (const el of sourceElements) {
+          if (el.id) idMap.set(el.id, generateId());
+          if (Array.isArray(el.groupIds)) {
+            for (const gid of el.groupIds) {
+              if (!groupMap.has(gid)) groupMap.set(gid, generateId());
+            }
+          }
+        }
+
+        // Locate text elements in order so we can override label/description without
+        // peeking into the visual layout. First text = primary label, second = secondary.
+        const textIndexes = sourceElements
+          .map((e, i) => (e.type === 'text' ? i : -1))
+          .filter(i => i >= 0);
+
+        const remappedElements: any[] = sourceElements.map((el, idx) => {
+          const remapped: any = {
+            ...el,
+            id: idMap.get(el.id) || generateId(),
+            x: (Number(el.x) || 0) + dx,
+            y: (Number(el.y) || 0) + dy,
+            groupIds: Array.isArray(el.groupIds)
+              ? el.groupIds.map((gid: string) => groupMap.get(gid) || gid)
+              : [],
+            seed: Math.floor(Math.random() * 2 ** 31),
+            version: 1,
+            versionNonce: Math.floor(Math.random() * 2 ** 31),
+            updated: Date.now()
+          };
+
+          // Update bindings (start/end on arrows)
+          if (el.startBinding?.elementId) {
+            remapped.startBinding = {
+              ...el.startBinding,
+              elementId: idMap.get(el.startBinding.elementId) || el.startBinding.elementId
+            };
+          }
+          if (el.endBinding?.elementId) {
+            remapped.endBinding = {
+              ...el.endBinding,
+              elementId: idMap.get(el.endBinding.elementId) || el.endBinding.elementId
+            };
+          }
+          if (Array.isArray(el.boundElements)) {
+            remapped.boundElements = el.boundElements.map((be: any) => ({
+              ...be,
+              id: idMap.get(be.id) || be.id
+            }));
+          }
+          if (el.containerId) {
+            remapped.containerId = idMap.get(el.containerId) || el.containerId;
+          }
+
+          // Override the primary / secondary text labels if requested
+          if (el.type === 'text') {
+            if (params.label !== undefined && idx === textIndexes[0]) {
+              remapped.text = params.label;
+              remapped.originalText = params.label;
+            } else if (params.description !== undefined && idx === textIndexes[1]) {
+              remapped.text = params.description;
+              remapped.originalText = params.description;
+            }
+          }
+
+          return remapped;
+        });
+
+        // Persist to canvas via the existing batch endpoint
+        const batchResponse = await fetch(`${EXPRESS_SERVER_URL}/api/elements/batch`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ elements: remappedElements })
+        });
+
+        if (!batchResponse.ok) {
+          const err = await batchResponse.text();
+          throw new Error(`Failed to insert library item: ${batchResponse.status} ${err}`);
+        }
+
+        const batchResult = await batchResponse.json() as ApiResponse;
+
+        return {
+          content: [{
+            type: 'text',
+            text: `Inserted library item '${params.name}' from '${params.library}' at (${params.x}, ${params.y}).\nElements: ${remappedElements.length}\n\n${JSON.stringify({ success: batchResult.success, count: remappedElements.length, firstId: remappedElements[0]?.id }, null, 2)}`
           }]
         };
       }

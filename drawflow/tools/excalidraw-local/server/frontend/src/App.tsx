@@ -170,19 +170,23 @@ function App(): JSX.Element {
     }
   }, [])
 
+  // Track whether we've already done the one-shot library load this mount so a
+  // WebSocket reconnect (or any rerender of this effect) does not re-inject the
+  // libraries — that triple-injection is what produced duplicate items in the
+  // library panel and made dragging look like it was "repeating" the element.
+  const librariesLoadedRef = useRef<boolean>(false)
+  const elementsLoadedRef = useRef<boolean>(false)
+
   // Load existing elements when Excalidraw API becomes available
   useEffect(() => {
     if (excalidrawAPI) {
-      loadExistingElements()
-      loadBackendLibraries()
-
-      // Aggressively inject localStorage libraries via the imperative API 
-      // in case initialData gets swallowed by the component lifecycle
-      if (initialLibraryItems.length > 0) {
-        excalidrawAPI.updateLibrary({
-          libraryItems: initialLibraryItems,
-          merge: true
-        });
+      if (!elementsLoadedRef.current) {
+        elementsLoadedRef.current = true
+        loadExistingElements()
+      }
+      if (!librariesLoadedRef.current) {
+        librariesLoadedRef.current = true
+        loadBackendLibraries()
       }
 
       // Ensure WebSocket is connected for real-time updates
@@ -191,6 +195,18 @@ function App(): JSX.Element {
       }
     }
   }, [excalidrawAPI, isConnected])
+
+  // De-duplicate library items by their stable id. A given .excalidrawlib item
+  // can arrive both from localStorage (initialData) and from /api/libraries on
+  // disk — merging without a dedupe lets the same item accumulate in the panel.
+  const dedupeLibraryItems = (items: any[]): any[] => {
+    const seen = new Map<string, any>();
+    for (const it of items) {
+      const key = it?.id || (Array.isArray(it?.elements) && it.elements[0]?.id) || JSON.stringify(it?.name);
+      if (!seen.has(key)) seen.set(key, it);
+    }
+    return Array.from(seen.values());
+  }
 
   const loadBackendLibraries = async (): Promise<void> => {
     try {
@@ -210,13 +226,20 @@ function App(): JSX.Element {
           return [];
         });
         const nestedItems = await Promise.all(fetchPromises);
-        let allItems: any[] = [];
-        nestedItems.forEach(items => {
-          allItems = allItems.concat(items);
-        });
+        const allItems = dedupeLibraryItems(
+          nestedItems.flat().concat(initialLibraryItems || [])
+        );
         if (allItems.length > 0 && excalidrawAPI) {
-          excalidrawAPI.updateLibrary({ libraryItems: allItems, merge: true });
+          // Replace (merge:false) so disk is canonical and localStorage
+          // duplicates from prior buggy runs get cleaned out.
+          excalidrawAPI.updateLibrary({ libraryItems: allItems, merge: false });
         }
+      } else if (initialLibraryItems.length > 0 && excalidrawAPI) {
+        // Disk has nothing — keep whatever localStorage had, deduped.
+        excalidrawAPI.updateLibrary({
+          libraryItems: dedupeLibraryItems(initialLibraryItems),
+          merge: false
+        });
       }
     } catch (e) {
       console.error('Failed to load backend libraries', e);
@@ -231,7 +254,13 @@ function App(): JSX.Element {
       if (result.success && result.elements && result.elements.length > 0) {
         const cleanedElements = result.elements.map(cleanElementForExcalidraw)
         const convertedElements = convertToExcalidrawElements(cleanedElements, { regenerateIds: false })
-        excalidrawAPI?.updateScene({ elements: convertedElements })
+        // captureUpdate NEVER prevents updateScene from re-firing onChange,
+        // which would otherwise cause the debounced syncToBackend to bounce
+        // the same elements back to the server on every reconnect.
+        excalidrawAPI?.updateScene({
+          elements: convertedElements,
+          captureUpdate: CaptureUpdateAction.NEVER
+        })
       }
     } catch (error) {
       console.error('Error loading existing elements:', error)
@@ -250,10 +279,12 @@ function App(): JSX.Element {
 
     websocketRef.current.onopen = () => {
       setIsConnected(true)
-
-      if (excalidrawAPI) {
-        setTimeout(loadExistingElements, 100)
-      }
+      // The server sends `initial_elements` on every WebSocket connection
+      // (see server.ts wss.on('connection')). The dedicated mount effect handles
+      // the very first hydration. We deliberately do NOT call loadExistingElements
+      // here on reconnect — that previously caused the scene to be replaced and
+      // re-synced, which (combined with debounced syncToBackend) could appear as
+      // the dropped element duplicating after a network blip.
     }
 
     websocketRef.current.onmessage = (event: MessageEvent) => {
@@ -733,8 +764,11 @@ function App(): JSX.Element {
             appState: {
               theme: 'light',
               viewBackgroundColor: '#ffffff'
-            },
-            libraryItems: initialLibraryItems
+            }
+            // Library items are loaded exclusively via loadBackendLibraries()
+            // (disk is canonical, merged with localStorage and deduped). Passing
+            // libraryItems here as well caused triple-injection and duplicate
+            // entries in the library panel.
           }}
           onChange={(elements, appState, files) => {
             // Auto-sync debounced by 2 seconds to keep backend elements up-to-date
