@@ -31,12 +31,13 @@ asi puedes comparar tus resultados con los artefactos de referencia en cualquier
 | Paso 2 | Context Brief (CB-001) | **Acelerador** (Negocio/Financiero) | Problema real, costo de NO resolver, deadline |
 | Paso 4 | RFC-001 | **Acelerador** + **Especialista Tecnico** | ROI por opcion + viabilidad tecnica + riesgos |
 | Paso 5 | ADR-001 | **Especialista Tecnico** | Consecuencias tecnicas, deuda esperada |
-| Paso 6 | PRD-001 | **Acelerador** + **QA** | Casos de uso + Quality Attribute Scenarios verificables |
+| Paso 6 | PRD-001 | **Acelerador** + **QA** (+ **Responsable de Seguridad** si hay PII) | Casos de uso + Quality Attribute Scenarios verificables |
 | Paso 7 | Tech Spec (TS-001) | **Especialista Tecnico** + entrega a **Equipo Desarrollo** | Contratos de integracion realistas |
-| Paso 8 | System Design (SD-001) | **Especialista Tecnico** + **DevOps / SRE** | STRIDE + infra + escalabilidad |
-| Paso 9 | RO-001 | **DevOps / SRE** | SLAs, rollback, runbook detallado |
-| Paso 9 | FF-001 | **Especialista Tecnico** + **DevOps** + **QA** | Implementa tests + reporta metricas + mapea a QA-Scenarios |
-| Paso 10 | TAA-001 | **Todos** (cada gate tiene dueno distinto) | Sprint Planning (QA), Code Review (ET), Pre/Post-Deploy (Ops), desviaciones (Dev) |
+| Paso 7.1 | API Design (API-001) | **Especialista Tecnico** + **Responsable de Seguridad** (+ Front Tech Lead si es GraphQL) | OpenAPI 3.1 + SemVer + deprecación (REST) **o** schema + política de evolución (GraphQL) |
+| Paso 8 | System Design (SD-001) | **Responsable de Seguridad (LIDERA STRIDE)** + **Especialista Tecnico** + **DevOps / SRE** | STRIDE por componente + infra + escalabilidad |
+| Paso 9 | RO-001 | **DevOps / SRE** (+ **Responsable de Seguridad** para incident response) | SLAs, rollback, runbook detallado |
+| Paso 9 | FF-001 | **Especialista Tecnico** + **DevOps** + **QA** + **Responsable de Seguridad** | Implementa tests + reporta metricas + mapea a QA-Scenarios + FFs de seguridad |
+| Paso 10 | TAA-001 | **Todos** (cada gate tiene dueno distinto) | Sprint Planning (QA), Code Review (ET), Pre/Post-Deploy (Ops), Seguridad (SEC), desviaciones (Dev) |
 
 > **Tip:** Si en un paso no tienes acceso al rol que necesitas, marca con :red_circle: TODO
 > los items que dependen de ese rol y avanza con lo que puedas. NO declares Approved un
@@ -616,20 +617,103 @@ Tu:
 > Paso a Review.
 
 Claude:
-> TS-001 actualizado. Estado: Review. Siguiente: System Design (SD-001).
+> TS-001 actualizado. Estado: Review. Detecto containers de tipo API expuesta.
+> Voy a disparar el sub-artefacto API-NNN (paso 7.1).
 ```
 
 **Referencia:** compara con `examples/inversion-pasiva/TS-001.md`
 
 ---
 
+## Paso 7.1: Diseño de API (sub-artefacto de la Tech Spec)
+
+> 👥 **Coordinas con: Especialista Técnico + Responsable de Seguridad.**
+> Si es API de **experiencia** (front-end → backend), también el **Front-end Tech Lead**.
+> El SA define el **QUE** del contrato; el SWA implementa el **COMO**.
+
+Cuando la Tech Spec contiene contenedores que exponen API, el orquestador dispara
+este sub-artefacto. Hay dos templates según el tipo de API:
+
+| Tipo de API | Cuándo usarlo | Template | Estándar principal |
+|---|---|---|---|
+| **REST + OpenAPI 3.1** | API de dominio / B2B / pública. Recursos estables, semántica HTTP fuerte | `templates/api-design-rest.md` | OpenAPI 3.1, **SemVer 2.0.0**, RFC 9457, RFC 8594 |
+| **GraphQL** | API de **experiencia** (web/mobile → backend). Front compone datos de múltiples fuentes | `templates/api-design-graphql.md` | GraphQL Spec, Relay Connections |
+
+### 7.1.a — API de dominio (REST + OpenAPI 3.1)
+
+```
+Tu:
+> /orquestador — genera API-001 para la API de Inversiones (REST, OpenAPI 3.1).
+> Es una API de dominio que también se expondrá a partners (B2B).
+>
+> Recursos principales: investments, orders, statements.
+> Política de versionamiento: SemVer en URI (/v1/), 2 MAJOR soportadas en paralelo,
+> ventana de deprecación de 12 meses con headers Deprecation + Sunset (RFC 8594).
+> Errores en RFC 9457 Problem Details.
+```
+
+Lo que genera la IA:
+- `API-001.md` con identidad, recursos, operaciones, convenciones, seguridad, SLOs y **política completa de ciclo de vida** (Preview → GA → Deprecated → Sunset)
+- Esqueleto del spec canónico en `openapi/inversiones.yaml`
+- Tabla de SemVer con qué constituye un MAJOR / MINOR / PATCH
+
+Lo que SEC firma: sección 6 (Seguridad — auth, scopes, PII en payloads, rate limiting).
+
+### 7.1.b — API de experiencia (GraphQL)
+
+```
+Tu:
+> /orquestador — genera API-002 para la Experience API.
+> Es el endpoint que consume la web SPA y la app mobile.
+>
+> Pantallas que debe resolver en una sola query: dashboard portafolio,
+> detalle de inversión, wizard de compra.
+> Endpoint: /graphql (HTTPS), subscriptions vía WebSocket.
+```
+
+Lo que genera la IA:
+- `API-002.md` con tipos modelados por pantalla, queries/mutations/subscriptions,
+  política de errores (UserError vs sistémicos), evolución del schema sin SemVer
+  (solo `@deprecated` + graphql-inspector en CI)
+- Esqueleto del SDL canónico en `schema/experience-api.graphql`
+
+Lo que SEC firma: sección 6 (auth por viewer, complexity/depth limits, persisted queries, anti-abuso).
+
+### Tu acción
+
+```
+Tu:
+> API-001 y API-002 generados. Apruebo las políticas de versionamiento y la
+> separación REST (dominio) vs GraphQL (experiencia). Necesito que el
+> Responsable de Seguridad revise sec. 6 de ambos antes de Approved.
+
+Claude:
+> API-001 y API-002 en estado: Review. Pendiente firma del Responsable de Seguridad.
+> Siguiente: System Design (SD-001), donde el SEC lidera STRIDE.
+```
+
+---
+
 ## Paso 8: System Design
 
-> 👥 **Coordinas con: Especialista Tecnico (STRIDE, despliegue logico) + DevOps / SRE
-> (infraestructura, escalabilidad, observabilidad).** Sin DevOps el SD es teoria.
+> 👥 **Coordinas con: Responsable de Seguridad (LIDERA STRIDE) + Especialista Tecnico
+> (despliegue logico) + DevOps / SRE (infraestructura, escalabilidad, observabilidad).**
+> En la fase de diseño y arquitectura, el modelado de amenazas STRIDE es
+> **responsabilidad del Responsable de Seguridad** — el SA facilita la sesión.
 > (Ver `templates/system-design.md`.)
 
 El System Design cubre: como escala, como es seguro, como se observa y opera.
+
+### Quién lidera qué en este paso
+
+| Sección | Líder | SA + otros |
+|---|---|---|
+| 1. Diagrama / deployment lógico | **Especialista Técnico** | SA define vista, DevOps valida infra |
+| 2. Rendimiento / disponibilidad / escalabilidad | **DevOps / SRE** | SA fija SLOs, QA define load tests |
+| **3. STRIDE (Seguridad)** | **Responsable de Seguridad** | SA facilita; SWA aporta detalle técnico de componentes |
+| 5. Observabilidad | DevOps + SA | SEC define qué eventos de seguridad observar |
+| 6. SPOFs | SA + SWA + DevOps | -- |
+| 7. Capacity Planning | DevOps | SA define triggers |
 
 ### Prompt de ejemplo
 
@@ -639,28 +723,55 @@ Tu:
 >
 > Prioridades para este diseno:
 > - STRIDE threat model (es sistema financiero, seguridad es critica)
+>   --> Convocar al Responsable de Seguridad para liderar la sesión
 > - SLO: 99.5% disponibilidad mensual
-> - Observabilidad: que metricas necesita Ops desde dia 1
+> - Observabilidad: que metricas necesita Ops desde dia 1, qué eventos de seguridad
 > - Capacity planning para 50k usuarios en el primer ano
+
+Claude:
+> Genero SD-001 con plantilla. Marco la sección 3 (STRIDE) como bloqueante para Approved.
+> Convoca al Responsable de Seguridad antes de cerrar la sección. Incluyo activos
+> protegidos (PII, datos financieros) y plantillas STRIDE por container.
 ```
 
 ### Que genera la IA
 
-- Modelo de amenazas STRIDE por componente
+- Modelo de amenazas STRIDE **por componente**, con likelihood × impact, mitigaciones y trazabilidad a ADR/TS/API/FF
+- Lista de **activos protegidos** y regulación aplicable
 - SLOs/SLAs con error budget
-- Estrategia de observabilidad (metricas, logs, traces)
+- Estrategia de observabilidad (metricas, logs, traces) — incluye eventos de seguridad que SEC define
 - Capacity planning con proyecciones
 - SPOFs (puntos unicos de falla) y mitigaciones
-- Estrategia de deployment (blue-green)
+- Sección de **firmas** (SEC + SWA + SA) requerida para Approved
+
+### Sesión de STRIDE con el Responsable de Seguridad
+
+El SEC lidera; el SA toma notas; el SWA aporta detalle técnico. Recorrido por componente:
+
+```
+SA (facilita):
+> Tomamos el API Gateway. Activos en juego: tokens JWT, payloads con PII.
+
+Responsable de Seguridad:
+> Spoofing — vector: robo de JWT. Likelihood Alta, Impact Alto. Mitigación:
+> JWT corto + refresh rotativo + mTLS interno. Validable con FF-002.
+
+Especialista Técnico:
+> Para mTLS interno necesitamos service mesh. Eso es un ADR aparte (ADR-003).
+
+SA:
+> Documento la mitigación en SD-001 sec. 3.2 y abro ADR-003 para el service mesh.
+```
 
 ### Tu accion
 
 ```
 Tu:
-> El STRIDE esta completo. Agrego: el audit trail es un SPOF —
-> si el servicio de auditoria falla, la operacion financiera NO debe proceder
-> (fail-closed, no fail-open). Esto es requisito regulatorio.
-> Paso a Draft — necesito mas iteracion con Ops.
+> El STRIDE quedó completo con firma del Responsable de Seguridad.
+> Agrego: el audit trail es un SPOF — si el servicio de auditoria falla,
+> la operacion financiera NO debe proceder (fail-closed, no fail-open).
+> Esto es requisito regulatorio.
+> Paso SD-001 a Review. Pendiente firma de DevOps para Approved.
 ```
 
 **Referencia:** compara con `examples/inversion-pasiva/SD-001.md`

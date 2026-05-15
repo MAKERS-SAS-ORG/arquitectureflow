@@ -7,7 +7,7 @@ Copiar y adaptar para cada artefacto nuevo.
 ---
 titulo: "[Nombre descriptivo del artefacto]"
 identificador: "[TIPO]-[NNN]"    # Ej: RFC-001, ADR-003, PRD-001
-tipo: RFC | ADR | PRD | Tech-Spec | System-Design | Runbook | Post-Mortem | System-Prompt-Spec | Context-Map | Fitness-Functions | Stakeholder-Map | Tablero-Adherencia
+tipo: RFC | ADR | PRD | Tech-Spec | API-Design | System-Design | Runbook | Post-Mortem | System-Prompt-Spec | Context-Map | Fitness-Functions | Stakeholder-Map | Tablero-Adherencia
 estado: Draft | Review | Approved | Superseded
 version: "1.0.0"
 autor: "[Nombre del autor]"
@@ -75,10 +75,12 @@ Captura quien firmo el artefacto desde cada rol colaborador (ver bloque
 | Context Brief | Acelerador (Sponsor / PO) |
 | RFC | Acelerador + Especialista Tecnico |
 | ADR | Especialista Tecnico |
-| PRD | Acelerador + QA |
+| PRD | Acelerador + QA (+ Responsable de Seguridad si hay PII / datos sensibles) |
 | Tech Spec | Especialista Tecnico |
-| System Design | DevOps + Especialista Tecnico (+ Security si datos sensibles) |
-| Req. Operacionales | DevOps |
-| Tablero Adherencia | Tech Lead + DevOps + QA (cada gate firma su seccion) |
-| System Prompt Spec | **Compliance** (bloqueante) + Especialista Tecnico + QA |
+| API Design REST (OpenAPI 3.1) | Especialista Tecnico + **Responsable de Seguridad** (auth, scopes, PII) |
+| API Design GraphQL | Especialista Tecnico + **Responsable de Seguridad** + Front-end Tech Lead |
+| System Design | DevOps + Especialista Tecnico + **Responsable de Seguridad (STRIDE) — bloqueante si hay datos sensibles o regulación** |
+| Req. Operacionales | DevOps (+ Responsable de Seguridad para incident response / accesos privilegiados) |
+| Tablero Adherencia | Tech Lead + DevOps + QA + Responsable de Seguridad (cada gate firma su seccion) |
+| System Prompt Spec | **Compliance** (bloqueante) + Especialista Tecnico + QA + **Responsable de Seguridad** (adversarial / prompt injection) |
 | Stakeholder Map | Acelerador / Sponsor |

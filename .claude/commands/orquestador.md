@@ -4,7 +4,8 @@ Lee el archivo `skills/orquestador/SKILL.md` completo y ejecuta el flujo.
 
 ANTES de hacer cualquier cosa, escanea el directorio actual y subdirectorios buscando
 artefactos de arquitectura existentes: `CB-*.md`, `RFC-*.md`, `ADR-*.md`, `PRD-*.md`,
-`TS-*.md`, `SD-*.md`, `RO-*.md`, `CM-*.md`, `FF-*.md`, `TAA-*.md`.
+`TS-*.md`, `API-*.md`, `SD-*.md`, `RO-*.md`, `CM-*.md`, `FF-*.md`, `TAA-*.md`,
+`SPS-*.md`, `SM-*.md`.
 
 ### Si el usuario escribio `/orquestador` sin argumentos:
 

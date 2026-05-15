@@ -29,6 +29,7 @@ seccion *Stakeholder Management* y la guia *Architecture Skills Framework*).
 |---|---|---|
 | **Acelerador** | Experto de negocio y financiero (entiende cliente, valor, ROI) | Necesidad real, viabilidad de negocio, criterios de aceptacion funcionales |
 | **Especialista Tecnico** | Software Architect / Tech Lead (experto en ingenieria) | Viabilidad tecnica, contratos, patrones, consecuencias de cada decision |
+| **Responsable de Seguridad** | CISO / Security Architect / AppSec Lead | **Lidera STRIDE en fase de diseño y arquitectura**, controles de seguridad, AuthN/AuthZ, manejo de PII, firma System Design y APIs |
 | **DevOps / SRE / Infra** | Operaciones e infraestructura | Despliegue, escalabilidad, metricas e informes para fitness functions, SLAs |
 | **QA** | Calidad y verificacion | Quality Attribute Scenarios, criterios de aceptacion automatizables |
 | **Equipo de Desarrollo** | Quien implementa el QUE | Recibe contratos claros, registra desviaciones, ejecuta acciones correctivas |
@@ -68,8 +69,12 @@ flowchart LR
     ET -. consecuencias tecnicas .-> ADR
     ET -. contratos, stack, patrones .-> TS
     ET -. implementa tests automatizados .-> FF
-    ET -. despliegue logico, STRIDE .-> SD
+    ET -. despliegue logico .-> SD
     ET -. Gate Code Review .-> TAA
+    SEC["Responsable de Seguridad<br>CISO / Security Architect"] -. PII y datos sensibles .-> PRD
+    SEC -. AuthN/AuthZ, scopes en contratos .-> TS
+    SEC -. "LIDERA STRIDE en diseño" .-> SD
+    SEC -. firma seguridad por endpoint .-> TAA
     OPS["DevOps / SRE / Infra"] -. metricas e informes continuos .-> FF
     OPS -. infraestructura, escalabilidad .-> SD
     OPS -. SLAs, rollback, runbook detallado .-> RO
@@ -84,6 +89,7 @@ flowchart LR
      SA:::sa
      AC:::ac
      ET:::et
+     SEC:::sec
      OPS:::ops
      QA:::qa
      DEV:::dev
@@ -100,6 +106,7 @@ flowchart LR
     classDef sa fill:#1e40af,stroke:#1e3a8a,color:#fff,font-weight:bold
     classDef ac fill:#15803d,stroke:#14532d,color:#fff
     classDef et fill:#b91c1c,stroke:#7f1d1d,color:#fff
+    classDef sec fill:#0f766e,stroke:#134e4a,color:#fff,font-weight:bold
     classDef ops fill:#a16207,stroke:#713f12,color:#fff
     classDef qa fill:#7e22ce,stroke:#581c87,color:#fff
     classDef dev fill:#475569,stroke:#1e293b,color:#fff
@@ -120,6 +127,12 @@ flowchart LR
   *Quality Attribute Scenarios* (ISO/IEC 25010:2023).
 - **Tech Spec**: el SA detalla con el **Especialista Tecnico** los contratos de
   integracion, y desde ahi el equipo de desarrollo recibe el QUE con claridad.
+  Si el sistema expone APIs, se disparan los sub-artefactos **API-NNN**:
+  `templates/api-design-rest.md` (OpenAPI 3.1 + SemVer) para dominio/B2B, o
+  `templates/api-design-graphql.md` para APIs de experiencia web/mobile.
+- **System Design — STRIDE**: el **Responsable de Seguridad** es el **dueño**
+  del modelo de amenazas STRIDE en la fase de diseño y arquitectura. El SA lo
+  convoca y el SWA aporta despliegue lógico; el SEC firma la seccion 3 del SD.
 - **Fitness Functions**: las **define el SA** (que medir y umbrales), las
   **implementa Ingenieria**, y **DevOps reporta** las metricas que validan que
   la arquitectura sigue siendo "fit" (ver `templates/fitness-functions.md`).
@@ -580,7 +593,9 @@ arquitectureflow/
 | **ADR** | Decision, justificacion, consecuencias, validacion | Configuracion especifica |
 | **PRD** | NFRs cuantificados, quality attribute scenarios, scope | Features detalladas (Product Owner) |
 | **Tech Spec** | Stack, contratos de integracion, politicas de solucion | Patrones de codigo, estructura de clases |
-| **System Design** | SLOs, STRIDE, escalabilidad, deployment logico | Infra fisica, CI/CD pipelines |
+| **API Design REST (OpenAPI 3.1)** | Recursos, operaciones, SemVer, política de deprecación/sunset, errores Problem Details | Frameworks, generadores de SDK, implementación de resolvers |
+| **API Design GraphQL** | Tipos de experiencia, queries/mutations por pantalla, política de errores, evolución del schema | Server, federación, resolvers, dataloaders |
+| **System Design** | SLOs, **STRIDE (dueño: Responsable de Seguridad)**, escalabilidad, deployment logico | Infra fisica, CI/CD pipelines |
 | **Fitness Functions** | Que medir, umbrales, que bloquea deploy | Implementacion de tests automatizados |
 | **Req. Operacionales** | Metricas criticas, SLAs, criterios de rollback | Procedimientos paso a paso (Operations) |
 | **Context Map** | Bounded contexts, patrones de integracion DDD | Implementacion de ACL, adapters |
@@ -606,7 +621,11 @@ Todos los artefactos estan alineados con estandares documentados en `references/
 | **Building Evolutionary Architectures** (Ford, Parsons, Kua, 2023) | Fitness functions, arquitectura incremental |
 | **Domain-Driven Design** (Evans, Vernon, Khononov) | Bounded contexts, context mapping |
 | **Google SRE Book** (Beyer et al., 2016) | Post-mortem blameless, SLIs/SLOs |
-| **STRIDE** (Microsoft) | Modelo de amenazas de seguridad |
+| **STRIDE** (Microsoft) | Modelo de amenazas de seguridad — liderado por el Responsable de Seguridad |
+| **OpenAPI 3.1** (OpenAPI Initiative, 2021) | Contrato para APIs REST de dominio / B2B / publicas |
+| **Semantic Versioning 2.0.0** (semver.org) | Versionamiento de APIs y artefactos |
+| **GraphQL Spec** (GraphQL Foundation, 2021) | APIs de experiencia web/mobile → backend |
+| **RFC 9457 Problem Details** + **RFC 8594 Sunset** | Errores y deprecación de APIs HTTP |
 | **Team Topologies** (Skelton, Pais, 2019) | Alineacion equipo-arquitectura |
 
 ---

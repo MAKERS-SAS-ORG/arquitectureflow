@@ -165,7 +165,54 @@ Cada entrada incluye: citacion completa, aplicabilidad y artefactos donde se usa
 - **URL:** https://learn.microsoft.com/en-us/azure/security/develop/threat-modeling-tool
 - **Aplicabilidad:** Modelo de amenazas: Spoofing, Tampering, Repudiation,
   Information Disclosure, Denial of Service, Elevation of Privilege.
-- **Artefactos donde aplica:** System Design
+  En ArquitectureFlow el modelado STRIDE en fase de diseño es **liderado por el
+  Responsable de Seguridad** y documentado en System Design sec. 3.
+- **Artefactos donde aplica:** System Design (principal), API Design (sec. 6 — Seguridad)
+
+## OpenAPI Specification {#openapi}
+
+- **Citacion:** OpenAPI Initiative. *OpenAPI Specification 3.1.0.* Linux Foundation, 2021.
+- **URL:** https://spec.openapis.org/oas/v3.1.0
+- **Aplicabilidad:** Contrato máquina-legible para APIs REST. JSON Schema 2020-12 nativo,
+  webhooks, security schemes. Default de ArquitectureFlow para APIs de dominio / B2B / publicas.
+- **Artefactos donde aplica:** API Design REST (`templates/api-design-rest.md`), Tech Spec sec. 3
+
+## Semantic Versioning 2.0.0 {#semver}
+
+- **Citacion:** Preston-Werner, Tom. *Semantic Versioning 2.0.0.*
+- **URL:** https://semver.org/
+- **Aplicabilidad:** Esquema MAJOR.MINOR.PATCH para versionar APIs y artefactos. En
+  ArquitectureFlow se aplica al `version` del frontmatter de todos los artefactos y a
+  la versión publicada de APIs REST. Reglas anti-breaking documentadas en `api-design-rest.md` sec. 1.
+- **Artefactos donde aplica:** Todos los artefactos (frontmatter `version`), API Design REST
+
+## API Lifecycle — RFC 8594 Sunset + Deprecation Header {#api-lifecycle}
+
+- **Citacion:** IETF. *RFC 8594 — The Sunset HTTP Header Field.* 2019.
+  IETF. *The Deprecation HTTP Response Header Field* (draft-ietf-httpapi-deprecation-header).
+- **URL:** https://www.rfc-editor.org/rfc/rfc8594
+- **Aplicabilidad:** Cómo anunciar retiro de versiones de API a consumidores via headers
+  HTTP (`Deprecation: true`, `Sunset: <fecha>`, `Link: ...; rel="successor-version"`).
+- **Artefactos donde aplica:** API Design REST sec. 9 (Ciclo de vida)
+
+## RFC 9457 — Problem Details for HTTP APIs {#rfc9457}
+
+- **Citacion:** IETF. *RFC 9457 — Problem Details for HTTP APIs.* 2023.
+  (Obsoleta RFC 7807, referenciado en versiones anteriores del framework.)
+- **URL:** https://www.rfc-editor.org/rfc/rfc9457
+- **Aplicabilidad:** Formato estándar de errores en APIs HTTP (`application/problem+json`
+  con `type`, `title`, `status`, `detail`, `instance`).
+- **Artefactos donde aplica:** Tech Spec sec. 6 (Políticas), API Design REST sec. 4
+
+## GraphQL Specification {#graphql}
+
+- **Citacion:** GraphQL Foundation. *GraphQL Specification.* October 2021 (working draft).
+- **URL:** https://spec.graphql.org/October2021/
+- **Aplicabilidad:** Lenguaje de query para APIs. Default en ArquitectureFlow para APIs
+  de **experiencia** (web/mobile → backend) cuando el front compone datos de múltiples
+  fuentes. Complementado por GraphQL over HTTP, Relay Connections Spec y patrón de
+  errores tipo UserError (Shopify) para separar errores de dominio vs sistémicos.
+- **Artefactos donde aplica:** API Design GraphQL (`templates/api-design-graphql.md`), Tech Spec sec. 3
 
 ## Team Topologies {#teamtopologies}
 

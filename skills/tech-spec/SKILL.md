@@ -1,5 +1,5 @@
 # Skill: Tech Spec — Technical Specification
-# Version: 2026.2
+# Version: 2026.3
 
 > Referencia: Arc42 Secciones 4-8 — `references/bibliografia.md#arc42`
 > Referencia: C4 Model Level 2 — `references/bibliografia.md#c4`
@@ -68,10 +68,35 @@ Cada contenedor con: nombre, tecnologia, responsabilidad.
 
 ### Paso 3: Contratos de Integracion
 Para cada relacion entre contenedores o con sistemas externos:
-- Protocolo (REST, gRPC, async/queue, batch)
+- Protocolo (REST, GraphQL, gRPC, async/queue, batch)
 - Contrato (endpoint, schema de eventos, formato de datos)
 - SLA esperado
 - Estrategia de error (retry, circuit breaker, fallback — a nivel de politica, no de implementacion)
+
+### Paso 3.1: Diseño detallado de APIs expuestas (sub-artefacto API-NNN)
+
+Cuando el sistema **expone** una o más APIs, la Tech Spec NO contiene el diseño
+detallado del contrato — referencia al sub-artefacto `API-NNN`:
+
+| Tipo de API | Cuándo dispararlo | Template |
+|---|---|---|
+| **REST + OpenAPI 3.1** (default para APIs de dominio / B2B / publicas) | Recursos estables, semántica HTTP fuerte, partners externos. Requiere SemVer 2.0.0 + política de deprecación (RFC 8594 Sunset header) | `templates/api-design-rest.md` |
+| **GraphQL** (default para APIs de **experiencia** web/mobile → backend) | Front-end compone datos de múltiples fuentes, varios clientes, iteración UX rápida | `templates/api-design-graphql.md` |
+| **gRPC / async (events)** | Comunicación interna alta-throughput / desacoplada | Documentar inline en TS-NNN sec. 3 |
+
+> Regla: para promover una API a estado **Approved** debe existir el sub-artefacto
+> `API-NNN` correspondiente con su spec canónico versionado (`openapi/*.yaml` o
+> `schema/*.graphql`). El handoff lo dispara este skill al detectar contenedores
+> de tipo API en la sección 2.
+
+### Paso 3.2: Trigger del sub-artefacto desde el orquestador
+
+Cuando el SA llene la sección 3 del Tech Spec y aparezca al menos una API expuesta:
+
+1. Detectar en sección 2 (Contenedores) los de tipo `API`.
+2. Para cada uno, preguntar: "¿Es API de experiencia (front-end → backend) o de dominio (B2B / backend)?"
+3. Cargar el template y skill apropiado y crear `API-NNN.md`.
+4. Anotar en la tabla 3.1 del Tech Spec el `API-NNN`, tipo y versión.
 
 ### Paso 4: Quality Attribute Trade-offs
 Documentar los trade-offs entre atributos de calidad:

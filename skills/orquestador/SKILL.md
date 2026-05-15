@@ -1,5 +1,5 @@
 # Skill: Orquestador de Arquitectura de Soluciones
-# Version: 2026.4
+# Version: 2026.5
 # Tipo: Orquestador principal
 
 ---
@@ -23,7 +23,8 @@ Este skill se activa cuando el usuario quiere:
 
 **ANTES de ejecutar cualquier fase**, el orquestador MUST escanear el directorio actual
 y subdirectorios buscando artefactos existentes: `CB-*.md`, `RFC-*.md`, `ADR-*.md`,
-`PRD-*.md`, `TS-*.md`, `SD-*.md`, `RO-*.md`, `CM-*.md`, `FF-*.md`, `TAA-*.md`.
+`PRD-*.md`, `TS-*.md`, `API-*.md`, `SD-*.md`, `RO-*.md`, `CM-*.md`, `FF-*.md`, `TAA-*.md`,
+`SPS-*.md`, `SM-*.md`.
 
 ### Si hay artefactos existentes
 
@@ -83,20 +84,21 @@ nombre de carpeta, e iniciar Fase 0.
 > artefacto y QUE pedirle. El bloque "Roles colaboradores" de cada template/skill
 > profundiza por seccion. Diagrama completo: `README.md`.
 
-| Artefacto | Acelerador (Negocio) | Especialista Tecnico (SWA) | DevOps / SRE | QA | Equipo Desarrollo |
-|---|---|---|---|---|---|
-| **0. Context Brief** | **PRINCIPAL** — problema, valor, costo | -- | -- | -- | -- |
-| **1. RFC** | ROI, viabilidad de negocio | Viabilidad tecnica, riesgos | -- | -- | -- |
-| **2. ADR** | Solo si hay impacto economico | **PRINCIPAL** — consecuencias tecnicas | Si afecta operacion | -- | -- |
-| **3. PRD** | **PRINCIPAL** — funcionalidades | Validar NFRs realistas | -- | **Quality Attribute Scenarios** | -- |
-| **4. Tech Spec** | -- | **PRINCIPAL** — contratos, stack | Restricciones de infra | Contract testing | **Recibe los contratos** |
-| **5. System Design** | -- | STRIDE, despliegue logico | **PRINCIPAL** — infra, escalabilidad | Load tests | -- |
-| **Fitness Functions** | -- | Implementa tests | **Metricas e informes continuos** | Mapea a QA-Scenarios | Acepta bloqueo de deploy |
-| **6. Req. Operacionales** | -- | Comportamiento esperado | **PRINCIPAL** — SLAs, rollback, runbook | -- | -- |
-| **7. Tablero Adherencia** | Firma riesgo seccion 6 | Gate 2 (Code Review) | Gates 3-4 (Pre/Post-Deploy) | Gate 1 (Sprint Planning) | **Registra desviaciones** |
-| **8. Post-Mortem** | Comunicacion a clientes | Causa raiz sistemica | **PRINCIPAL** — timeline tecnico | -- | Acciones correctivas |
-| **System Prompt Spec** | Tono, idioma, casos | Estructura del prompt | -- | **Test cases adversariales** | -- |
-| **Context Map** | Core/Supporting/Generic | **PRINCIPAL** — patrones DDD | -- | -- | Validar interfaces actuales |
+| Artefacto | Acelerador (Negocio) | Especialista Tecnico (SWA) | Responsable de Seguridad | DevOps / SRE | QA | Equipo Desarrollo |
+|---|---|---|---|---|---|---|
+| **0. Context Brief** | **PRINCIPAL** — problema, valor, costo | -- | Si maneja datos sensibles / regulación | -- | -- | -- |
+| **1. RFC** | ROI, viabilidad de negocio | Viabilidad tecnica, riesgos | Riesgo de seguridad por opción | -- | -- | -- |
+| **2. ADR** | Solo si hay impacto economico | **PRINCIPAL** — consecuencias tecnicas | Si la decisión afecta superficie de ataque | Si afecta operacion | -- | -- |
+| **3. PRD** | **PRINCIPAL** — funcionalidades | Validar NFRs realistas | PII, scopes, requisitos de auditoría | -- | **Quality Attribute Scenarios** | -- |
+| **4. Tech Spec** | -- | **PRINCIPAL** — contratos, stack | AuthN/AuthZ por contrato, secretos | Restricciones de infra | Contract testing | **Recibe los contratos** |
+| **4.1 API Design (REST u GraphQL)** | -- | Validar factibilidad y origen de datos | **CO-PRINCIPAL** — auth por endpoint/campo, PII, rate limit, errores sin filtración | SLOs y cuotas | Contract testing | Front-end consume |
+| **5. System Design** | -- | Despliegue lógico, consecuencias técnicas del STRIDE | **PRINCIPAL — LIDERA STRIDE** | **PRINCIPAL** — infra, escalabilidad | Load tests + tests de seguridad | -- |
+| **Fitness Functions** | -- | Implementa tests | Define FFs de seguridad (auth, audit, secrets) | **Metricas e informes continuos** | Mapea a QA-Scenarios | Acepta bloqueo de deploy |
+| **6. Req. Operacionales** | -- | Comportamiento esperado | Incident response, accesos privilegiados | **PRINCIPAL** — SLAs, rollback, runbook | -- | -- |
+| **7. Tablero Adherencia** | Firma riesgo seccion 6 | Gate 2 (Code Review) | Gate firma controles de seguridad | Gates 3-4 (Pre/Post-Deploy) | Gate 1 (Sprint Planning) | **Registra desviaciones** |
+| **8. Post-Mortem** | Comunicacion a clientes | Causa raiz sistemica | Si hubo brecha de seguridad / data leak | **PRINCIPAL** — timeline tecnico | -- | Acciones correctivas |
+| **System Prompt Spec** | Tono, idioma, casos | Estructura del prompt | **Adversarial testing, prompt injection, data leakage** | -- | **Test cases adversariales** | -- |
+| **Context Map** | Core/Supporting/Generic | **PRINCIPAL** — patrones DDD | Trust boundaries entre contextos | -- | -- | Validar interfaces actuales |
 
 **Como usar esta tabla en cada handoff (Fase 3):**
 
@@ -168,7 +170,9 @@ contenido del CB y emitir avisos automaticos:
 | Senial en el CB | Aviso obligatorio del orquestador |
 |---|---|
 | Seccion 4: "Integra IA/LLM: Si" | :warning: **REQUERIDO: System Prompt Spec (SPS-NNN)** — bloqueante para go-live. Compliance MUST firmar. |
-| Seccion 4: requisito regulatorio (GDPR, HIPAA, PCI-DSS, SuperSalud, SOX, regulacion financiera local, Habeas Data) | :warning: **REQUERIDO: Stakeholder Map (incluir regulador)** + **TAA con firmas-roles obligatorio** + **FF para audit trail** |
+| Seccion 4: requisito regulatorio (GDPR, HIPAA, PCI-DSS, SuperSalud, SOX, regulacion financiera local, Habeas Data) | :warning: **REQUERIDO: Stakeholder Map (incluir regulador)** + **TAA con firmas-roles obligatorio** + **FF para audit trail** + **Responsable de Seguridad MUST firmar SD-NNN (STRIDE) y API-NNN** |
+| Cualquier sistema con datos personales, financieros, de salud o credenciales | :warning: **REQUERIDO: convocar Responsable de Seguridad desde Fase 0** — STRIDE en SD-NNN es bloqueante |
+| Tech Spec con contenedor de tipo `API` (expuesto) | :warning: **REQUERIDO: sub-artefacto API-NNN** — REST/OpenAPI 3.1 (`templates/api-design-rest.md`) si es API de dominio/B2B, **GraphQL** (`templates/api-design-graphql.md`) si es API de experiencia (web/mobile → backend) |
 | Seccion 3: "Sistemas existentes involucrados" con > 2 integraciones externas | :warning: **REQUERIDO: Context Map (CM-NNN)** + Tech Spec con contratos detallados |
 | Seccion 3: Naturaleza "Migracion" | :warning: **REQUERIDO: ADR de estrategia de migracion** + plan de rollback en RFC |
 | Seccion 1: Deadline regulatorio | :warning: **CRITICO: incluir el deadline en RFC seccion 2.3 (Por Que Ahora)** y en el TAA seccion 6 |

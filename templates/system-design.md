@@ -10,7 +10,7 @@ fecha-ultima-revision: YYYY-MM-DD
 revisores: []
 artefactos-origen: ["TS-NNN"]
 stakeholders: []
-firmas-roles: []   # MUST firma de DevOps + Especialista Tecnico para Approved. Ver _frontmatter.md
+firmas-roles: []   # MUST firma de DevOps + Especialista Tecnico + Responsable de Seguridad (STRIDE) para Approved. Ver _frontmatter.md
 tags: []
 ---
 
@@ -18,16 +18,21 @@ tags: []
 
 ## Roles colaboradores
 
-> El SA define como escala y como es seguro. **Especialista Tecnico** aporta STRIDE y
-> despliegue logico. **DevOps** aporta infraestructura, escalabilidad real y observabilidad.
+> El SA define como escala y como es seguro. **Responsable de Seguridad** es el dueño
+> del STRIDE. **Especialista Tecnico** aporta despliegue logico y consecuencias de diseño.
+> **DevOps** aporta infraestructura, escalabilidad real y observabilidad.
 > Ver diagrama de roles en `README.md`.
 
 | Rol | Que aporta al SA | Cuando consultarlo |
 |---|---|---|
-| **Especialista Tecnico** (SWA / Tech Lead) | Modelado STRIDE, decisiones de despliegue logico (que corre donde), patrones de tolerancia a fallos | Seccion 1 (deployment logico), seccion 3 (STRIDE) y seccion 9 (decisiones de diseno) |
+| **Responsable de Seguridad** (CISO / Security Architect / AppSec Lead) | **PRINCIPAL — lidera STRIDE en fase de diseño.** Identifica amenazas por componente, evalúa riesgo, propone mitigaciones, valida controles existentes, requisitos de auditoría y compliance | **Sección 3 (STRIDE) — BLOQUEANTE**; revisa sec. 1 (deployment) y sec. 5 (observabilidad de eventos de seguridad). Firma `firmas-roles` para Approved |
+| **Especialista Tecnico** (SWA / Tech Lead) | Despliegue logico (que corre donde), patrones de tolerancia a fallos, viabilidad de las mitigaciones propuestas por SEC | Seccion 1 (deployment logico), seccion 3 (STRIDE — como contraparte tecnica) y seccion 9 (decisiones de diseno) |
 | **DevOps / SRE / Infra** | Capacidad real de la infraestructura, costos de auto-scaling, plataforma de observabilidad disponible, viabilidad de SLOs | Seccion 2 (rendimiento, disponibilidad, escalabilidad), seccion 5 (observabilidad) y seccion 7 (capacity planning) |
-| **Seguridad / SecOps** | Validacion del modelo STRIDE, controles existentes, requisitos de auditoria | Seccion 3 (STRIDE) — especialmente si el sistema maneja datos sensibles |
-| **QA** | Escenarios de carga y pruebas de resiliencia (chaos / load test) que validan los NFRs | Seccion 2 (rendimiento) — define como se prueba antes de produccion |
+| **QA** | Escenarios de carga y pruebas de resiliencia (chaos / load test) que validan los NFRs; tests de seguridad automatizables (auth bypass, fuzzing) | Seccion 2 (rendimiento) y Sección 3 (validación de mitigaciones STRIDE) |
+
+> ⚠️ **El System Design NO se declara Approved sin firma del Responsable de Seguridad
+> en `firmas-roles`** cuando el sistema maneja datos personales, financieros, de salud,
+> o cae en regulacion (ver `templates/_frontmatter.md`).
 
 ## 1. Diagrama de Arquitectura
 
@@ -59,18 +64,62 @@ tags: []
 | 1 ano | [metrica] | [valor] | [estrategia] |
 | 3 anos | [metrica] | [valor] | [estrategia] |
 
-## 3. Seguridad (STRIDE)
+## 3. Seguridad (STRIDE) — Dueño: Responsable de Seguridad
 
-> Referencia: Microsoft STRIDE Threat Modeling
+> Referencia: Microsoft STRIDE Threat Modeling — `references/bibliografia.md#stride`
+>
+> **STRIDE es responsabilidad del Responsable de Seguridad** ejecutada en la fase de
+> diseño y arquitectura. El SA facilita la sesión, el SEC lidera la identificación
+> de amenazas y el SWA aporta detalle técnico de los componentes. **MUST** firmar
+> esta sección antes de promover el SD a Approved.
 
-| Amenaza | Riesgo | Mitigacion |
+### 3.1 Activos protegidos
+
+Lista de **activos** del sistema que el modelado de amenazas debe cubrir:
+
+| Activo | Sensibilidad | Regulación aplicable |
 |---|---|---|
-| Spoofing | [nivel] | [mitigacion] |
-| Tampering | [nivel] | [mitigacion] |
-| Repudiation | [nivel] | [mitigacion] |
-| Information Disclosure | [nivel] | [mitigacion] |
-| Denial of Service | [nivel] | [mitigacion] |
-| Elevation of Privilege | [nivel] | [mitigacion] |
+| [ej: Datos personales del usuario] | Alta (PII) | GDPR / Habeas Data |
+| [ej: Saldo y operaciones financieras] | Crítica | SFC / SOX |
+| [ej: Tokens de sesión] | Crítica | -- |
+
+### 3.2 Amenazas por componente (STRIDE)
+
+> Hacer una tabla por **container** relevante de la sec. 1, no una sola tabla global.
+> El nivel de riesgo se evalúa con el SEC (matriz Likelihood × Impact).
+
+#### Componente: [Container A — ej: API Gateway]
+
+| Amenaza STRIDE | Vector concreto | Likelihood | Impact | Riesgo | Mitigación (decisión SA + SEC) | Validación |
+|---|---|---|---|---|---|---|
+| **S**poofing — suplantación de identidad | Robo de JWT, replay de credenciales | Alta | Alto | 🔴 Critico | JWT corto (15min) + refresh rotativo + mTLS interno | FF-NNN |
+| **T**ampering — alteración de datos en tránsito o reposo | MITM, modificación de payload | Media | Alto | 🟡 Importante | TLS 1.3, HSTS, integridad de payloads firmados | -- |
+| **R**epudiation — negación de acciones | Usuario niega haber operado | Alta | Alto | 🔴 Critico | Audit trail inmutable + firma de operaciones críticas | FF-NNN |
+| **I**nformation Disclosure — exposición de PII | Logs con datos sensibles, errores verbosos | Media | Alto | 🟡 Importante | Masking en logs, Problem Details genérico, encriptación at-rest | -- |
+| **D**enial of Service | Flood al API, queries GraphQL costosas | Alta | Medio | 🟡 Importante | Rate limiting por IP + por user, complexity limit GraphQL, WAF | FF-NNN |
+| **E**levation of Privilege | Escalada vertical/horizontal de permisos | Baja | Crítico | 🟡 Importante | Verificación de scope por endpoint, viewer-based authz en GraphQL | -- |
+
+#### Componente: [Container B — repetir la tabla]
+
+| Amenaza STRIDE | Vector | Likelihood | Impact | Riesgo | Mitigación | Validación |
+|---|---|---|---|---|---|---|
+| ... | ... | ... | ... | ... | ... | ... |
+
+### 3.3 Trazabilidad de mitigaciones
+
+Cada mitigación crítica debe estar referenciada en:
+- **ADR-NNN** si implica una decisión arquitectónica
+- **TS-NNN** sec. 6 (Políticas) si es política transversal
+- **API-NNN** sec. 6 (Seguridad) si afecta a un API expuesta
+- **FF-NNN** si es validable automáticamente
+
+### 3.4 Firmas
+
+| Rol | Persona | Fecha | Decisión |
+|---|---|---|---|
+| Responsable de Seguridad | [nombre] | YYYY-MM-DD | Aprueba / Aprueba con condiciones / Rechaza |
+| Especialista Técnico | [nombre] | YYYY-MM-DD | Acepta implementar |
+| Arquitecto de Soluciones | [nombre] | YYYY-MM-DD | Integra al SD |
 
 ## 4. Dependencias Externas
 
